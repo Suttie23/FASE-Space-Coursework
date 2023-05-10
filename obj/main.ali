@@ -19,7 +19,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_IMPLEMENTATION_PRAGMAS
 RV MAX_TASKS=1+
 
-U main%b		main.adb		aeb286b4 NE OO SU
+U main%b		main.adb		19e10934 NE OO SU
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 Z ada.real_time%s	a-reatim.adb		a-reatim.ali
@@ -28,6 +28,8 @@ W ada.text_io%s		a-textio.adb		a-textio.ali
 W station%s		station.adb		station.ali
 Z system%s		system.ads		system.ali
 Z system.concat_2%s	s-conca2.adb		s-conca2.ali
+Z system.concat_3%s	s-conca3.adb		s-conca3.ali
+Z system.img_int%s	s-imgint.ads		s-imgint.ali
 Z system.parameters%s	s-parame.adb		s-parame.ali
 Z system.soft_links%s	s-soflin.adb		s-soflin.ali
 Z system.task_info%s	s-tasinf.adb		s-tasinf.ali
@@ -51,14 +53,17 @@ D interfac.ads		20210520051132 edec285f interfaces%s
 D i-c.ads		20210520051132 d9beded9 interfaces.c%s
 D i-cstrin.ads		20210520051132 341d0ddf interfaces.c.strings%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
-D main.adb		20230510140734 9037ae79 main%b
-D station.ads		20230510140556 9071fda0 station%s
+D main.adb		20230510165642 6decf454 main%b
+D station.ads		20230510165426 daf9280d station%s
 D system.ads		20210520051136 2ffa5114 system%s
 D s-atacco.ads		20210520051132 4c36d12f system.address_to_access_conversions%s
 D s-conca2.ads		20210520051132 02a0d7d0 system.concat_2%s
+D s-conca3.ads		20210520051132 0b705ca5 system.concat_3%s
 D s-crtl.ads		20210520051132 0ebbdb71 system.crtl%s
 D s-exctab.ads		20210520051132 54135002 system.exception_table%s
 D s-ficobl.ads		20210520051132 078245e4 system.file_control_block%s
+D s-imagei.ads		20210520051134 0d3f86a7 system.image_i%s
+D s-imgint.ads		20210520051134 bdb6f5ec system.img_int%s
 D s-multip.ads		20210520051134 38ac9f73 system.multiprocessors%s
 D s-osinte.ads		20210520051128 97504df8 system.os_interface%s
 D s-parame.ads		20210520051134 4752c4cb system.parameters%s
@@ -82,30 +87,35 @@ D s-win32.ads		20210520051136 15ac53fb system.win32%s
 D unchconv.ads		20210520051136 ca2f9e18 unchecked_conversion%s
 G a e
 G c Z b b [main standard 4 11 none]
-G r c none [main standard 4 11 none] [open_door station 16 14 none]
-G r c none [main standard 4 11 none] [seal_airlock station 22 14 none]
+G r c none [main standard 4 11 none] [open_door station 25 14 none]
+G r c none [main standard 4 11 none] [seal_airlock station 30 14 none]
+G r c none [main standard 4 11 none] [update_height station 35 14 none]
 X 1 ada.ads
 16K9*Ada 20e8 18|2r6 2r23
 X 12 a-textio.ads
 58K13*Text_IO 725e16 18|2w10 2r27
-479U14*Get_Line 18|36s10
-506U14*Put_Line 18|14s7 15s7 16s7 17s7 18s7 19s7 20s10 21s10 22s7 23s7 24s7
-. 25s7 26s7 27s7 28s7 29s7
+479U14*Get_Line 18|38s10
+506U14*Put_Line 18|14s7 15s7 16s7 17s7 18s7 19s7 20s7 21s10 22s10 23s7 24s7
+. 25s7 26s7 27s7 28s7 29s7 30s7 31s7
 X 18 main.adb
-4U11*Main 4b11 49l5 49t9
-6a4 Str{string} 36m19 37r16
-7i4 Last{natural} 36m24
-8r4 S{19|8R9} 17r39 18r39 38m32 38r32 39m32 39r32 40m35 40r35
-10t9 ControlPanel 32b14 45l8 45t20
-12U14 DashboardControls 12b14 30l8 30t25 35s10
+4U11*Main 4b11 52l5 52t9
+6a4 Str{string} 38m19 39r16
+7i4 Last{natural} 38m24
+8r4 S{19|12R9} 18r39 19r39 20r31 40m32 40r32 41m32 41r32 42m35 42r35 43m36
+. 43r36
+10t9 ControlPanel 34b14 48l8 48t20
+12U14 DashboardControls 12b14 32l8 32t25 37s10
 X 19 station.ads
-1K9*Station 18|1w6 1r19 19|26e12
-8R9*Station_Record 18|8r8 19|11e14
-9e7*Door1{5E9} 18|17r41
-10e7*Door2{5E9} 18|18r41
-16U14*Open_Door 18|38s22 39s22
-22U14*Seal_Airlock 18|40s22
-X 33 s-stausa.ads
+1K9*Station 18|1w6 1r19 19|39e12
+5n26*Open{5E9} 18|8r36 8r51
+12R9*Station_Record 18|8r8 19|16e14
+13e7*Door1{5E9} 18|8m27 18r41
+14e7*Door2{5E9} 18|8m42 19r41
+15i7*Altitude{integer} 18|8m57 20r33
+25U14*Open_Door 18|40s22 41s22
+30U14*Seal_Airlock 18|42s22
+35U14*Update_Height 18|43s22
+X 36 s-stausa.ads
 208U14*Initialize 209i<c,__gnat_stack_usage_initialize>22
 273U14*Output_Results 277i<c,__gnat_stack_usage_output_results>22
 

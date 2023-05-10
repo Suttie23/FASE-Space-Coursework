@@ -5,18 +5,19 @@ procedure Main is
 
    Str: String (1..2);
    Last: Natural;
-   S : Station_Record;
+   S : Station_Record := (Door1 => Open, Door2 => Open, Altitude => 820000);
 
    task ControlPanel;
 
    procedure DashboardControls is
    begin
+      Put_Line("");
       Put_Line("------------------------------");
-      Put_Line("Napier Space Station Dashboard Dashboard");
+      Put_Line("Napier Space Station Status");
       Put_Line("------------------------------");
       Put_Line("Interior Airlock: " & S.Door1'Image);
       Put_Line("Exterior Airlock: " & S.Door2'Image);
-      Put_Line("Altitude: dummyvalue" & "ft (820,000ft Min, 920,000ft Max)");
+      Put_Line("Altitude: " & S.Altitude'Image & "ft (820,000ft Min, 920,000ft Max)");
          Put_Line("");
          Put_Line("");
       Put_Line("------------------------------");
@@ -25,6 +26,7 @@ procedure Main is
       Put_Line("(a) - Open Interior Door");
       Put_Line("(b) - Open Exterior Door");
       Put_Line("(c) - Seal Airlock");
+      Put_Line("(d) - Adjust Orbit");
       Put_Line("");
       Put_Line("Enter command:");
    end DashboardControls;
@@ -38,6 +40,7 @@ procedure Main is
          when 'a' => Open_Door(S, 1);
          when 'b' => Open_Door(S, 2);
          when 'c' => Seal_Airlock(S);
+         when 'd' => Update_Height(S, 850000);
          when others => exit;
          end case;
       end loop;

@@ -1,0 +1,31 @@
+Summary of SPARK analysis
+=========================
+
+-------------------------------------------------------------------------------------------
+SPARK Analysis results        Total      Flow   CodePeer     Provers   Justified   Unproved
+-------------------------------------------------------------------------------------------
+Data Dependencies                 .         .          .           .           .          .
+Flow Dependencies                 .         .          .           .           .          .
+Initialization                    .         .          .           .           .          .
+Non-Aliasing                      .         .          .           .           .          .
+Run-time Checks                   7         .          .    7 (CVC4)           .          .
+Assertions                        .         .          .           .           .          .
+Functional Contracts              3         .          .    2 (CVC4)           .          1
+LSP Verification                  .         .          .           .           .          .
+Termination                       .         .          .           .           .          .
+Concurrency                       .         .          .           .           .          .
+-------------------------------------------------------------------------------------------
+Total                            10         .          .     9 (90%)           .    1 (10%)
+
+
+max steps used for successful proof: 1
+
+Analyzed 2 units
+in unit main, 0 subprograms and packages out of 1 analyzed
+  Main at main.adb:4 skipped
+in unit station, 5 subprograms and packages out of 5 analyzed
+  Station at station.ads:1 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (0 checks)
+  Station.Open_Door at station.ads:25 flow analyzed (0 errors, 0 checks and 0 warnings) and not proved, 4 checks out of 5 proved
+  Station.Seal_Airlock at station.ads:31 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (3 checks)
+  Station.SealedInvariant at station.ads:20 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (0 checks)
+  Station.Update_Height at station.ads:36 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (2 checks)
