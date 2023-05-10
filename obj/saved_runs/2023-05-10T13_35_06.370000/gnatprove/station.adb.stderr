@@ -1,0 +1,1 @@
+station.ads:21:35: medium: postcondition might fail, cannot prove S.Door2 = Closed[#0]

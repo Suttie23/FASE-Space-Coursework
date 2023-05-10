@@ -1,0 +1,77 @@
+{
+  "spark": [
+    {
+      "name": "Station",
+      "sloc": [
+        {
+          "file": "station.ads",
+          "line": 1
+        }
+      ],
+      "spark": "all"
+    },
+    {
+      "name": "Station.Open_Door",
+      "sloc": [
+        {
+          "file": "station.ads",
+          "line": 14
+        }
+      ],
+      "spark": "all"
+    },
+    {
+      "name": "Station.Seal_Airlock",
+      "sloc": [
+        {
+          "file": "station.ads",
+          "line": 20
+        }
+      ],
+      "spark": "all"
+    }
+  ],
+  "flow": [
+  ],
+  "assumptions": [
+    {
+      "assumptions": [
+      ],
+      "claim": {
+        "predicate": "CLAIM_EFFECTS",
+        "arg": {
+          "name": "Station.Open_Door",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 14
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assumptions": [
+      ],
+      "claim": {
+        "predicate": "CLAIM_EFFECTS",
+        "arg": {
+          "name": "Station.Seal_Airlock",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 20
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "timings": {
+    "globals (advanced)": 1.69002003967762E-02,
+    "flow analysis": 1.88280001748353E-03,
+    "marking": 1.05599996459205E-04,
+    "properties (advanced)": 1.92000006791204E-05,
+    "globals (basic)": 1.70622002333403E-02
+  }
+}

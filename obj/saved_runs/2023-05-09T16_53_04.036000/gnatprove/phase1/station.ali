@@ -1,0 +1,44 @@
+V "GNAT Lib v2021"
+A -x
+A ada
+A -gnatA
+A -gnatc
+P GP FX
+
+RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+
+U station%b		station.adb		3f2aa8eb OO PK
+
+U station%s		station.ads		ea6f0c6f OO PK
+
+D station.ads		20230509155154 ea6f0c6f station%s
+D station.adb		20230509155208 d545a484 station%b
+D system.ads		20210520051134 2ffa5114 system%s
+G a Z
+X 1 station.ads
+1K9*Station 21l5 21e12 2|1b14 13l5 13t12
+5E9*airLockInteriorStatus 5e50 10r25 17r40 2|4r40
+5n35*opened{5E9} 19r20 2|7r14
+5n43*closed{5E9} 10r50 18r36
+6E9*airLockExteroirStatus 6e50 11r24 17r76 2|4r76
+6n35*opened{6E9}
+6n43*closed{6E9} 11r49 18r19
+9R9*stationOverview 12e14 14r19
+10e7*internalAirlock{5E9}
+11e7*externalAirlock{6E9}
+14r4*SpaceStation{9R9}
+17U14*openAirlock 17=27 17=63 2|4b14 9l8 9t19
+17e27 aLI{5E9} 18r30 19r14 2|4b27 7m7
+17e63 aLE{6E9} 18r13 2|4b63
+
+QQ SPARKVERSION SPARK Community 2021 (20210519)
+GG EK_DIRECT_CALLS station__openairlock 0
+GG EK_GLOBALS station__openairlock local FALSE E_PROCEDURE FALSE ORIGIN_FLOW 1 station proper_proof_in 0 proper_input 0 proper_output 0 refined_proof_in 0 refined_input 0 refined_output 0 calls_proof 0 calls 0 calls_conditional 0 FALSE FALSE FALSE TRUE ENTRY_CALLS 0 SUSPENDS_ON 0 UNSYNCH_ACCESSES 0 LOCKS 0
+GG EK_DIRECT_CALLS station 0
+GG EK_GLOBALS station local FALSE E_PACKAGE TRUE ORIGIN_FLOW 0 proper_proof_in 0 proper_input 0 proper_output 0 refined_proof_in 0 refined_input 0 refined_output 0 initializes 1 station__spacestation refined_initializes 1 station__spacestation calls_proof 0 calls 0 calls_conditional 0 local_var 1 station__spacestation FALSE FALSE FALSE FALSE ENTRY_CALLS 0 SUSPENDS_ON 0 UNSYNCH_ACCESSES 0 LOCKS 0
+GG EK_FLOW_SCOPE station__openairlock FALSE FALSE FALSE FALSE TRUE station VISIBLE_PART
+GG EK_FLOW_SCOPE station TRUE FALSE FALSE FALSE FALSE __standard
+GG EK_END_MARKER

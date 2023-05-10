@@ -1,0 +1,4 @@
+main.adb:13:28: error: invalid operand types for operator "&"
+main.adb:14:28: error: invalid operand types for operator "&"
+main.adb:17:28: error: invalid operand types for operator "&"
+main.adb:18:28: error: invalid operand types for operator "&"

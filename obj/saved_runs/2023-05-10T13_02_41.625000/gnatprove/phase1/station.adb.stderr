@@ -1,0 +1,8 @@
+station.adb:9:11: error: no selector "Door1" for type "Station_Record" defined at station.ads:6
+station.adb:10:11: error: no selector "Door2" for type "Station_Record" defined at station.ads:6
+station.adb:12:11: error: no selector "Door2" for type "Station_Record" defined at station.ads:6
+station.adb:13:11: error: no selector "Door1" for type "Station_Record" defined at station.ads:6
+station.ads:13:39: error: no selector "Door1" for type "Station_Record" defined at line 6
+station.ads:13:58: error: no selector "Door2" for type "Station_Record" defined at line 6
+station.ads:14:37: error: no selector "Door2" for type "Station_Record" defined at line 6
+station.ads:14:56: error: no selector "Door1" for type "Station_Record" defined at line 6

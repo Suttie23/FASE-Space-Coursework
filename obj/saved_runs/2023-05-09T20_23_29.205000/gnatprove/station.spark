@@ -1,0 +1,101 @@
+{
+  "spark": [
+    {
+      "name": "Station",
+      "sloc": [
+        {
+          "file": "station.ads",
+          "line": 1
+        }
+      ],
+      "spark": "all"
+    },
+    {
+      "name": "Station.Open",
+      "sloc": [
+        {
+          "file": "station.ads",
+          "line": 8
+        }
+      ],
+      "spark": "all"
+    },
+    {
+      "name": "Station.Close",
+      "sloc": [
+        {
+          "file": "station.ads",
+          "line": 12
+        }
+      ],
+      "spark": "all"
+    }
+  ],
+  "flow": [
+  ],
+  "assumptions": [
+    {
+      "assumptions": [
+        {
+          "predicate": "CLAIM_EFFECTS",
+          "arg": {
+            "name": "Ada.Text_IO.Put_Line",
+            "sloc": [
+              {
+                "file": "a-textio.ads",
+                "line": 506
+              }
+            ]
+          }
+        }
+      ],
+      "claim": {
+        "predicate": "CLAIM_EFFECTS",
+        "arg": {
+          "name": "Station.Close",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 12
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assumptions": [
+        {
+          "predicate": "CLAIM_EFFECTS",
+          "arg": {
+            "name": "Ada.Text_IO.Put_Line",
+            "sloc": [
+              {
+                "file": "a-textio.ads",
+                "line": 506
+              }
+            ]
+          }
+        }
+      ],
+      "claim": {
+        "predicate": "CLAIM_EFFECTS",
+        "arg": {
+          "name": "Station.Open",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 8
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "timings": {
+    "globals (advanced)": 1.74573007971048E-02,
+    "flow analysis": 1.64789997506887E-03,
+    "marking": 1.03400001535192E-04,
+    "properties (advanced)": 5.13000013597775E-05,
+    "globals (basic)": 3.99332009255886E-02
+  }
+}

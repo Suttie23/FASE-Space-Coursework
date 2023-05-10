@@ -1,0 +1,3 @@
+main.adb:6:08: error: "Space_Station" is undefined (more references follow)
+main.adb:9:04: error: invalid prefix in selected component "S"
+main.adb:10:04: error: invalid prefix in selected component "S"

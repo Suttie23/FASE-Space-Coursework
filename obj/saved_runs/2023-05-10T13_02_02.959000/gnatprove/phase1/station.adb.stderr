@@ -1,0 +1,11 @@
+station.adb:6:11: error: not fully conformant with declaration at station.ads:11
+station.adb:6:11: error: name "Door_Num" does not match
+station.adb:9:11: error: no selector "Door1" for type "Station_Record" defined at station.ads:6
+station.adb:10:11: error: no selector "Door2" for type "Station_Record" defined at station.ads:6
+station.adb:12:11: error: no selector "Door2" for type "Station_Record" defined at station.ads:6
+station.adb:13:11: error: no selector "Door1" for type "Station_Record" defined at station.ads:6
+station.ads:12:18: error: "Door_Num" is undefined (more references follow)
+station.ads:13:33: error: no selector "Door1" for type "Station_Record" defined at line 6
+station.ads:13:52: error: no selector "Door2" for type "Station_Record" defined at line 6
+station.ads:14:31: error: no selector "Door2" for type "Station_Record" defined at line 6
+station.ads:14:50: error: no selector "Door1" for type "Station_Record" defined at line 6

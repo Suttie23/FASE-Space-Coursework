@@ -1,0 +1,4 @@
+main.adb:13:29: error: invalid prefix in selected component "Station_Record"
+main.adb:14:29: error: invalid prefix in selected component "Station_Record"
+main.adb:17:29: error: invalid prefix in selected component "Station_Record"
+main.adb:18:29: error: invalid prefix in selected component "Station_Record"

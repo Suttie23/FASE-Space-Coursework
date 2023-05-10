@@ -1,0 +1,6 @@
+station.adb:7:11: error: aspect specification must appear on initial declaration
+station.adb:8:11: error: aspect "Post" should be "Refined_Post"
+station.adb:20:11: error: aspect specification must appear on initial declaration
+station.adb:21:11: error: aspect "Post" should be "Refined_Post"
+station.adb:33:11: error: aspect specification must appear on initial declaration
+station.adb:34:11: error: aspect "Post" should be "Refined_Post"

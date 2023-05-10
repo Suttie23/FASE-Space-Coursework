@@ -1,0 +1,4 @@
+main.adb:13:44: error: unexpected argument for "Image" attribute
+main.adb:14:44: error: unexpected argument for "Image" attribute
+main.adb:17:29: error: invalid prefix in selected component "Station_Record"
+main.adb:18:29: error: invalid prefix in selected component "Station_Record"

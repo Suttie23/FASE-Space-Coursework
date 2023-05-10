@@ -1,0 +1,1224 @@
+module Standard__integer
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type integer = <range -2147483648 2147483647>
+  
+  val function first : int
+    ensures { result = ((- 2147483648) : int) }
+  
+  val function last : int
+    ensures { result = (2147483647 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = integer,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type integer__ref = { mutable integer__content : integer }
+  
+  function integer__ref_integer__content__projection (a: integer__ref) : integer =
+    a.integer__content
+  
+  meta "model_projection" function integer__ref_integer__content__projection
+  
+  meta "inline:no" function integer__ref_integer__content__projection
+  
+  val integer__havoc (x: integer__ref) : unit
+    writes { x }
+end
+
+module Standard__positive
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type positive = <range 1 2147483647>
+  
+  val function first : int
+    ensures { result = (1 : int) }
+  
+  val function last : int
+    ensures { result = (2147483647 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = positive,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type positive__ref = { mutable positive__content : positive }
+  
+  function positive__ref_positive__content__projection (a: positive__ref) : positive =
+    a.positive__content
+  
+  meta "model_projection" function positive__ref_positive__content__projection
+  
+  meta "inline:no" function positive__ref_positive__content__projection
+  
+  val positive__havoc (x: positive__ref) : unit
+    writes { x }
+end
+
+module Standard__character
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type character
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (255 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = character,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type character__ref = { mutable character__content : character }
+  
+  function character__ref_character__content__projection (a: character__ref) : character =
+    a.character__content
+  
+  meta "model_projection" function character__ref_character__content__projection
+  
+  meta "inline:no" function character__ref_character__content__projection
+  
+  val character__havoc (x: character__ref) : unit
+    writes { x }
+end
+
+module Standard__character__rep
+  use Standard__character as Standard__character
+  use _gnatprove_standard.Main
+  use int.Int
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Standard__character.character,
+    predicate in_range = Standard__character.in_range
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Array__Int__Standard__character
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__character as Standard__character
+  use Standard__character__rep as Standard__character__rep
+  
+  function index_I1_one : int = 1 : int
+  
+  type component_type = Standard__character.character
+  
+  clone export _gnatprove_standard.Array__1 with
+    axiom .,
+    type I1.t = int,
+    predicate I1.le = Int.( <= ),
+    predicate I1.lt = Int.( < ),
+    predicate I1.gt = Int.( > ),
+    function I1.add = Int.( + ),
+    function I1.sub = Int.( - ),
+    function I1.one = index_I1_one,
+    type component_type = component_type
+  
+  function bool_eq (a: map) (a__first: int) (a__last: int) (b: map) (b__first: int) (b__last: int) : bool =
+    ((if (a__first <= a__last) then
+        ((b__first <= b__last) /\
+           ((a__last - a__first) = (b__last - b__first)))
+      else (b__first > b__last)) /\
+       (forall temp___idx_98 : int.
+          if ((a__first <= temp___idx_98) /\ (temp___idx_98 <= a__last)) then
+            ((Standard__character__rep.to_rep ((get a) temp___idx_98))
+               = (Standard__character__rep.to_rep
+                    ((get b) ((b__first - a__first) + temp___idx_98))))
+          else true))
+  
+  val bool_eq (a: map) (a__first: int) (a__last: int) (b: map) (b__first: int) (b__last: int) : 
+    bool
+    ensures { result
+      =
+      ((((((bool_eq (a : map)) (a__first : int)) (a__last : int)) (b : map))
+          (b__first : int))
+         (b__last : int)) }
+  
+  axiom bool_eq_rev:
+    forall a : map, b : map.
+      forall a__first : int, a__last : int, b__first : int, b__last : int.
+        ((((((((bool_eq b) b__first) b__last) a) a__first) a__last) = True) ->
+           ((if (a__first <= a__last) then
+               ((b__first <= b__last) /\
+                  ((a__last - a__first) = (b__last - b__first)))
+             else (b__first > b__last)) /\
+              (forall temp___idx_98 : int.
+                 if ((a__first <= temp___idx_98) /\
+                       (temp___idx_98 <= a__last)) then
+                   ((Standard__character__rep.to_rep ((get a) temp___idx_98))
+                      = (Standard__character__rep.to_rep
+                           ((get b) ((b__first - a__first) + temp___idx_98))))
+                 else true)))
+end
+
+module Standard__integer__rep
+  use Standard__integer as Standard__integer
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  function to_rep (x: Standard__integer.integer) : int =
+    Standard__integer.integer'int x
+  
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Standard__integer.integer,
+    predicate in_range = Standard__integer.in_range,
+    function to_rep = to_rep
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Standard__string
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__integer as Standard__integer
+  use Standard__positive as Standard__positive
+  use Standard__character as Standard__character
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Standard__integer__rep as Standard__integer__rep
+  
+  type component_type = Standard__character.character
+  
+  function index_1_id (x: int) : int = x
+  
+  clone export ada__model.Unconstr_Array with
+    axiom .,
+    type map = Array__Int__Standard__character.map,
+    function array_bool_eq = Array__Int__Standard__character.bool_eq,
+    type index_base_type = Standard__integer.integer,
+    type index_rep_type = int,
+    function to_rep = Standard__integer__rep.to_rep,
+    function rep_to_int = index_1_id,
+    predicate in_range_base = Standard__integer.in_range,
+    predicate index_dynamic_property = Standard__positive.dynamic_property,
+    predicate index_rep_le = Int.( <= )
+  
+  type string__ = __t
+  
+  meta "model_projection" function to_array
+  
+  meta "inline:no" function to_array
+  
+  meta "model_projection" function first
+  
+  meta "inline:no" function first
+  
+  meta "model_projection" function last
+  
+  meta "inline:no" function last
+  
+  type string____ref = { mutable string____content : string__ }
+  
+  function string____ref_string____content__projection (a: string____ref) : string__ =
+    a.string____content
+  
+  meta "model_projection" function string____ref_string____content__projection
+  
+  meta "inline:no" function string____ref_string____content__projection
+  
+  val string____havoc (x: string____ref) : unit
+    writes { x }
+end
+
+module Station__open__door1
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val door1 : int__ref
+end
+
+module Station__open__door2
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val door2 : int__ref
+end
+
+module Ada___ada__text_io__line_length__2
+  use _gnatprove_standard.Main
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  
+  val function line_length (Ada___ada__text_io__file_system___file_system___: 
+    Main.__private) (Ada___ada__text_io__standard_in___standard_in___: 
+    Main.__private) (Ada___ada__text_io__standard_out___standard_out___: 
+    Main.__private) (Ada___ada__text_io__standard_err___standard_err___: 
+    Main.__private) (Ada___ada__text_io__current_in___current_in___: 
+    Main.__private) (Ada___ada__text_io__current_out___current_out___: 
+    Main.__private) (Ada___ada__text_io__current_err___current_err___: 
+    Main.__private) : int
+  
+  val predicate line_length__function_guard (temp___result_161: int) (Ada___ada__text_io__file_system___file_system___: 
+    Main.__private) (Ada___ada__text_io__standard_in___standard_in___: 
+    Main.__private) (Ada___ada__text_io__standard_out___standard_out___: 
+    Main.__private) (Ada___ada__text_io__standard_err___standard_err___: 
+    Main.__private) (Ada___ada__text_io__current_in___current_in___: 
+    Main.__private) (Ada___ada__text_io__current_out___current_out___: 
+    Main.__private) (Ada___ada__text_io__current_err___current_err___: 
+    Main.__private)
+end
+
+module Ada___ada__text_io__page_length__2
+  use _gnatprove_standard.Main
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  
+  val function page_length (Ada___ada__text_io__file_system___file_system___: 
+    Main.__private) (Ada___ada__text_io__standard_in___standard_in___: 
+    Main.__private) (Ada___ada__text_io__standard_out___standard_out___: 
+    Main.__private) (Ada___ada__text_io__standard_err___standard_err___: 
+    Main.__private) (Ada___ada__text_io__current_in___current_in___: 
+    Main.__private) (Ada___ada__text_io__current_out___current_out___: 
+    Main.__private) (Ada___ada__text_io__current_err___current_err___: 
+    Main.__private) : int
+  
+  val predicate page_length__function_guard (temp___result_162: int) (Ada___ada__text_io__file_system___file_system___: 
+    Main.__private) (Ada___ada__text_io__standard_in___standard_in___: 
+    Main.__private) (Ada___ada__text_io__standard_out___standard_out___: 
+    Main.__private) (Ada___ada__text_io__standard_err___standard_err___: 
+    Main.__private) (Ada___ada__text_io__current_in___current_in___: 
+    Main.__private) (Ada___ada__text_io__current_out___current_out___: 
+    Main.__private) (Ada___ada__text_io__current_err___current_err___: 
+    Main.__private)
+end
+
+module Ada___ada__text_io__file_system
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val file_system : Main.__private__ref
+end
+
+module Ada___ada__text_io__standard_in
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val standard_in : Main.__private__ref
+end
+
+module Ada___ada__text_io__standard_out
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val standard_out : Main.__private__ref
+end
+
+module Ada___ada__text_io__standard_err
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val standard_err : Main.__private__ref
+end
+
+module Ada___ada__text_io__current_in
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val current_in : Main.__private__ref
+end
+
+module Ada___ada__text_io__current_out
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val current_out : Main.__private__ref
+end
+
+module Ada___ada__text_io__current_err
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val current_err : Main.__private__ref
+end
+
+module Ada___ada__text_io__put_line__2___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  use Standard__string as Standard__string
+  use Ada___ada__text_io__line_length__2 as Ada___ada__text_io__line_length__2
+  use Ada___ada__text_io__page_length__2 as Ada___ada__text_io__page_length__2
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  
+  val put_line (item: Standard__string.string__) : unit
+    reads { Ada___ada__text_io__file_system.file_system,
+      Ada___ada__text_io__standard_in.standard_in,
+      Ada___ada__text_io__standard_out.standard_out,
+      Ada___ada__text_io__standard_err.standard_err,
+      Ada___ada__text_io__current_in.current_in,
+      Ada___ada__text_io__current_out.current_out,
+      Ada___ada__text_io__current_err.current_err }
+    requires { true }
+    writes { Ada___ada__text_io__file_system.file_system, Ada___ada__text_io__standard_in.standard_in, Ada___ada__text_io__standard_out.standard_out, Ada___ada__text_io__standard_err.standard_err, Ada___ada__text_io__current_in.current_in, Ada___ada__text_io__current_out.current_out, Ada___ada__text_io__current_err.current_err }
+    ensures { (([@GP_Pretty_Ada:3257]
+                ((old (((((((Ada___ada__text_io__line_length__2.line_length
+                               (Main.__private__content
+                                   Ada___ada__text_io__file_system.file_system))
+                              (Main.__private__content
+                                  Ada___ada__text_io__standard_in.standard_in))
+                             (Main.__private__content
+                                 Ada___ada__text_io__standard_out.standard_out))
+                            (Main.__private__content
+                                Ada___ada__text_io__standard_err.standard_err))
+                           (Main.__private__content
+                               Ada___ada__text_io__current_in.current_in))
+                          (Main.__private__content
+                              Ada___ada__text_io__current_out.current_out))
+                         (Main.__private__content
+                             Ada___ada__text_io__current_err.current_err)))
+                   = (((((((Ada___ada__text_io__line_length__2.line_length
+                              (Main.__private__content
+                                  Ada___ada__text_io__file_system.file_system))
+                             (Main.__private__content
+                                 Ada___ada__text_io__standard_in.standard_in))
+                            (Main.__private__content
+                                Ada___ada__text_io__standard_out.standard_out))
+                           (Main.__private__content
+                               Ada___ada__text_io__standard_err.standard_err))
+                          (Main.__private__content
+                              Ada___ada__text_io__current_in.current_in))
+                         (Main.__private__content
+                             Ada___ada__text_io__current_out.current_out))
+                        (Main.__private__content
+                            Ada___ada__text_io__current_err.current_err)))) /\
+                 ([@GP_Pretty_Ada:3263]
+                  ((old (((((((Ada___ada__text_io__page_length__2.page_length
+                                 (Main.__private__content
+                                     Ada___ada__text_io__file_system.file_system))
+                                (Main.__private__content
+                                    Ada___ada__text_io__standard_in.standard_in))
+                               (Main.__private__content
+                                   Ada___ada__text_io__standard_out.standard_out))
+                              (Main.__private__content
+                                  Ada___ada__text_io__standard_err.standard_err))
+                             (Main.__private__content
+                                 Ada___ada__text_io__current_in.current_in))
+                            (Main.__private__content
+                                Ada___ada__text_io__current_out.current_out))
+                           (Main.__private__content
+                               Ada___ada__text_io__current_err.current_err)))
+                     = (((((((Ada___ada__text_io__page_length__2.page_length
+                                (Main.__private__content
+                                    Ada___ada__text_io__file_system.file_system))
+                               (Main.__private__content
+                                   Ada___ada__text_io__standard_in.standard_in))
+                              (Main.__private__content
+                                  Ada___ada__text_io__standard_out.standard_out))
+                             (Main.__private__content
+                                 Ada___ada__text_io__standard_err.standard_err))
+                            (Main.__private__content
+                                Ada___ada__text_io__current_in.current_in))
+                           (Main.__private__content
+                               Ada___ada__text_io__current_out.current_out))
+                          (Main.__private__content
+                              Ada___ada__text_io__current_err.current_err))))) }
+end
+
+module Station__door
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type door
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (1 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = door,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type door__ref = { mutable door__content : door }
+  
+  function door__ref_door__content__projection (a: door__ref) : door =
+    a.door__content
+  
+  meta "model_projection" function door__ref_door__content__projection
+  
+  meta "inline:no" function door__ref_door__content__projection
+  
+  val door__havoc (x: door__ref) : unit
+    writes { x }
+end
+
+module Station__door___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__door as Station__door
+  
+  predicate dynamic_invariant (temp___expr_167: int) (temp___is_init_163: bool) (temp___skip_constant_164: bool) (temp___do_toplevel_165: bool) (temp___do_typ_inv_166: bool) =
+    if ((temp___is_init_163 = True) \/
+          (Station__door.first <= Station__door.last)) then
+      (((Station__door.dynamic_property Station__door.first)
+          Station__door.last)
+         temp___expr_167)
+    else true
+  
+  val dynamic_invariant (temp___expr_167: int) (temp___is_init_163: bool) (temp___skip_constant_164: bool) (temp___do_toplevel_165: bool) (temp___do_typ_inv_166: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_167 : int))
+                      (temp___is_init_163 : bool))
+                     (temp___skip_constant_164 : bool))
+                    (temp___do_toplevel_165 : bool))
+                   (temp___do_typ_inv_166 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_168: int) (temp___skip_top_level_169: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_168: int) (temp___skip_top_level_169: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_168 : int))
+                   (temp___skip_top_level_169 : bool)) }
+end
+
+module Temp___String_Literal_180
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__character as Standard__character
+  use Standard__character__rep as Standard__character__rep
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  
+  val function temp___String_Literal_180 (__void_param: unit) : Array__Int__Standard__character.map
+  
+  axiom temp___String_Literal_180__def_axiom:
+    forall __void_param : unit [temp___String_Literal_180 __void_param].
+      ((((Standard__character__rep.to_rep
+            ((Array__Int__Standard__character.get
+                (temp___String_Literal_180 __void_param))
+               (1 : int)))
+           = (65 : int)) /\
+          ((Standard__character__rep.to_rep
+              ((Array__Int__Standard__character.get
+                  (temp___String_Literal_180 __void_param))
+                 (2 : int)))
+             = (105 : int))) /\
+         (((((((Standard__character__rep.to_rep
+                  ((Array__Int__Standard__character.get
+                      (temp___String_Literal_180 __void_param))
+                     (3 : int)))
+                 = (114 : int)) /\
+                ((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_180 __void_param))
+                       (4 : int)))
+                   = (108 : int))) /\
+               (((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_180 __void_param))
+                       (5 : int)))
+                   = (111 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_180 __void_param))
+                         (6 : int)))
+                     = (99 : int)))) /\
+              ((((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_180 __void_param))
+                       (7 : int)))
+                   = (107 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_180 __void_param))
+                         (8 : int)))
+                     = (32 : int))) /\
+                 ((Standard__character__rep.to_rep
+                     ((Array__Int__Standard__character.get
+                         (temp___String_Literal_180 __void_param))
+                        (9 : int)))
+                    = (100 : int)))) /\
+             (((((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_180 __void_param))
+                       (10 : int)))
+                   = (111 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_180 __void_param))
+                         (11 : int)))
+                     = (111 : int))) /\
+                 ((Standard__character__rep.to_rep
+                     ((Array__Int__Standard__character.get
+                         (temp___String_Literal_180 __void_param))
+                        (12 : int)))
+                    = (114 : int))) /\
+                ((((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_180 __void_param))
+                         (13 : int)))
+                     = (115 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_180 __void_param))
+                           (14 : int)))
+                       = (32 : int))) /\
+                   ((Standard__character__rep.to_rep
+                       ((Array__Int__Standard__character.get
+                           (temp___String_Literal_180 __void_param))
+                          (15 : int)))
+                      = (97 : int))))) /\
+            ((((((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_180 __void_param))
+                       (16 : int)))
+                   = (114 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_180 __void_param))
+                         (17 : int)))
+                     = (101 : int))) /\
+                 ((Standard__character__rep.to_rep
+                     ((Array__Int__Standard__character.get
+                         (temp___String_Literal_180 __void_param))
+                        (18 : int)))
+                    = (32 : int))) /\
+                ((((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_180 __void_param))
+                         (19 : int)))
+                     = (110 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_180 __void_param))
+                           (20 : int)))
+                       = (111 : int))) /\
+                   ((Standard__character__rep.to_rep
+                       ((Array__Int__Standard__character.get
+                           (temp___String_Literal_180 __void_param))
+                          (21 : int)))
+                      = (119 : int)))) /\
+               (((((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_180 __void_param))
+                         (22 : int)))
+                     = (32 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_180 __void_param))
+                           (23 : int)))
+                       = (111 : int))) /\
+                   ((Standard__character__rep.to_rep
+                       ((Array__Int__Standard__character.get
+                           (temp___String_Literal_180 __void_param))
+                          (24 : int)))
+                      = (112 : int))) /\
+                  ((((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_180 __void_param))
+                           (25 : int)))
+                       = (101 : int)) /\
+                      ((Standard__character__rep.to_rep
+                          ((Array__Int__Standard__character.get
+                              (temp___String_Literal_180 __void_param))
+                             (26 : int)))
+                         = (110 : int))) /\
+                     ((Standard__character__rep.to_rep
+                         ((Array__Int__Standard__character.get
+                             (temp___String_Literal_180 __void_param))
+                            (27 : int)))
+                        = (46 : int)))))))
+end
+
+module Standard__positive___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__positive as Standard__positive
+  
+  predicate dynamic_invariant (temp___expr_53: int) (temp___is_init_49: bool) (temp___skip_constant_50: bool) (temp___do_toplevel_51: bool) (temp___do_typ_inv_52: bool) =
+    if ((temp___is_init_49 = True) \/
+          (Standard__positive.first <= Standard__positive.last)) then
+      (((Standard__positive.dynamic_property Standard__positive.first)
+          Standard__positive.last)
+         temp___expr_53)
+    else true
+  
+  val dynamic_invariant (temp___expr_53: int) (temp___is_init_49: bool) (temp___skip_constant_50: bool) (temp___do_toplevel_51: bool) (temp___do_typ_inv_52: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_53 : int))
+                      (temp___is_init_49 : bool))
+                     (temp___skip_constant_50 : bool))
+                    (temp___do_toplevel_51 : bool))
+                   (temp___do_typ_inv_52 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_54: int) (temp___skip_top_level_55: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_54: int) (temp___skip_top_level_55: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_54 : int))
+                   (temp___skip_top_level_55 : bool)) }
+end
+
+module Standard__character___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__character as Standard__character
+  
+  predicate dynamic_invariant (temp___expr_81: int) (temp___is_init_77: bool) (temp___skip_constant_78: bool) (temp___do_toplevel_79: bool) (temp___do_typ_inv_80: bool) =
+    if ((temp___is_init_77 = True) \/
+          (Standard__character.first <= Standard__character.last)) then
+      (((Standard__character.dynamic_property Standard__character.first)
+          Standard__character.last)
+         temp___expr_81)
+    else true
+  
+  val dynamic_invariant (temp___expr_81: int) (temp___is_init_77: bool) (temp___skip_constant_78: bool) (temp___do_toplevel_79: bool) (temp___do_typ_inv_80: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_81 : int))
+                      (temp___is_init_77 : bool))
+                     (temp___skip_constant_78 : bool))
+                    (temp___do_toplevel_79 : bool))
+                   (temp___do_typ_inv_80 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_82: int) (temp___skip_top_level_83: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_82: int) (temp___skip_top_level_83: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_82 : int))
+                   (temp___skip_top_level_83 : bool)) }
+end
+
+module Standard__string___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use Standard__positive as Standard__positive
+  use Standard__string as Standard__string
+  
+  predicate dynamic_invariant (temp___expr_103: Standard__string.string__) (temp___is_init_99: bool) (temp___skip_constant_100: bool) (temp___do_toplevel_101: bool) (temp___do_typ_inv_102: bool) =
+    if temp___skip_constant_100 then true
+    else
+      ((((Standard__string.dynamic_property Standard__positive.first)
+           Standard__positive.last)
+          (Standard__string.first temp___expr_103))
+         (Standard__string.last temp___expr_103))
+  
+  val dynamic_invariant (temp___expr_103: Standard__string.string__) (temp___is_init_99: bool) (temp___skip_constant_100: bool) (temp___do_toplevel_101: bool) (temp___do_typ_inv_102: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant
+                       (temp___expr_103 : Standard__string.string__))
+                      (temp___is_init_99 : bool))
+                     (temp___skip_constant_100 : bool))
+                    (temp___do_toplevel_101 : bool))
+                   (temp___do_typ_inv_102 : bool)) }
+end
+
+module Standard__integer___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__integer as Standard__integer
+  
+  predicate dynamic_invariant (temp___expr_18: int) (temp___is_init_14: bool) (temp___skip_constant_15: bool) (temp___do_toplevel_16: bool) (temp___do_typ_inv_17: bool) =
+    if ((temp___is_init_14 = True) \/
+          (Standard__integer.first <= Standard__integer.last)) then
+      (((Standard__integer.dynamic_property Standard__integer.first)
+          Standard__integer.last)
+         temp___expr_18)
+    else true
+  
+  val dynamic_invariant (temp___expr_18: int) (temp___is_init_14: bool) (temp___skip_constant_15: bool) (temp___do_toplevel_16: bool) (temp___do_typ_inv_17: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_18 : int))
+                      (temp___is_init_14 : bool))
+                     (temp___skip_constant_15 : bool))
+                    (temp___do_toplevel_16 : bool))
+                   (temp___do_typ_inv_17 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_19: int) (temp___skip_top_level_20: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_19: int) (temp___skip_top_level_20: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_19 : int))
+                   (temp___skip_top_level_20 : bool)) }
+end
+
+module Station__open__door1___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__open__door2___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Ada___ada__text_io__count
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type count = <range 0 2147483647>
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (2147483647 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = count,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type count__ref = { mutable count__content : count }
+  
+  function count__ref_count__content__projection (a: count__ref) : count =
+    a.count__content
+  
+  meta "model_projection" function count__ref_count__content__projection
+  
+  meta "inline:no" function count__ref_count__content__projection
+  
+  val count__havoc (x: count__ref) : unit
+    writes { x }
+end
+
+module Ada___ada__text_io__count___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Ada___ada__text_io__count as Ada___ada__text_io__count
+  
+  predicate dynamic_invariant (temp___expr_174: int) (temp___is_init_170: bool) (temp___skip_constant_171: bool) (temp___do_toplevel_172: bool) (temp___do_typ_inv_173: bool) =
+    if ((temp___is_init_170 = True) \/
+          (Ada___ada__text_io__count.first <= Ada___ada__text_io__count.last)) then
+      (((Ada___ada__text_io__count.dynamic_property
+           Ada___ada__text_io__count.first)
+          Ada___ada__text_io__count.last)
+         temp___expr_174)
+    else true
+  
+  val dynamic_invariant (temp___expr_174: int) (temp___is_init_170: bool) (temp___skip_constant_171: bool) (temp___do_toplevel_172: bool) (temp___do_typ_inv_173: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_174 : int))
+                      (temp___is_init_170 : bool))
+                     (temp___skip_constant_171 : bool))
+                    (temp___do_toplevel_172 : bool))
+                   (temp___do_typ_inv_173 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_175: int) (temp___skip_top_level_176: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_175: int) (temp___skip_top_level_176: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_175 : int))
+                   (temp___skip_top_level_176 : bool)) }
+end
+
+module Ada___ada__text_io__line_length__2___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  use Ada___ada__text_io__line_length__2 as Ada___ada__text_io__line_length__2
+  use Ada___ada__text_io__count___axiom as Ada___ada__text_io__count___axiom
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  
+  val line_length (__void_param: unit) : int
+    reads { Ada___ada__text_io__file_system.file_system,
+      Ada___ada__text_io__standard_in.standard_in,
+      Ada___ada__text_io__standard_out.standard_out,
+      Ada___ada__text_io__standard_err.standard_err,
+      Ada___ada__text_io__current_in.current_in,
+      Ada___ada__text_io__current_out.current_out,
+      Ada___ada__text_io__current_err.current_err }
+    requires { true }
+    writes {  }
+    ensures { (((result
+                   = (((((((Ada___ada__text_io__line_length__2.line_length
+                              (Main.__private__content
+                                  Ada___ada__text_io__file_system.file_system))
+                             (Main.__private__content
+                                 Ada___ada__text_io__standard_in.standard_in))
+                            (Main.__private__content
+                                Ada___ada__text_io__standard_out.standard_out))
+                           (Main.__private__content
+                               Ada___ada__text_io__standard_err.standard_err))
+                          (Main.__private__content
+                              Ada___ada__text_io__current_in.current_in))
+                         (Main.__private__content
+                             Ada___ada__text_io__current_out.current_out))
+                        (Main.__private__content
+                            Ada___ada__text_io__current_err.current_err))) /\
+                  true) /\
+                 (((((Ada___ada__text_io__count___axiom.dynamic_invariant
+                        result)
+                       True)
+                      False)
+                     True)
+                    True)) }
+  
+  axiom line_length__post_axiom:
+    forall Ada___ada__text_io__file_system___file_system___ : Main.__private, Ada___ada__text_io__standard_in___standard_in___ : 
+          Main.__private, Ada___ada__text_io__standard_out___standard_out___ : 
+          Main.__private, Ada___ada__text_io__standard_err___standard_err___ : 
+          Main.__private, Ada___ada__text_io__current_in___current_in___ : 
+          Main.__private, Ada___ada__text_io__current_out___current_out___ : 
+          Main.__private, Ada___ada__text_io__current_err___current_err___ : 
+          Main.__private
+          [((((((Ada___ada__text_io__line_length__2.line_length
+                   Ada___ada__text_io__file_system___file_system___)
+                  Ada___ada__text_io__standard_in___standard_in___)
+                 Ada___ada__text_io__standard_out___standard_out___)
+                Ada___ada__text_io__standard_err___standard_err___)
+               Ada___ada__text_io__current_in___current_in___)
+              Ada___ada__text_io__current_out___current_out___)
+             Ada___ada__text_io__current_err___current_err___].
+      let result =
+        ((((((Ada___ada__text_io__line_length__2.line_length
+                Ada___ada__text_io__file_system___file_system___)
+               Ada___ada__text_io__standard_in___standard_in___)
+              Ada___ada__text_io__standard_out___standard_out___)
+             Ada___ada__text_io__standard_err___standard_err___)
+            Ada___ada__text_io__current_in___current_in___)
+           Ada___ada__text_io__current_out___current_out___)
+          Ada___ada__text_io__current_err___current_err___ in
+      ((true /\
+          (((((Ada___ada__text_io__count___axiom.dynamic_invariant result)
+                True)
+               False)
+              True)
+             True)) /\
+         true)
+end
+
+module Ada___ada__text_io__page_length__2___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  use Ada___ada__text_io__page_length__2 as Ada___ada__text_io__page_length__2
+  use Ada___ada__text_io__count___axiom as Ada___ada__text_io__count___axiom
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  
+  val page_length (__void_param: unit) : int
+    reads { Ada___ada__text_io__file_system.file_system,
+      Ada___ada__text_io__standard_in.standard_in,
+      Ada___ada__text_io__standard_out.standard_out,
+      Ada___ada__text_io__standard_err.standard_err,
+      Ada___ada__text_io__current_in.current_in,
+      Ada___ada__text_io__current_out.current_out,
+      Ada___ada__text_io__current_err.current_err }
+    requires { true }
+    writes {  }
+    ensures { (((result
+                   = (((((((Ada___ada__text_io__page_length__2.page_length
+                              (Main.__private__content
+                                  Ada___ada__text_io__file_system.file_system))
+                             (Main.__private__content
+                                 Ada___ada__text_io__standard_in.standard_in))
+                            (Main.__private__content
+                                Ada___ada__text_io__standard_out.standard_out))
+                           (Main.__private__content
+                               Ada___ada__text_io__standard_err.standard_err))
+                          (Main.__private__content
+                              Ada___ada__text_io__current_in.current_in))
+                         (Main.__private__content
+                             Ada___ada__text_io__current_out.current_out))
+                        (Main.__private__content
+                            Ada___ada__text_io__current_err.current_err))) /\
+                  true) /\
+                 (((((Ada___ada__text_io__count___axiom.dynamic_invariant
+                        result)
+                       True)
+                      False)
+                     True)
+                    True)) }
+  
+  axiom page_length__post_axiom:
+    forall Ada___ada__text_io__file_system___file_system___ : Main.__private, Ada___ada__text_io__standard_in___standard_in___ : 
+          Main.__private, Ada___ada__text_io__standard_out___standard_out___ : 
+          Main.__private, Ada___ada__text_io__standard_err___standard_err___ : 
+          Main.__private, Ada___ada__text_io__current_in___current_in___ : 
+          Main.__private, Ada___ada__text_io__current_out___current_out___ : 
+          Main.__private, Ada___ada__text_io__current_err___current_err___ : 
+          Main.__private
+          [((((((Ada___ada__text_io__page_length__2.page_length
+                   Ada___ada__text_io__file_system___file_system___)
+                  Ada___ada__text_io__standard_in___standard_in___)
+                 Ada___ada__text_io__standard_out___standard_out___)
+                Ada___ada__text_io__standard_err___standard_err___)
+               Ada___ada__text_io__current_in___current_in___)
+              Ada___ada__text_io__current_out___current_out___)
+             Ada___ada__text_io__current_err___current_err___].
+      let result =
+        ((((((Ada___ada__text_io__page_length__2.page_length
+                Ada___ada__text_io__file_system___file_system___)
+               Ada___ada__text_io__standard_in___standard_in___)
+              Ada___ada__text_io__standard_out___standard_out___)
+             Ada___ada__text_io__standard_err___standard_err___)
+            Ada___ada__text_io__current_in___current_in___)
+           Ada___ada__text_io__current_out___current_out___)
+          Ada___ada__text_io__current_err___current_err___ in
+      ((true /\
+          (((((Ada___ada__text_io__count___axiom.dynamic_invariant result)
+                True)
+               False)
+              True)
+             True)) /\
+         true)
+end
+
+module Station__open__subprogram_def
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use _gnatprove_standard.Boolean as Boolean
+  use Standard__string as Standard__string
+  use Station__open__door1 as Station__open__door1
+  use Station__open__door2 as Station__open__door2
+  use Ada___ada__text_io__put_line__2___axiom as Ada___ada__text_io__put_line__2___axiom
+  use Station__door___axiom as Station__door___axiom
+  use Temp___String_Literal_180 as Temp___String_Literal_180
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Standard__positive___axiom as Standard__positive___axiom
+  use Standard__character___axiom as Standard__character___axiom
+  use Standard__string___axiom as Standard__string___axiom
+  use Standard__integer___axiom as Standard__integer___axiom
+  use Station__door___axiom as Station__door___axiom
+  use Station__open__door1___axiom as Station__open__door1___axiom
+  use Station__open__door2___axiom as Station__open__door2___axiom
+  use Ada___ada__text_io__count___axiom as Ada___ada__text_io__count___axiom
+  use Ada___ada__text_io__line_length__2___axiom as Ada___ada__text_io__line_length__2___axiom
+  use Ada___ada__text_io__page_length__2___axiom as Ada___ada__text_io__page_length__2___axiom
+  use Ada___ada__text_io__put_line__2___axiom as Ada___ada__text_io__put_line__2___axiom
+  
+  let def (__void_param : unit)
+    requires { [#"station.ads" 8 0 0] true }
+    ensures { [#"station.ads" 8 0 0]
+              [#"station.ads" 10 0 0]
+              [@GP_Reason:VC_POSTCONDITION]
+              [@GP_Sloc:station.ads:10:19]
+              [@GP_Shape:pragargs__or]
+              [@comment:          Post => (Door1 = Opened and Door2 = Closed) or (Door1 = Closed and Door2 = Opened);                   ^ station.ads:10:19:VC_POSTCONDITION]
+              [@model_vc_post]
+              [@GP_Id:0]
+              [@GP_Sloc:station.ads:10:19]
+              [@GP_Pretty_Ada:11750]
+              ((((Station__open__door1.door1.int__content) = (1 : int)) /\
+                  ((Station__open__door2.door2.int__content) = (0 : int))) \/
+                 (((Station__open__door1.door1.int__content) = (0 : int)) /\
+                    ((Station__open__door2.door2.int__content) = (1 : int)))) }
+  = [@vc:divergent]
+    (([@GNAT-comment:Assume dynamic invariants of inputs of the subprogram station.ads:8]
+      ());
+     assume {
+       ((((Station__door___axiom.dynamic_invariant
+             (Station__open__door1.door1.int__content))
+            True)
+           False)
+          True)
+         True };
+     assume {
+       ((((Station__door___axiom.dynamic_invariant
+             (Station__open__door2.door2.int__content))
+            True)
+           False)
+          True)
+         True };
+     ([@GNAT-comment:Assume moved pointers in outputs of the subprogram station.ads:8]
+      ());
+     ([@GNAT-comment:Check for RTE in the Pre of the subprogram station.ads:8]
+      ());
+     (begin
+        ensures { true }
+        let _ =
+          let _ =
+            (Boolean.andb
+               ((Station__open__door1.door1.int__content) = (0 : int)))
+              ((Station__open__door2.door2.int__content) = (0 : int)) in
+          () in
+        ()
+      end);
+     ([@GNAT-comment:Assume Pre of the subprogram station.ads:8] ());
+     assume {
+       (([@GP_Pretty_Ada:905]
+         ((Station__open__door1.door1.int__content) = (0 : int))) /\
+          ([@GP_Pretty_Ada:909]
+           ((Station__open__door2.door2.int__content) = (0 : int)))) };
+     (try
+        ([@GP_Sloc:station.adb:10:13]
+         [#"station.adb" 10 0 0]
+         [#"station.adb" 10 0 0]
+         (Station__open__door1.door1.int__content <- (1 : int)));
+        ([@GP_Sloc:station.adb:11:13]
+         [#"station.adb" 11 0 0]
+         [#"station.adb" 11 0 0]
+         (Station__open__door2.door2.int__content <- (1 : int)));
+        ([@GP_Sloc:station.adb:14:7] [#"station.adb" 14 0 0] ());
+        ([@GP_Sloc:station.adb:14:7]
+         [#"station.adb" 14 0 0]
+         (([#"station.adb" 14 0 0] (val _f : unit in
+                                    _f));
+          (Ada___ada__text_io__put_line__2___axiom.put_line
+             (let temp___181 =
+                Temp___String_Literal_180.temp___String_Literal_180 () in
+              ((Standard__string.of_array temp___181) (1 : int)) (27 : int)))));
+        (raise Return__exc)
+      with Return__exc -> ()
+      end);
+     (begin
+        ensures { true }
+        let _ =
+          let _ =
+            (Boolean.orb
+               ((Boolean.andb
+                   ((Station__open__door1.door1.int__content) = (1 : int)))
+                  ((Station__open__door2.door2.int__content) = (0 : int))))
+              ((Boolean.andb
+                  ((Station__open__door1.door1.int__content) = (0 : int)))
+                 ((Station__open__door2.door2.int__content) = (1 : int))) in
+          () in
+        ()
+      end))
+end

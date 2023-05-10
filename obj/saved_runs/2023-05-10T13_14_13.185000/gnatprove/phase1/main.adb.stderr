@@ -1,0 +1,4 @@
+main.adb:13:27: error: binary operator expected
+main.adb:14:27: error: binary operator expected
+main.adb:17:27: error: binary operator expected
+main.adb:18:27: error: binary operator expected
