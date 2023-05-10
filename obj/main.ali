@@ -19,7 +19,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_IMPLEMENTATION_PRAGMAS
 RV MAX_TASKS=1+
 
-U main%b		main.adb		19e10934 NE OO SU
+U main%b		main.adb		1a47dd24 NE OO SU
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 Z ada.real_time%s	a-reatim.adb		a-reatim.ali
@@ -53,7 +53,7 @@ D interfac.ads		20210520051132 edec285f interfaces%s
 D i-c.ads		20210520051132 d9beded9 interfaces.c%s
 D i-cstrin.ads		20210520051132 341d0ddf interfaces.c.strings%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
-D main.adb		20230510165642 6decf454 main%b
+D main.adb		20230510205630 6e4a2044 main%b
 D station.ads		20230510165426 daf9280d station%s
 D system.ads		20210520051136 2ffa5114 system%s
 D s-atacco.ads		20210520051132 4c36d12f system.address_to_access_conversions%s
@@ -94,16 +94,16 @@ X 1 ada.ads
 16K9*Ada 20e8 18|2r6 2r23
 X 12 a-textio.ads
 58K13*Text_IO 725e16 18|2w10 2r27
-479U14*Get_Line 18|38s10
+479U14*Get_Line 18|38s10 49s13
 506U14*Put_Line 18|14s7 15s7 16s7 17s7 18s7 19s7 20s7 21s10 22s10 23s7 24s7
-. 25s7 26s7 27s7 28s7 29s7 30s7 31s7
+. 25s7 26s7 27s7 28s7 29s7 30s7 31s7 44s13 45s13 46s13 47s13 48s13
 X 18 main.adb
-4U11*Main 4b11 52l5 52t9
-6a4 Str{string} 38m19 39r16
-7i4 Last{natural} 38m24
-8r4 S{19|12R9} 18r39 19r39 20r31 40m32 40r32 41m32 41r32 42m35 42r35 43m36
-. 43r36
-10t9 ControlPanel 34b14 48l8 48t20
+4U11*Main 4b11 65l5 65t9
+6a4 Str{string} 38m19 39r16 49m22 50r21
+7i4 Last{natural} 38m24 49m27
+8r4 S{19|12R9} 18r39 19r39 20r31 40m32 40r32 41m32 41r32 42m35 42r35 51m42
+. 51r42 51r45 52m42 52r42 52r45 53m42 53r42 53r45 54m42 54r42 54r45
+10t9 ControlPanel 34b14 61l8 61t20
 12U14 DashboardControls 12b14 32l8 32t25 37s10
 X 19 station.ads
 1K9*Station 18|1w6 1r19 19|39e12
@@ -111,10 +111,10 @@ X 19 station.ads
 12R9*Station_Record 18|8r8 19|16e14
 13e7*Door1{5E9} 18|8m27 18r41
 14e7*Door2{5E9} 18|8m42 19r41
-15i7*Altitude{integer} 18|8m57 20r33
+15i7*Altitude{integer} 18|8m57 20r33 51r47 52r47 53r47 54r47
 25U14*Open_Door 18|40s22 41s22
 30U14*Seal_Airlock 18|42s22
-35U14*Update_Height 18|43s22
+35U14*Update_Height 18|51s28 52s28 53s28 54s28
 X 36 s-stausa.ads
 208U14*Initialize 209i<c,__gnat_stack_usage_initialize>22
 273U14*Output_Results 277i<c,__gnat_stack_usage_output_results>22

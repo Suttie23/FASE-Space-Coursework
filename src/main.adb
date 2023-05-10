@@ -40,7 +40,20 @@ procedure Main is
          when 'a' => Open_Door(S, 1);
          when 'b' => Open_Door(S, 2);
          when 'c' => Seal_Airlock(S);
-         when 'd' => Update_Height(S, 850000);
+         when 'd' =>
+            Put_Line("Adjust Altitude by: ");
+            Put_Line("(1) + 10000ft");
+            Put_Line("(2) + 25000ft");
+            Put_Line("(3) - 10000ft");
+            Put_Line("(4) - 25000ft");
+            Get_Line(Str, Last);
+               case Str(1) is
+               when '1' => Update_Height(S, S.Altitude + 10000);
+               when '2' => Update_Height(S, S.Altitude + 25000);
+               when '3' => Update_Height(S, S.Altitude - 10000);
+               when '4' => Update_Height(S, S.Altitude - 25000);
+               when others => exit;
+               end case;
          when others => exit;
          end case;
       end loop;

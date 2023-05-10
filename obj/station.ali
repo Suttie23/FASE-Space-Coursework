@@ -16,7 +16,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_IMPLEMENTATION_PRAGMAS
 RV NO_ELABORATION_CODE
 
-U station%b		station.adb		84c0e7ba NE OO PK
+U station%b		station.adb		9d87defa NE OO PK
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
@@ -41,7 +41,7 @@ D a-unccon.ads		20210520051130 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210520051132 edec285f interfaces%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
 D station.ads		20230510165426 daf9280d station%s
-D station.adb		20230510165600 f0cd1ada station%b
+D station.adb		20230510205936 e98a239a station%b
 D system.ads		20210520051136 2ffa5114 system%s
 D s-conca2.ads		20210520051132 02a0d7d0 system.concat_2%s
 D s-crtl.ads		20210520051132 0ebbdb71 system.crtl%s
@@ -70,23 +70,23 @@ X 1 ada.ads
 X 11 a-textio.ads
 58K13*Text_IO 725e16 16|1w10 1r27
 506U14*Put_Line 16|13s10 15s10 16s10 17s10 23s10 25s10 26s10 27s10 31s10
-. 32s10 33s10 46s4 48s4 49s4 50s4 60s10 61s10 62s10
+. 32s10 33s10 46s4 48s4 49s4 50s4 61s10 62s10 64s10 66s10 68s10
 X 15 station.ads
-1K9*Station 39l5 39e12 16|3b14 66l5 66t12
+1K9*Station 39l5 39e12 16|3b14 72l5 72t12
 5E9*Airlock_Door 5e39 13r15 14r15
 5n26*Open{5E9} 21r18 21r80 31r24 31r65 16|11r21 20r21 40r23 42r23
 5n32*Closed{5E9} 13r31 14r31 21r37 21r59 22r20 22r41 31r43 31r84 32r24 32r45
 . 16|12r21 21r21 29r21 30r21 41r21 43r21
 8N4*MINALTITUDE 15r32
 9N4*MAXALTITUDE 15r45
-12R9*Station_Record 16e14 18r8 25r36 30r39 35r39 16|8r33 38r39 54r39
+12R9*Station_Record 16e14 18r8 25r36 30r39 35r39 16|8r33 38r39 55r39
 13e7*Door1{5E9} 21r10 21r51 22r12 31r16 31r76 32r16 16|11m12 15r37 21m12
 . 25r38 30m12 40r15 41m12 48r32
 14e7*Door2{5E9} 21r29 21r72 22r33 31r35 31r57 32r37 16|12m12 16r37 20m12
 . 26r38 29m12 42r15 43m12 49r32
-15i7*Altitude{integer} 37r16 16|58m12
+15i7*Altitude{integer} 37r16 16|59m12
 18r4*S{12R9} 21r8 21r27 21r49 21r70 22r10 22r31
-20V13*SealedInvariant{boolean} 26s13 27s14 36s65 37s42 16|10s33 19s36 57s62
+20V13*SealedInvariant{boolean} 26s13 27s14 36s65 37s42 16|10s33 19s36 58s62
 25U14*Open_Door 25=25 25>52 16|8b11 35l8 35t17
 25r25 S{12R9} 16|8b22 11m10 12m10 15r35 16r35 20m10 21m10 25r36 26r36 29m10
 . 30m10
@@ -94,7 +94,7 @@ X 15 station.ads
 30U14*Seal_Airlock 30=28 16|38b14 52l8 52t20
 30r28 S{12R9} 31r14 31r33 31r55 31r74 32r14 32r35 16|38b28 40r13 41m10 42r13
 . 43m10 48r30 49r30
-35U14*Update_Height 35=28 35>55 16|54b14 64l8 64t21
-35r28 S{12R9} 37r14 16|54b28 58m10
-35i55 New_Height{integer} 36r14 36r39 37r27 16|54b55 57r11 57r36 58r24
+35U14*Update_Height 35=28 35>55 16|55b14 70l8 70t21
+35r28 S{12R9} 37r14 16|55b28 59m10
+35i55 New_Height{integer} 36r14 36r39 37r27 16|55b55 58r11 58r36 59r24
 

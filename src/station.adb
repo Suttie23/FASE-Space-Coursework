@@ -51,6 +51,7 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
 
    end Seal_Airlock;
 
+   -- Update Height of Orbit
    procedure Update_Height(S : in out Station_Record; New_Height : in Integer)
    is
    begin
@@ -59,6 +60,11 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       else
          Put_Line ("");
          Put_Line ("WARNING: UNSAFE ORBITAL ADJUSTMENT DETECTED!");
+         delay 0.8;
+         Put_Line ("WARNING: DISREGARDING ORBITAL ADJUSTMENT");
+         delay 0.8;
+         Put_Line ("WARNING: PLEASE SET A HEIGHT BETWEEN 820,000ft AND 920,000ft");
+         delay 0.8;
          Put_Line ("");
       end if;
    end Update_Height;
