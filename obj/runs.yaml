@@ -432,3 +432,192 @@
     '
   output_parser: GNATprove_Parser
   timestamp: '2023-05-10T13:37:57.450000'
+'2023-05-10T14:05:51.096000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    station.ads:15:17: error: anonymous array not allowed as component
+
+    gnatprove: error during generation of Global contracts
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T14:05:51.096000'
+'2023-05-10T14:06:42.137000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    station.ads:15:17: error: anonymous array not allowed as component
+
+    gnatprove: error during generation of Global contracts
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T14:06:42.137000'
+'2023-05-10T14:09:10.816000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    station.ads:13:17: error: anonymous array not allowed as component
+
+    gnatprove: error during generation of Global contracts
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T14:09:10.816000'
+'2023-05-10T14:09:47.908000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T14:09:47.908000'
+'2023-05-10T14:32:59.486000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    station.ads:36:14: medium: postcondition might fail[#0]
+
+    station.ads:41:14: medium: postcondition might fail[#1]
+
+    station.ads:46:14: medium: postcondition might fail[#2]
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T14:32:59.486000'
+'2023-05-10T14:33:39.054000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    station.ads:41:14: medium: postcondition might fail[#0]
+
+    station.ads:46:14: medium: postcondition might fail[#1]
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T14:33:39.054000'
+'2023-05-10T15:06:06.395000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    main.adb:19:32: error: no selector "Altitude" for type "Station_Record" defined
+    at station.ads:8
+
+    gnatprove: error during generation of Global contracts
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T15:06:06.395000'
+'2023-05-10T15:06:50.420000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    main.adb:19:38: error: binary operator expected
+
+    gnatprove: error during generation of Global contracts
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T15:06:50.420000'
+'2023-05-10T15:07:44.674000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    main.adb:4:11: info: SPARK_Mode not applied to this compilation unit
+
+    main.adb:4:11: info: only enclosed declarations with SPARK_Mode will be analyzed
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T15:07:44.674000'
+'2023-05-10T15:08:16.573000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    main.adb:2:34: error: missing ";"
+
+    main.adb:3:06: error: file "spark_mode.ads" not found
+
+    gnatprove: error during generation of Global contracts
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T15:08:16.573000'
+'2023-05-10T15:08:44.636000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    main.adb:3:06: error: file "spark_mode.ads" not found
+
+    gnatprove: error during generation of Global contracts
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T15:08:44.636000'
+'2023-05-10T15:08:52.745000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    main.adb:4:11: info: SPARK_Mode not applied to this compilation unit
+
+    main.adb:4:11: info: only enclosed declarations with SPARK_Mode will be analyzed
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-10T15:08:52.745000'

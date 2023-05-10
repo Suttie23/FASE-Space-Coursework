@@ -1,0 +1,1 @@
+main.adb:19:32: error: no selector "Altitude" for type "Station_Record" defined at station.ads:8

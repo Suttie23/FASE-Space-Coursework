@@ -10,6 +10,8 @@ is
       Door2 : Airlock_Door := Closed;
    end record;
 
+   S : Station_Record := (Door1 => Closed, Door2 => Closed);
+
    -- Procedure to Open an Airlock
    procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) with
      Pre => 1 <= Airlock_Number and Airlock_Number <= 2,
@@ -20,6 +22,5 @@ is
    procedure Seal_Airlock (S : in out Station_Record) with
      Pre => (S.Door1 = Open and S.Door2 = Closed) or (S.Door2 = Open and S.Door1 = Closed),
      Post => S.Door1 = Closed and S.Door2 = Closed;
-
 
 end Station;

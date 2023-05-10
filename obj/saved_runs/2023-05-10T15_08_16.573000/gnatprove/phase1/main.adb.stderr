@@ -1,0 +1,2 @@
+main.adb:2:34: error: missing ";"
+main.adb:3:06: error: file "spark_mode.ads" not found

@@ -1,0 +1,264 @@
+{
+  "spark": [
+    {
+      "name": "Station",
+      "sloc": [
+        {
+          "file": "station.ads",
+          "line": 1
+        }
+      ],
+      "spark": "all"
+    },
+    {
+      "name": "Station.Open_Door",
+      "sloc": [
+        {
+          "file": "station.ads",
+          "line": 14
+        }
+      ],
+      "spark": "all"
+    },
+    {
+      "name": "Station.Seal_Airlock",
+      "sloc": [
+        {
+          "file": "station.ads",
+          "line": 20
+        }
+      ],
+      "spark": "all"
+    }
+  ],
+  "flow": [
+  ],
+  "session_map": {
+    " 1": "D:\\My Folders\\Uni\\Year 4\\Formal Approaches To Software Engineering\\Code\\FASE-Space-Coursework\\obj\\gnatprove\\station__open_door",
+    " 2": "D:\\My Folders\\Uni\\Year 4\\Formal Approaches To Software Engineering\\Code\\FASE-Space-Coursework\\obj\\gnatprove\\station__seal_airlock"
+  },
+  "proof": [
+    {
+      "file": "station.ads",
+      "line": 16,
+      "col": 14,
+      "rule": "VC_POSTCONDITION",
+      "severity": "info",
+      "entity": {
+        "name": "Station.Open_Door",
+        "sloc": [
+          {
+            "file": "station.ads",
+            "line": 14
+          }
+        ]
+      },
+      "check_tree": [
+        {
+          "proof_attempts": {
+            "CVC4": {
+              "result": "Valid",
+              "steps": 1,
+              "time": 0
+            }
+          },
+          "transformations": {
+          }
+        }
+      ],
+      "check_file": "station.ads",
+      "check_line": 16,
+      "check_col": 14,
+      "session_dir": 1,
+      "how_proved": "prover",
+      "stats": {
+        "CVC4": {
+          "count": 1,
+          "max_steps": 1,
+          "max_time": 0.00000000000000E+00
+        }
+      }
+    },
+    {
+      "file": "station.ads",
+      "line": 22,
+      "col": 14,
+      "rule": "VC_POSTCONDITION",
+      "severity": "info",
+      "entity": {
+        "name": "Station.Seal_Airlock",
+        "sloc": [
+          {
+            "file": "station.ads",
+            "line": 20
+          }
+        ]
+      },
+      "check_tree": [
+        {
+          "proof_attempts": {
+            "CVC4": {
+              "result": "Valid",
+              "steps": 1,
+              "time": 0
+            }
+          },
+          "transformations": {
+          }
+        },
+        {
+          "proof_attempts": {
+            "CVC4": {
+              "result": "Valid",
+              "steps": 1,
+              "time": 0
+            }
+          },
+          "transformations": {
+          }
+        }
+      ],
+      "check_file": "station.ads",
+      "check_line": 22,
+      "check_col": 14,
+      "session_dir": 2,
+      "how_proved": "prover",
+      "stats": {
+        "CVC4": {
+          "count": 2,
+          "max_steps": 1,
+          "max_time": 0.00000000000000E+00
+        }
+      }
+    }
+  ],
+  "assumptions": [
+    {
+      "assumptions": [
+      ],
+      "claim": {
+        "predicate": "CLAIM_POST",
+        "arg": {
+          "name": "Station.Open_Door",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 14
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assumptions": [
+      ],
+      "claim": {
+        "predicate": "CLAIM_AORTE",
+        "arg": {
+          "name": "Station",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assumptions": [
+      ],
+      "claim": {
+        "predicate": "CLAIM_EFFECTS",
+        "arg": {
+          "name": "Station.Open_Door",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 14
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assumptions": [
+      ],
+      "claim": {
+        "predicate": "CLAIM_AORTE",
+        "arg": {
+          "name": "Station.Open_Door",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 14
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assumptions": [
+      ],
+      "claim": {
+        "predicate": "CLAIM_POST",
+        "arg": {
+          "name": "Station.Seal_Airlock",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 20
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assumptions": [
+      ],
+      "claim": {
+        "predicate": "CLAIM_EFFECTS",
+        "arg": {
+          "name": "Station.Seal_Airlock",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 20
+            }
+          ]
+        }
+      }
+    },
+    {
+      "assumptions": [
+      ],
+      "claim": {
+        "predicate": "CLAIM_AORTE",
+        "arg": {
+          "name": "Station.Seal_Airlock",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 20
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "timings": {
+    "codepeer results": 3.54000003426336E-05,
+    "init_why_sections": 4.92600025609136E-04,
+    "gnatwhy3.run_vcs": 0.00000000000000E+00,
+    "globals (advanced)": 1.71881001442671E-02,
+    "flow analysis": 1.88019999768585E-03,
+    "marking": 1.01400000858121E-04,
+    "translation of standard": 3.05230007506907E-03,
+    "properties (advanced)": 1.89000002137618E-05,
+    "gnatwhy3.register_vcs": 0.00000000000000E+00,
+    "globals (basic)": 1.69686991721392E-02,
+    "gnatwhy3.schedule_vcs": 0.00000000000000E+00,
+    "gnatwhy3.save_session": 1.56250000000000E-02,
+    "gnatwhy3.init": 3.59375000000000E-01
+  }
+}

@@ -1,0 +1,3 @@
+station.ads:36:14: medium: postcondition might fail[#0]
+station.ads:41:14: medium: postcondition might fail[#1]
+station.ads:46:14: medium: postcondition might fail[#2]

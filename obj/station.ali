@@ -5,19 +5,28 @@ A -march=x86-64
 P ZX
 
 RN
+RV NO_DELAY
 RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_ENUMERATION_MAPS
+RV NO_FIXED_POINT
 RV NO_IO
+RV NO_RELATIVE_DELAY
+RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_IMPLEMENTATION_PRAGMAS
 
-U station%b		station.adb		e641fef0 NE OO PK
+U station%b		station.adb		90ed1101 NE OO PK
 W ada%s			ada.ads			ada.ali
+Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
+Z system.concat_2%s	s-conca2.adb		s-conca2.ali
 
-U station%s		station.ads		becd79e7 EE NE OO PK
+U station%s		station.ads		9071fda0 EE NE OO PK
 Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
 
 D ada.ads		20210520051132 76789da1 ada%s
+D a-calend.ads		20210520051128 474d9720 ada.calendar%s
+D a-caldel.ads		20210520051128 9f20b83d ada.calendar.delays%s
 D a-except.ads		20210520051128 946f3014 ada.exceptions%s
 D a-ioexce.ads		20210520051128 e4a01f64 ada.io_exceptions%s
 D a-stream.ads		20210520051130 119b8fb3 ada.streams%s
@@ -29,9 +38,10 @@ D a-textio.ads		20210520051130 aef4d56d ada.text_io%s
 D a-unccon.ads		20210520051130 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210520051132 edec285f interfaces%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
-D station.ads		20230510123504 becd79e7 station%s
-D station.adb		20230510123316 f678527a station%b
+D station.ads		20230510140556 9071fda0 station%s
+D station.adb		20230510135454 ae6839cc station%b
 D system.ads		20210520051136 2ffa5114 system%s
+D s-conca2.ads		20210520051132 02a0d7d0 system.concat_2%s
 D s-crtl.ads		20210520051132 0ebbdb71 system.crtl%s
 D s-exctab.ads		20210520051132 54135002 system.exception_table%s
 D s-ficobl.ads		20210520051132 078245e4 system.file_control_block%s
@@ -48,25 +58,32 @@ D s-unstyp.ads		20210520051134 2b077493 system.unsigned_types%s
 D s-wchcon.ads		20210520051136 1b7d22d2 system.wch_con%s
 D unchconv.ads		20210520051136 ca2f9e18 unchecked_conversion%s
 G a e
-G c Z s b [open_door station 14 14 none]
-G c Z s b [seal_airlock station 19 14 none]
 G c Z s s [station_recordIP station 8 9 none]
+G c Z s b [open_door station 16 14 none]
+G c Z s b [seal_airlock station 22 14 none]
 X 1 ada.ads
-16K9*Ada 20e8 14|1r6 1r23
-X 9 a-textio.ads
-58K13*Text_IO 725e16 14|1w10 1r27
-X 13 station.ads
-1K9*Station 24l5 24e12 14|3b14 27l5 27t12
+16K9*Ada 20e8 16|1r6 1r23
+X 11 a-textio.ads
+58K13*Text_IO 725e16 16|1w10 1r27
+506U14*Put_Line 16|12s10 14s10 15s10 16s10 22s10 24s10 25s10 26s10 40s4 42s4
+. 43s4 44s4
+X 15 station.ads
+1K9*Station 26l5 26e12 16|3b14 48l5 48t12
 5E9*Airlock_Door 5e39 9r15 10r15
-5n26*Open{5E9} 16r48 17r40 20r23 20r41 14|9r21 12r21 19r23 21r23
-5n32*Closed{5E9} 9r31 10r31 16r67 17r59 21r24 21r45 14|10r21 13r21 20r21
-. 22r21
-8R9*Station_Record 11e14 14r36 19r39 14|6r33 17r39
-9e7*Door1{5E9} 16r40 17r51 20r15 21r16 14|9m12 13m12 19r15 20m12
-10e7*Door2{5E9} 16r59 17r32 20r33 21r37 14|10m12 12m12 21r15 22m12
-14U14*Open_Door 14=25 14>52 14|6b11 15l8 15t17
-14r25 S{8R9} 16r38 16r57 17r30 17r49 14|6b22 9m10 10m10 12m10 13m10
-14i52 Airlock_Number{integer} 15r18 15r37 16r15 17r7 14|6b49 8r10 11r13
-19U14*Seal_Airlock 19=28 14|17b14 24l8 24t20
-19r28 S{8R9} 20r13 20r31 21r14 21r35 14|17b28 19r13 20m10 21r13 22m10
+5n26*Open{5E9} 18r48 19r40 23r24 23r65 16|10r21 19r21 34r23 36r23
+5n32*Closed{5E9} 9r31 10r31 13r36 13r53 18r67 19r59 23r43 23r84 24r24 24r45
+. 16|11r21 20r21 35r21 37r21
+8R9*Station_Record 11e14 13r8 16r36 22r39 16|7r33 32r39
+9e7*Door1{5E9} 13m27 18r40 19r51 23r16 23r76 24r16 16|10m12 14r37 20m12 24r38
+. 34r15 35m12 42r32
+10e7*Door2{5E9} 13m44 18r59 19r32 23r35 23r57 24r37 16|11m12 15r37 19m12
+. 25r38 36r15 37m12 43r32
+13r4*S{8R9}
+16U14*Open_Door 16=25 16>52 16|7b11 29l8 29t17
+16r25 S{8R9} 18r38 18r57 19r30 19r49 16|7b22 10m10 11m10 14r35 15r35 19m10
+. 20m10 24r36 25r36
+16i52 Airlock_Number{integer} 17r18 17r37 18r15 19r7 16|7b49 9r10 18r13
+22U14*Seal_Airlock 22=28 16|32b14 46l8 46t20
+22r28 S{8R9} 23r14 23r33 23r55 23r74 24r14 24r35 16|32b28 34r13 35m10 36r13
+. 37m10 42r30 43r30
 
