@@ -1,0 +1,2 @@
+station.adb:81:48: medium: range check might fail [reason for check: result of addition must fit in the target type of the assignment] [possible fix: precondition of subprogram at station.ads:49 should mention S][#0]
+station.ads:57:51: medium: postcondition might fail, cannot prove S.Top_Module_Index = S'Old.Top_Module_Index - 1[#1]

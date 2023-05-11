@@ -15,14 +15,14 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_IMPLEMENTATION_PRAGMAS
 RV NO_IMPLICIT_LOOPS
 
-U station%b		station.adb		969b0208 NE OO PK
+U station%b		station.adb		34599f44 NE OO PK
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
 Z system.concat_2%s	s-conca2.adb		s-conca2.ali
 
-U station%s		station.ads		9cb90e41 EE NE OO PK
+U station%s		station.ads		0f38e28d EE NE OO PK
 Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
 
 D ada.ads		20210520051132 76789da1 ada%s
@@ -39,8 +39,8 @@ D a-textio.ads		20210520051130 aef4d56d ada.text_io%s
 D a-unccon.ads		20210520051130 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210520051132 edec285f interfaces%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
-D station.ads		20230511161704 9cb90e41 station%s
-D station.adb		20230511154714 a4d6d924 station%b
+D station.ads		20230511165020 0f38e28d station%s
+D station.adb		20230511164652 9595a8a4 station%b
 D system.ads		20210520051136 2ffa5114 system%s
 D s-conca2.ads		20210520051132 02a0d7d0 system.concat_2%s
 D s-crtl.ads		20210520051132 0ebbdb71 system.crtl%s
@@ -72,34 +72,35 @@ X 1 ada.ads
 X 11 a-textio.ads
 58K13*Text_IO 725e16 16|1w10 1r27
 506U14*Put_Line 16|13s10 15s10 16s10 17s10 23s10 25s10 26s10 27s10 31s10
-. 32s10 33s10 46s4 48s4 49s4 50s4 61s10 62s10 64s10 66s10 68s10 92s13
+. 32s10 33s10 46s4 48s4 49s4 50s4 61s10 62s10 64s10 66s10 68s10 95s13
 X 15 station.ads
-1K9*Station 60l5 60e12 16|3b14 98l5 98t12
+1K9*Station 60l5 60e12 16|3b14 101l5 101t12
 5N4*MINALTITUDE 19r32
 6N4*MAXALTITUDE 19r45
 9E9*Airlock_Door 9e39 17r15 18r15
 9n26*Open{9E9} 30r18 30r80 40r24 40r65 16|11r21 20r21 40r23 42r23
 9n32*Closed{9E9} 17r31 18r31 24r36 24r53 30r37 30r59 31r20 31r41 40r43 40r84
 . 41r24 41r45 16|12r21 21r21 29r21 30r21 41r21 43r21
-12E9*Module 12e66 13r41 49r68 16|73r68
+12E9*Module 12e74 13r41 49r68 16|73r68
 12n20*CrewQuarters{12E9} 25r44
-12n34*DockingHall{12E9} 25r63
-12n47*ResearchBay{12E9}
-12n60*Empty{12E9} 25r81 50r53 56r110 56r135 16|88r26 89r26 91r31 91r56
+12n34*CommunicationsArray{12E9} 25r63
+12n55*ResearchBay{12E9}
+12n68*Empty{12E9} 25r89 50r53 16|90r26 91r29 94r58 94r83
 13A9*Module_Array(12E9)<integer> 20r17
 16R9*Station_Record 22e14 24r8 34r36 39r39 44r39 49r36 55r43 16|8r33 38r39
-. 55r39 73r36 84r43
+. 55r39 73r36 85r43
 17e7*Door1{9E9} 24m27 30r10 30r51 31r12 40r16 40r76 41r16 16|11m12 15r37
 . 21m12 25r38 30m12 40r15 41m12 48r32
 18e7*Door2{9E9} 24m44 30r29 30r72 31r33 40r35 40r57 41r37 16|12m12 16r37
 . 20m12 26r38 29m12 42r15 43m12 49r32
 19i7*Altitude{integer} 24m61 46r16 16|59m12
-20a7*Modules{13A9} 25m27 51r17 52r28 52r46 52r65 56r96 56r121 16|76r29 77m12
-. 77r28 80m9 87r23 88r12 89m12 91r18 91r43
-21i7*Top_Module_Index{integer} 26m26 56r41 56r68 57r25 57r53 57r78 57r106
+20a7*Modules{13A9} 25m27 51r17 52r28 52r46 52r65 56r90 16|76r29 77m12 77r28
+. 80m9 89r23 90r12 91m15 94r45 94r70
+21i7*Top_Module_Index{integer} 26m26 56r41 56r68 57r25 57r53 57r78 58r28
+. 16|81m9 81r31 92m15 92r37 94r18
 24r4*S{16R9} 30r8 30r27 30r49 30r70 31r10 31r31
 29V13*SealedInvariant{boolean} 35s13 36s14 45s65 46s42 50s18 52s83 56s18
-. 58s24 16|10s33 19s36 58s62
+. 58s54 16|10s33 19s36 58s62
 34U14*Open_Door 34=25 34>52 16|8b11 35l8 35t17
 34r25 S{16R9} 16|8b22 11m10 12m10 15r35 16r35 20m10 21m10 25r36 26r36 29m10
 . 30m10
@@ -110,14 +111,15 @@ X 15 station.ads
 44U14*Update_Height 44=28 44>55 16|55b14 70l8 70t21
 44r28 S{16R9} 46r14 16|55b28 59m10
 44i55 New_Height{integer} 45r14 45r39 46r27 16|55b55 58r11 58r36 59r24
-49U14*Add_Module 49=25 49>52 16|73b14 81l8 81t18
-49r25 S{16R9} 51r15 52r26 52r44 52r59 16|73b25 76r27 77m10 77r26 80m7
+49U14*Add_Module 49=25 49>52 16|73b14 82l8 82t18
+49r25 S{16R9} 51r15 52r26 52r44 52r59 16|73b25 76r27 77m10 77r26 80m7 81m7
+. 81r29
 49e52 New_Module{12E9} 50r39 51r30 16|73b52 80r23
 52i18 i{integer} 52r54 52r73
-55U14*Remove_Top_Module 55=32 16|84b14 96l5 96t22
-55r32 S{16R9} 56r39 56r66 56r94 56r119 57r23 57r51 57r72 57r104 16|84b32
-. 87r21 88r10 89m10 91r16 91r41
+55U14*Remove_Top_Module 55=32 16|85b14 99l5 99t22
+55r32 S{16R9} 56r39 56r66 56r88 57r23 57r51 57r72 58r26 16|85b32 89r21 90r10
+. 91m13 92m13 92r35 94r16 94r43 94r68
 X 16 station.adb
 76i11 I{integer} 77r20 77r36
-87i8 i{integer} 88r20 89r20
+89i8 i{integer} 90r20 91r23
 

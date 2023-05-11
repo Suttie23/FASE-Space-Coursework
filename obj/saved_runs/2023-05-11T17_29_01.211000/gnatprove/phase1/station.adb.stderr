@@ -1,0 +1,4 @@
+station.ads:56:52: error: "others" choice not allowed here
+station.ads:56:52: error: qualify the aggregate with a constrained subtype to provide bounds for it
+station.ads:57:63: error: "others" choice not allowed here
+station.ads:57:63: error: qualify the aggregate with a constrained subtype to provide bounds for it

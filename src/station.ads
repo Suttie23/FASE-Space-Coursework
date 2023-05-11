@@ -9,7 +9,7 @@ is
    type Airlock_Door is (Open, Closed);
 
    -- Module Types
-   type Module is (CrewQuarters, DockingHall, ResearchBay, Empty);
+   type Module is (CrewQuarters, CommunicationsArray, ResearchBay, Empty);
    type Module_Array is array (1..3) of Module;
 
    -- Station Record to hold all Station Variables
@@ -22,8 +22,8 @@ is
    end record;
 
    S : Station_Record := (Door1 => Closed, Door2 => Closed, Altitude => 820000,
-                          Modules => (1 => CrewQuarters, 2 => DockingHall, 3 => Empty),
-                         Top_Module_Index => 0);
+                          Modules => (1 => CrewQuarters, 2 => CommunicationsArray, 3 => Empty),
+                         Top_Module_Index => 2);
 
 
    function SealedInvariant return Boolean is
@@ -46,15 +46,16 @@ is
      Post => S.Altitude = New_Height and SealedInvariant;
 
    -- Procedure to add a module to the station
-   procedure Add_Module(S : in out Station_Record; New_Module : in Module)
-     with Pre => SealedInvariant and (New_Module /= Empty),
-     Post => (S.Modules(1) = New_Module) and
-        (for all i in 2..S.Modules'Last => S.Modules(i) = S'Old.Modules(i-1)) and SealedInvariant;
+   procedure Add_Module(S : in out Station_Record; New_Module : in Module) with
+     Pre => SealedInvariant and (S.Top_Module_Index < S.Modules'Last),
+     Post => (S.Modules(1) = New_Module) and (S.Top_Module_Index = S'Old.Top_Module_Index + 1) and
+     (for all i in 2..S.Modules'Last => S.Modules(i) = S'Old.Modules(i-1)) and SealedInvariant;
 
    -- Procedure to remove the top module from the stack
-   procedure Remove_Top_Module(S : in out Station_Record)
-     with Pre => SealedInvariant and (S.Top_Module_Index > 0 or (S.Top_Module_Index = 0 and (S.Modules(2) /= Empty or S.Modules(3) /= Empty))),
-          Post => (if S.Top_Module_Index > 0 then S.Top_Module_Index = S'Old.Top_Module_Index - 1 else S.Top_Module_Index = 0)
-                   and SealedInvariant;
+   procedure Remove_Top_Module(S : in out Station_Record) with
+     Pre => SealedInvariant and (S.Top_Module_Index > 0 and S.Top_Module_Index <= S.Modules'Last),
+     Post => (if S.Top_Module_Index > 1 then S.Top_Module_Index = S'Old.Top_Module_Index - 1
+     else S.Top_Module_Index = 0) and SealedInvariant;
+
 
 end Station;

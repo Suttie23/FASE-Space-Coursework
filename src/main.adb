@@ -70,7 +70,18 @@ procedure Main is
                when '4' => Update_Height(S, S.Altitude - 25000);
                when others => exit;
             end case;
-         when 'e' => Add_Module(S, ResearchBay);
+         when 'e' =>
+            Put_Line("Select a Module to Add: ");
+            Put_Line("(1) Research Bay");
+            Put_Line("(2) Crew Quarters");
+            Put_Line("(3) Communications Array");
+               Get_Line(Str, Last);
+               case Str(1) is
+               when '1' => Add_Module(S, ResearchBay);
+               when '2' => Add_Module(S, CrewQuarters);
+               when '3' => Add_Module(S, CommunicationsArray);
+               when others => exit;
+            end case;
          when 'f' => Remove_Top_Module(S);
          when others => exit;
          end case;
