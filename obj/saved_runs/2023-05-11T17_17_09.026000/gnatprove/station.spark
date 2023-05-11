@@ -1,0 +1,66 @@
+{
+  "spark": [
+    {
+      "name": "Station.Add_Module",
+      "sloc": [
+        {
+          "file": "station.ads",
+          "line": 49
+        }
+      ],
+      "spark": "all"
+    }
+  ],
+  "flow": [
+  ],
+  "session_map": {
+    " 1": "D:\\My Folders\\Uni\\Year 4\\Formal Approaches To Software Engineering\\Code\\FASE-Space-Coursework\\obj\\gnatprove\\station__add_module"
+  },
+  "proof": [
+  ],
+  "assumptions": [
+    {
+      "assumptions": [
+        {
+          "predicate": "CLAIM_EFFECTS",
+          "arg": {
+            "name": "Station.SealedInvariant",
+            "sloc": [
+              {
+                "file": "station.ads",
+                "line": 29
+              }
+            ]
+          }
+        }
+      ],
+      "claim": {
+        "predicate": "CLAIM_EFFECTS",
+        "arg": {
+          "name": "Station.Add_Module",
+          "sloc": [
+            {
+              "file": "station.ads",
+              "line": 49
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "timings": {
+    "codepeer results": 8.89100017957389E-04,
+    "init_why_sections": 4.56999987363815E-04,
+    "gnatwhy3.run_vcs": 0.00000000000000E+00,
+    "globals (advanced)": 2.20385994762182E-02,
+    "flow analysis": 2.00459989719093E-03,
+    "marking": 2.00199996470474E-04,
+    "translation of standard": 2.93070008046925E-03,
+    "properties (advanced)": 3.70999987353571E-05,
+    "gnatwhy3.register_vcs": 0.00000000000000E+00,
+    "globals (basic)": 2.55680996924639E-02,
+    "gnatwhy3.schedule_vcs": 0.00000000000000E+00,
+    "gnatwhy3.save_session": 1.56250000000000E-02,
+    "gnatwhy3.init": 2.18750000000000E-01
+  }
+}

@@ -69,4 +69,30 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       end if;
    end Update_Height;
 
+   -- Procedure to add a module to the stack
+   procedure Add_Module(S : in out Station_Record; New_Module : in Module) is
+   begin
+      -- Shift all modules to the right to create space for the new module
+      for I in reverse 2..S.Modules'Last loop
+         S.Modules(I) := S.Modules(I-1);
+      end loop;
+      -- Insert the new module at the top of the stack
+      S.Modules(1) := New_Module;
+   end Add_Module;
+
+   -- Procedure to remove the top module from the stack
+   procedure Remove_Top_Module(S : in out Station_Record) is
+   begin
+   -- Remove the top module
+   for i in reverse S.Modules'Range loop
+      if S.Modules(i) /= Empty then
+         S.Modules(i) := Empty;
+            exit;
+         elsif S.Modules(2) = Empty and S.Modules(3) = Empty then
+            Put_Line ("WARNING: CANNOT REMOVE THE ONLY REMAINING STATION MODULE");
+            exit;
+      end if;
+   end loop;
+end Remove_Top_Module;
+
 end Station;

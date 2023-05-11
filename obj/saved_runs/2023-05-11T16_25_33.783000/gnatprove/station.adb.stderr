@@ -1,0 +1,3 @@
+station.adb:91:24: medium: array index check might fail [reason for check: result of subtraction must be a valid index into the array][#2]
+station.ads:51:19: medium: postcondition might fail, cannot prove S.Top_Module_Index = S'Old.Top_Module_Index + 1[#1]
+station.ads:52:31: medium: array index check might fail [reason for check: value must be a valid index into the array][#0]

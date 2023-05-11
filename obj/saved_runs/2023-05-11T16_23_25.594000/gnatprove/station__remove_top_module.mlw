@@ -1,0 +1,1501 @@
+module Station__airlock_door
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type airlock_door
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (1 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = airlock_door,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type airlock_door__ref = { mutable airlock_door__content : airlock_door }
+  
+  function airlock_door__ref_airlock_door__content__projection (a: airlock_door__ref) : airlock_door =
+    a.airlock_door__content
+  
+  meta "model_projection" function airlock_door__ref_airlock_door__content__projection
+  
+  meta "inline:no" function airlock_door__ref_airlock_door__content__projection
+  
+  val airlock_door__havoc (x: airlock_door__ref) : unit
+    writes { x }
+end
+
+module Station__airlock_door__rep
+  use Station__airlock_door as Station__airlock_door
+  use _gnatprove_standard.Main
+  use int.Int
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Station__airlock_door.airlock_door,
+    predicate in_range = Station__airlock_door.in_range
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Station__module
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type module__
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (3 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = module__,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type module____ref = { mutable module____content : module__ }
+  
+  function module____ref_module____content__projection (a: module____ref) : module__ =
+    a.module____content
+  
+  meta "model_projection" function module____ref_module____content__projection
+  
+  meta "inline:no" function module____ref_module____content__projection
+  
+  val module____havoc (x: module____ref) : unit
+    writes { x }
+end
+
+module Station__module__rep
+  use Station__module as Station__module
+  use _gnatprove_standard.Main
+  use int.Int
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Station__module.module__,
+    predicate in_range = Station__module.in_range
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Array__Int__Station__module
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__module as Station__module
+  use Station__module__rep as Station__module__rep
+  
+  function index_I1_one : int = 1 : int
+  
+  type component_type = Station__module.module__
+  
+  clone export _gnatprove_standard.Array__1 with
+    axiom .,
+    type I1.t = int,
+    predicate I1.le = Int.( <= ),
+    predicate I1.lt = Int.( < ),
+    predicate I1.gt = Int.( > ),
+    function I1.add = Int.( + ),
+    function I1.sub = Int.( - ),
+    function I1.one = index_I1_one,
+    type component_type = component_type
+  
+  function bool_eq (a: map) (a__first: int) (a__last: int) (b: map) (b__first: int) (b__last: int) : bool =
+    ((if (a__first <= a__last) then
+        ((b__first <= b__last) /\
+           ((a__last - a__first) = (b__last - b__first)))
+      else (b__first > b__last)) /\
+       (forall temp___idx_161 : int.
+          if ((a__first <= temp___idx_161) /\ (temp___idx_161 <= a__last)) then
+            ((Station__module__rep.to_rep ((get a) temp___idx_161))
+               = (Station__module__rep.to_rep
+                    ((get b) ((b__first - a__first) + temp___idx_161))))
+          else true))
+  
+  val bool_eq (a: map) (a__first: int) (a__last: int) (b: map) (b__first: int) (b__last: int) : 
+    bool
+    ensures { result
+      =
+      ((((((bool_eq (a : map)) (a__first : int)) (a__last : int)) (b : map))
+          (b__first : int))
+         (b__last : int)) }
+  
+  axiom bool_eq_rev:
+    forall a : map, b : map.
+      forall a__first : int, a__last : int, b__first : int, b__last : int.
+        ((((((((bool_eq b) b__first) b__last) a) a__first) a__last) = True) ->
+           ((if (a__first <= a__last) then
+               ((b__first <= b__last) /\
+                  ((a__last - a__first) = (b__last - b__first)))
+             else (b__first > b__last)) /\
+              (forall temp___idx_161 : int.
+                 if ((a__first <= temp___idx_161) /\
+                       (temp___idx_161 <= a__last)) then
+                   ((Station__module__rep.to_rep ((get a) temp___idx_161))
+                      = (Station__module__rep.to_rep
+                           ((get b) ((b__first - a__first) + temp___idx_161))))
+                 else true)))
+end
+
+module Station__module_array
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__module as Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  
+  type component_type = Station__module.module__
+  
+  val function first : int
+    ensures { result = (1 : int) }
+  
+  val function last : int
+    ensures { result = (3 : int) }
+  
+  clone export ada__model.Constr_Array with
+    axiom .,
+    type map = Array__Int__Station__module.map,
+    function array_bool_eq = Array__Int__Station__module.bool_eq,
+    function first = first,
+    function last = last,
+    type index_rep_type = int
+end
+
+module Station__station_record__T3s
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type t3s = <range 820000 920000>
+  
+  val function first : int
+    ensures { result = (820000 : int) }
+  
+  val function last : int
+    ensures { result = (920000 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = t3s,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type t3s__ref = { mutable t3s__content : t3s }
+  
+  function t3s__ref_t3s__content__projection (a: t3s__ref) : t3s =
+    a.t3s__content
+  
+  meta "model_projection" function t3s__ref_t3s__content__projection
+  
+  meta "inline:no" function t3s__ref_t3s__content__projection
+  
+  val t3s__havoc (x: t3s__ref) : unit
+    writes { x }
+end
+
+module Station__station_record__T3s__rep
+  use Station__station_record__T3s as Station__station_record__T3s
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  function to_rep (x: Station__station_record__T3s.t3s) : int =
+    Station__station_record__T3s.t3s'int x
+  
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Station__station_record__T3s.t3s,
+    predicate in_range = Station__station_record__T3s.in_range,
+    function to_rep = to_rep
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Station__station_record__T4s
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type t4s = <range 0 3>
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (3 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = t4s,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type t4s__ref = { mutable t4s__content : t4s }
+  
+  function t4s__ref_t4s__content__projection (a: t4s__ref) : t4s =
+    a.t4s__content
+  
+  meta "model_projection" function t4s__ref_t4s__content__projection
+  
+  meta "inline:no" function t4s__ref_t4s__content__projection
+  
+  val t4s__havoc (x: t4s__ref) : unit
+    writes { x }
+end
+
+module Station__station_record__T4s__rep
+  use Station__station_record__T4s as Station__station_record__T4s
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  function to_rep (x: Station__station_record__T4s.t4s) : int =
+    Station__station_record__T4s.t4s'int x
+  
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Station__station_record__T4s.t4s,
+    predicate in_range = Station__station_record__T4s.in_range,
+    function to_rep = to_rep
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Station__station_record__rep
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__airlock_door as Station__airlock_door
+  use Station__airlock_door__rep as Station__airlock_door__rep
+  use Station__module_array as Station__module_array
+  use Station__station_record__T3s as Station__station_record__T3s
+  use Station__station_record__T3s__rep as Station__station_record__T3s__rep
+  use Station__station_record__T4s as Station__station_record__T4s
+  use Station__station_record__T4s__rep as Station__station_record__T4s__rep
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  
+  type __split_fields = {
+                       rec__station__station_record__door1 :
+                         Station__airlock_door.airlock_door;
+                       rec__station__station_record__door2 :
+                         Station__airlock_door.airlock_door;
+                       rec__station__station_record__altitude :
+                         Station__station_record__T3s.t3s;
+                       rec__station__station_record__modules :
+                         Array__Int__Station__module.map;
+                       rec__station__station_record__top_module_index :
+                         Station__station_record__T4s.t4s
+                       }
+  
+  function __split_fields_rec__station__station_record__door1__projection (a: __split_fields) : 
+    Station__airlock_door.airlock_door =
+    a.rec__station__station_record__door1
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__door1__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__door1__projection
+  
+  function __split_fields_rec__station__station_record__door2__projection (a: __split_fields) : 
+    Station__airlock_door.airlock_door =
+    a.rec__station__station_record__door2
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__door2__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__door2__projection
+  
+  function __split_fields_rec__station__station_record__altitude__projection (a: __split_fields) : 
+    Station__station_record__T3s.t3s =
+    a.rec__station__station_record__altitude
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__altitude__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__altitude__projection
+  
+  function __split_fields_rec__station__station_record__modules__projection (a: __split_fields) : 
+    Array__Int__Station__module.map =
+    a.rec__station__station_record__modules
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__modules__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__modules__projection
+  
+  function __split_fields_rec__station__station_record__top_module_index__projection (a: __split_fields) : 
+    Station__station_record__T4s.t4s =
+    a.rec__station__station_record__top_module_index
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__top_module_index__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__top_module_index__projection
+  
+  type __split_fields__ref = {
+                            mutable __split_fields__content : __split_fields
+                            }
+  
+  function __split_fields__ref___split_fields__content__projection (a: __split_fields__ref) : __split_fields =
+    __split_fields__content a
+  
+  meta "model_projection" function __split_fields__ref___split_fields__content__projection
+  
+  meta "inline:no" function __split_fields__ref___split_fields__content__projection
+  
+  val __split_fields__havoc (x: __split_fields__ref) : unit
+    writes { x }
+  
+  type __rep = { __split_fields : __split_fields }
+  
+  function __rep___split_fields__projection (a: __rep) : __split_fields =
+    __split_fields a
+  
+  meta "model_projection" function __rep___split_fields__projection
+  
+  meta "inline:no" function __rep___split_fields__projection
+  
+  function to_base (a: __rep) : __rep = a
+  
+  val to_base (a: __rep) : __rep
+    ensures { result = (to_base (a : __rep)) }
+  
+  function of_base (a: __rep) : __rep = a
+  
+  val of_base (a: __rep) : __rep
+    ensures { result = (of_base (a : __rep)) }
+  
+  predicate station__station_record__door1__pred (a: __rep) = true
+  
+  val station__station_record__door1__pred (a: __rep) : bool
+    ensures { result <-> (station__station_record__door1__pred (a : __rep)) }
+  
+  val rec__station__station_record__door1_ (a: __rep) : Station__airlock_door.airlock_door
+    requires { station__station_record__door1__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__door1)) }
+  
+  predicate station__station_record__door2__pred (a: __rep) = true
+  
+  val station__station_record__door2__pred (a: __rep) : bool
+    ensures { result <-> (station__station_record__door2__pred (a : __rep)) }
+  
+  val rec__station__station_record__door2_ (a: __rep) : Station__airlock_door.airlock_door
+    requires { station__station_record__door2__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__door2)) }
+  
+  predicate station__station_record__altitude__pred (a: __rep) = true
+  
+  val station__station_record__altitude__pred (a: __rep) : bool
+    ensures { result
+                <->
+                (station__station_record__altitude__pred (a : __rep)) }
+  
+  val rec__station__station_record__altitude_ (a: __rep) : Station__station_record__T3s.t3s
+    requires { station__station_record__altitude__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__altitude)) }
+  
+  predicate station__station_record__modules__pred (a: __rep) = true
+  
+  val station__station_record__modules__pred (a: __rep) : bool
+    ensures { result <-> (station__station_record__modules__pred (a : __rep)) }
+  
+  val rec__station__station_record__modules_ (a: __rep) : Array__Int__Station__module.map
+    requires { station__station_record__modules__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__modules)) }
+  
+  predicate station__station_record__top_module_index__pred (a: __rep) = true
+  
+  val station__station_record__top_module_index__pred (a: __rep) : bool
+    ensures { result
+                <->
+                (station__station_record__top_module_index__pred (a : __rep)) }
+  
+  val rec__station__station_record__top_module_index_ (a: __rep) : Station__station_record__T4s.t4s
+    requires { station__station_record__top_module_index__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__top_module_index)) }
+  
+  function bool_eq (a: __rep) (b: __rep) : bool =
+    if ((((Station__airlock_door__rep.to_rep
+             ((__split_fields a).rec__station__station_record__door1))
+            = (Station__airlock_door__rep.to_rep
+                 ((__split_fields b).rec__station__station_record__door1))) /\
+           ((Station__airlock_door__rep.to_rep
+               ((__split_fields a).rec__station__station_record__door2))
+              = (Station__airlock_door__rep.to_rep
+                   ((__split_fields b).rec__station__station_record__door2)))) /\
+          ((((Station__station_record__T3s__rep.to_rep
+                ((__split_fields a).rec__station__station_record__altitude))
+               = (Station__station_record__T3s__rep.to_rep
+                    ((__split_fields b).rec__station__station_record__altitude))) /\
+              ((Station__module_array.bool_eq
+                  ((__split_fields a).rec__station__station_record__modules))
+                 ((__split_fields b).rec__station__station_record__modules))) /\
+             ((Station__station_record__T4s__rep.to_rep
+                 ((__split_fields a).rec__station__station_record__top_module_index))
+                = (Station__station_record__T4s__rep.to_rep
+                     ((__split_fields b).rec__station__station_record__top_module_index))))) then
+      True
+    else False
+  
+  val bool_eq (a: __rep) (b: __rep) : bool
+    ensures { result = ((bool_eq (a : __rep)) (b : __rep)) }
+end
+
+module Station__station_record
+  use export Station__station_record__rep
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type station_record = __rep
+  
+  val function value__size : int
+  
+  val function object__size : int
+  
+  val function alignment : int
+  
+  axiom value__size_axiom: (value__size >= (0 : int))
+  
+  axiom object__size_axiom: (object__size >= (0 : int))
+  
+  axiom alignment_axiom: (alignment >= (0 : int))
+  
+  val function station__station_record__door1__first__bit : int
+  
+  val function station__station_record__door1__last__bit : int
+  
+  val function station__station_record__door1__position : int
+  
+  axiom station__station_record__door1__first__bit_axiom:
+    (station__station_record__door1__first__bit >= (0 : int))
+  
+  axiom station__station_record__door1__last__bit_axiom:
+    (station__station_record__door1__last__bit
+       > station__station_record__door1__first__bit)
+  
+  axiom station__station_record__door1__position_axiom:
+    (station__station_record__door1__position >= (0 : int))
+  
+  val function station__station_record__door2__first__bit : int
+  
+  val function station__station_record__door2__last__bit : int
+  
+  val function station__station_record__door2__position : int
+  
+  axiom station__station_record__door2__first__bit_axiom:
+    (station__station_record__door2__first__bit >= (0 : int))
+  
+  axiom station__station_record__door2__last__bit_axiom:
+    (station__station_record__door2__last__bit
+       > station__station_record__door2__first__bit)
+  
+  axiom station__station_record__door2__position_axiom:
+    (station__station_record__door2__position >= (0 : int))
+  
+  val function station__station_record__altitude__first__bit : int
+  
+  val function station__station_record__altitude__last__bit : int
+  
+  val function station__station_record__altitude__position : int
+  
+  axiom station__station_record__altitude__first__bit_axiom:
+    (station__station_record__altitude__first__bit >= (0 : int))
+  
+  axiom station__station_record__altitude__last__bit_axiom:
+    (station__station_record__altitude__last__bit
+       > station__station_record__altitude__first__bit)
+  
+  axiom station__station_record__altitude__position_axiom:
+    (station__station_record__altitude__position >= (0 : int))
+  
+  val function station__station_record__modules__first__bit : int
+  
+  val function station__station_record__modules__last__bit : int
+  
+  val function station__station_record__modules__position : int
+  
+  axiom station__station_record__modules__first__bit_axiom:
+    (station__station_record__modules__first__bit >= (0 : int))
+  
+  axiom station__station_record__modules__last__bit_axiom:
+    (station__station_record__modules__last__bit
+       > station__station_record__modules__first__bit)
+  
+  axiom station__station_record__modules__position_axiom:
+    (station__station_record__modules__position >= (0 : int))
+  
+  val function station__station_record__top_module_index__first__bit : 
+    int
+  
+  val function station__station_record__top_module_index__last__bit : 
+    int
+  
+  val function station__station_record__top_module_index__position : 
+    int
+  
+  axiom station__station_record__top_module_index__first__bit_axiom:
+    (station__station_record__top_module_index__first__bit >= (0 : int))
+  
+  axiom station__station_record__top_module_index__last__bit_axiom:
+    (station__station_record__top_module_index__last__bit
+       > station__station_record__top_module_index__first__bit)
+  
+  axiom station__station_record__top_module_index__position_axiom:
+    (station__station_record__top_module_index__position >= (0 : int))
+  
+  val function user_eq (a: station_record) (b: station_record) : bool
+  
+  val function dummy : station_record
+  
+  type station_record__ref = {
+                            mutable station_record__content : station_record
+                            }
+  
+  function station_record__ref_station_record__content__projection (a: station_record__ref) : station_record =
+    a.station_record__content
+  
+  meta "model_projection" function station_record__ref_station_record__content__projection
+  
+  meta "inline:no" function station_record__ref_station_record__content__projection
+  
+  val station_record__havoc (x: station_record__ref) : unit
+    writes { x }
+end
+
+module Station__s
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__station_record as Station__station_record
+  
+  val s__split_fields : Station__station_record.__split_fields__ref
+end
+
+module Station__station_record___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__station_record as Station__station_record
+  use Station__airlock_door as Station__airlock_door
+  use Station__airlock_door__rep as Station__airlock_door__rep
+  use Station__station_record__T4s as Station__station_record__T4s
+  use Station__station_record__T4s__rep as Station__station_record__T4s__rep
+  
+  predicate dynamic_invariant (temp___expr_193: Station__station_record.station_record) (temp___is_init_189: bool) (temp___skip_constant_190: bool) (temp___do_toplevel_191: bool) (temp___do_typ_inv_192: bool) =
+    true
+  
+  val dynamic_invariant (temp___expr_193: Station__station_record.station_record) (temp___is_init_189: bool) (temp___skip_constant_190: bool) (temp___do_toplevel_191: bool) (temp___do_typ_inv_192: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant
+                       (temp___expr_193 :
+                          Station__station_record.station_record))
+                      (temp___is_init_189 : bool))
+                     (temp___skip_constant_190 : bool))
+                    (temp___do_toplevel_191 : bool))
+                   (temp___do_typ_inv_192 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_195: Station__station_record.station_record) (temp___skip_top_level_196: bool) =
+    (((if (Station__station_record.station__station_record__door1__pred
+             temp___expr_195) then
+         ((Station__airlock_door__rep.to_rep
+             ((Station__station_record.__split_fields temp___expr_195).
+                Station__station_record.rec__station__station_record__door1))
+            = (1 : int))
+       else true) /\
+        (if (Station__station_record.station__station_record__door2__pred
+               temp___expr_195) then
+           ((Station__airlock_door__rep.to_rep
+               ((Station__station_record.__split_fields temp___expr_195).
+                  Station__station_record.rec__station__station_record__door2))
+              = (1 : int))
+         else true)) /\
+       (if (Station__station_record.station__station_record__top_module_index__pred
+              temp___expr_195) then
+          ((Station__station_record__T4s__rep.to_rep
+              ((Station__station_record.__split_fields temp___expr_195).
+                 Station__station_record.rec__station__station_record__top_module_index))
+             = (0 : int))
+        else true))
+  
+  val default_initial_assumption (temp___expr_195: Station__station_record.station_record) (temp___skip_top_level_196: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption
+                    (temp___expr_195 : Station__station_record.station_record))
+                   (temp___skip_top_level_196 : bool)) }
+end
+
+module Station__sealedinvariant
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__station_record as Station__station_record
+  
+  val function sealedinvariant (Station__s___s__split_fields___: Station__station_record.__split_fields) : 
+    bool
+  
+  val predicate sealedinvariant__function_guard (temp___result_162: bool) (Station__s___s__split_fields___: 
+    Station__station_record.__split_fields)
+end
+
+module Station__sealedinvariant___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__s as Station__s
+  use Station__station_record as Station__station_record
+  use Station__station_record___axiom as Station__station_record___axiom
+  use Station__sealedinvariant as Station__sealedinvariant
+  use Station__airlock_door as Station__airlock_door
+  use Station__airlock_door__rep as Station__airlock_door__rep
+  
+  val sealedinvariant (__void_param: unit) : bool
+    reads { Station__s.s__split_fields }
+    requires { true }
+    writes {  }
+    ensures { (((result
+                   = (Station__sealedinvariant.sealedinvariant
+                        (Station__station_record.__split_fields__content
+                            Station__s.s__split_fields))) /\
+                  ((Station__sealedinvariant.sealedinvariant__function_guard
+                      result)
+                     (Station__station_record.__split_fields__content
+                         Station__s.s__split_fields))) /\
+                 (result
+                    = (((((Station__airlock_door__rep.to_rep
+                             ((Station__station_record.__split_fields
+                                  { Station__station_record.__split_fields =
+                                      (Station__station_record.__split_fields__content
+                                          Station__s.s__split_fields) }).
+                                Station__station_record.rec__station__station_record__door1))
+                            = (0 : int)) /\
+                           ((Station__airlock_door__rep.to_rep
+                               ((Station__station_record.__split_fields
+                                    { Station__station_record.__split_fields =
+                                        (Station__station_record.__split_fields__content
+                                            Station__s.s__split_fields) }).
+                                  Station__station_record.rec__station__station_record__door2))
+                              = (1 : int))) \/
+                          (((Station__airlock_door__rep.to_rep
+                               ((Station__station_record.__split_fields
+                                    { Station__station_record.__split_fields =
+                                        (Station__station_record.__split_fields__content
+                                            Station__s.s__split_fields) }).
+                                  Station__station_record.rec__station__station_record__door1))
+                              = (1 : int)) /\
+                             ((Station__airlock_door__rep.to_rep
+                                 ((Station__station_record.__split_fields
+                                      { Station__station_record.__split_fields =
+                                          (Station__station_record.__split_fields__content
+                                              Station__s.s__split_fields) }).
+                                    Station__station_record.rec__station__station_record__door2))
+                                = (0 : int)))) \/
+                         (((Station__airlock_door__rep.to_rep
+                              ((Station__station_record.__split_fields
+                                   { Station__station_record.__split_fields =
+                                       (Station__station_record.__split_fields__content
+                                           Station__s.s__split_fields) }).
+                                 Station__station_record.rec__station__station_record__door1))
+                             = (1 : int)) /\
+                            ((Station__airlock_door__rep.to_rep
+                                ((Station__station_record.__split_fields
+                                     { Station__station_record.__split_fields =
+                                         (Station__station_record.__split_fields__content
+                                             Station__s.s__split_fields) }).
+                                   Station__station_record.rec__station__station_record__door2))
+                               = (1 : int)))))) }
+  
+  axiom sealedinvariant__post_axiom:
+    forall Station__s___s__split_fields___ : Station__station_record.__split_fields
+          [Station__sealedinvariant.sealedinvariant
+             Station__s___s__split_fields___].
+      ((((((Station__station_record___axiom.dynamic_invariant
+              { Station__station_record.__split_fields =
+                  Station__s___s__split_fields___ })
+             True)
+            True)
+           True)
+          True) ->
+         (let result =
+            Station__sealedinvariant.sealedinvariant
+              Station__s___s__split_fields___ in
+          if ((Station__sealedinvariant.sealedinvariant__function_guard
+                 result)
+                Station__s___s__split_fields___) then
+            ((true /\ true) /\ true)
+          else true))
+  
+  axiom sealedinvariant__def_axiom:
+    forall Station__s___s__split_fields___ : Station__station_record.__split_fields
+          [Station__sealedinvariant.sealedinvariant
+             Station__s___s__split_fields___].
+      ((Station__sealedinvariant.sealedinvariant
+          Station__s___s__split_fields___)
+         = (((((Station__airlock_door__rep.to_rep
+                  ((Station__station_record.__split_fields
+                       { Station__station_record.__split_fields =
+                           Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door1))
+                 = (0 : int)) /\
+                ((Station__airlock_door__rep.to_rep
+                    ((Station__station_record.__split_fields
+                         { Station__station_record.__split_fields =
+                             Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door2))
+                   = (1 : int))) \/
+               (((Station__airlock_door__rep.to_rep
+                    ((Station__station_record.__split_fields
+                         { Station__station_record.__split_fields =
+                             Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door1))
+                   = (1 : int)) /\
+                  ((Station__airlock_door__rep.to_rep
+                      ((Station__station_record.__split_fields
+                           { Station__station_record.__split_fields =
+                               Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door2))
+                     = (0 : int)))) \/
+              (((Station__airlock_door__rep.to_rep
+                   ((Station__station_record.__split_fields
+                        { Station__station_record.__split_fields =
+                            Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door1))
+                  = (1 : int)) /\
+                 ((Station__airlock_door__rep.to_rep
+                     ((Station__station_record.__split_fields
+                          { Station__station_record.__split_fields =
+                              Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door2))
+                    = (1 : int)))))
+end
+
+module Station__remove_top_module__s
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__station_record as Station__station_record
+  
+  val s__split_fields : Station__station_record.__split_fields__ref
+end
+
+module Station__remove_top_module__B_2__non_empty_found
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val non_empty_found : bool__ref
+end
+
+module Station__remove_top_module__B_2__L_3__i
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val i : int__ref
+end
+
+module Station__remove_top_module__L_4__i
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val i : int__ref
+end
+
+module Station__remove_top_module__B_2__L_3
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  exception L_3
+end
+
+module Station__remove_top_module__L_4
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  exception L_4
+end
+
+module Station__remove_top_module__B_2__non_empty_found___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__remove_top_module__B_2__L_3__i___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__remove_top_module__L_4__i___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__remove_top_module__B_2__L_3___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__remove_top_module__L_4___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__airlock_door___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__airlock_door as Station__airlock_door
+  
+  predicate dynamic_invariant (temp___expr_169: int) (temp___is_init_165: bool) (temp___skip_constant_166: bool) (temp___do_toplevel_167: bool) (temp___do_typ_inv_168: bool) =
+    if ((temp___is_init_165 = True) \/
+          (Station__airlock_door.first <= Station__airlock_door.last)) then
+      (((Station__airlock_door.dynamic_property Station__airlock_door.first)
+          Station__airlock_door.last)
+         temp___expr_169)
+    else true
+  
+  val dynamic_invariant (temp___expr_169: int) (temp___is_init_165: bool) (temp___skip_constant_166: bool) (temp___do_toplevel_167: bool) (temp___do_typ_inv_168: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_169 : int))
+                      (temp___is_init_165 : bool))
+                     (temp___skip_constant_166 : bool))
+                    (temp___do_toplevel_167 : bool))
+                   (temp___do_typ_inv_168 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_170: int) (temp___skip_top_level_171: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_170: int) (temp___skip_top_level_171: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_170 : int))
+                   (temp___skip_top_level_171 : bool)) }
+end
+
+module Station__module___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__module as Station__module
+  
+  predicate dynamic_invariant (temp___expr_176: int) (temp___is_init_172: bool) (temp___skip_constant_173: bool) (temp___do_toplevel_174: bool) (temp___do_typ_inv_175: bool) =
+    if ((temp___is_init_172 = True) \/
+          (Station__module.first <= Station__module.last)) then
+      (((Station__module.dynamic_property Station__module.first)
+          Station__module.last)
+         temp___expr_176)
+    else true
+  
+  val dynamic_invariant (temp___expr_176: int) (temp___is_init_172: bool) (temp___skip_constant_173: bool) (temp___do_toplevel_174: bool) (temp___do_typ_inv_175: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_176 : int))
+                      (temp___is_init_172 : bool))
+                     (temp___skip_constant_173 : bool))
+                    (temp___do_toplevel_174 : bool))
+                   (temp___do_typ_inv_175 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_177: int) (temp___skip_top_level_178: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_177: int) (temp___skip_top_level_178: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_177 : int))
+                   (temp___skip_top_level_178 : bool)) }
+end
+
+module Station__module_array___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  
+  predicate dynamic_invariant (temp___expr_183: Array__Int__Station__module.map) (temp___is_init_179: bool) (temp___skip_constant_180: bool) (temp___do_toplevel_181: bool) (temp___do_typ_inv_182: bool) =
+    true
+  
+  val dynamic_invariant (temp___expr_183: Array__Int__Station__module.map) (temp___is_init_179: bool) (temp___skip_constant_180: bool) (temp___do_toplevel_181: bool) (temp___do_typ_inv_182: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant
+                       (temp___expr_183 : Array__Int__Station__module.map))
+                      (temp___is_init_179 : bool))
+                     (temp___skip_constant_180 : bool))
+                    (temp___do_toplevel_181 : bool))
+                   (temp___do_typ_inv_182 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_185: Array__Int__Station__module.map) (temp___skip_top_level_186: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_185: Array__Int__Station__module.map) (temp___skip_top_level_186: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption
+                    (temp___expr_185 : Array__Int__Station__module.map))
+                   (temp___skip_top_level_186 : bool)) }
+end
+
+module Station__s___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__remove_top_module__s___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__station_record__T3s___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__station_record__T4s___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__remove_top_module__subprogram_def
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  use _gnatprove_standard.Boolean as Boolean
+  use Station__s as Station__s
+  use Station__station_record as Station__station_record
+  use Station__station_record___axiom as Station__station_record___axiom
+  use Station__sealedinvariant as Station__sealedinvariant
+  use Station__sealedinvariant___axiom as Station__sealedinvariant___axiom
+  use Station__remove_top_module__s as Station__remove_top_module__s
+  use Station__remove_top_module__B_2__non_empty_found as Station__remove_top_module__B_2__non_empty_found
+  use Station__remove_top_module__B_2__L_3__i as Station__remove_top_module__B_2__L_3__i
+  use Station__remove_top_module__L_4__i as Station__remove_top_module__L_4__i
+  use Station__module as Station__module
+  use Station__module__rep as Station__module__rep
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Station__station_record__T4s as Station__station_record__T4s
+  use Station__station_record__T4s__rep as Station__station_record__T4s__rep
+  use Station__remove_top_module__B_2__L_3 as Station__remove_top_module__B_2__L_3
+  use Station__remove_top_module__L_4 as Station__remove_top_module__L_4
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Station__remove_top_module__B_2__non_empty_found___axiom as Station__remove_top_module__B_2__non_empty_found___axiom
+  use Station__remove_top_module__B_2__L_3__i___axiom as Station__remove_top_module__B_2__L_3__i___axiom
+  use Station__remove_top_module__L_4__i___axiom as Station__remove_top_module__L_4__i___axiom
+  use Station__remove_top_module__B_2__L_3___axiom as Station__remove_top_module__B_2__L_3___axiom
+  use Station__remove_top_module__L_4___axiom as Station__remove_top_module__L_4___axiom
+  use Station__airlock_door___axiom as Station__airlock_door___axiom
+  use Station__module___axiom as Station__module___axiom
+  use Station__module_array___axiom as Station__module_array___axiom
+  use Station__station_record___axiom as Station__station_record___axiom
+  use Station__s___axiom as Station__s___axiom
+  use Station__sealedinvariant___axiom as Station__sealedinvariant___axiom
+  use Station__remove_top_module__s___axiom as Station__remove_top_module__s___axiom
+  use Station__station_record__T3s___axiom as Station__station_record__T3s___axiom
+  use Station__station_record__T4s___axiom as Station__station_record__T4s___axiom
+  
+  let def (__void_param : unit)
+    requires { [#"station.ads" 55 0 0] true }
+    ensures { [#"station.ads" 55 0 0]
+              [#"station.ads" 57 0 0]
+              [@GP_Reason:VC_POSTCONDITION]
+              [@GP_Id:13]
+              [@GP_Sloc:station.ads:57:19]
+              [@model_vc_post]
+              [@comment:          Post => (S.Top_Module_Index = S'Old.Top_Module_Index - 1) and SealedInvariant;                   ^ station.ads:57:19:VC_POSTCONDITION]
+              [@GP_Shape:pragargs__and]
+              (([@GP_Sloc:station.ads:57:19]
+                [@GP_Pretty_Ada:1482]
+                ((Station__station_record__T4s__rep.to_rep
+                    ((Station__station_record.__split_fields
+                         { Station__station_record.__split_fields =
+                             (Station__station_record.__split_fields__content
+                                 Station__remove_top_module__s.s__split_fields) }).
+                       Station__station_record.rec__station__station_record__top_module_index))
+                   = ((Station__station_record__T4s__rep.to_rep
+                         ((Station__station_record.__split_fields
+                              (old { Station__station_record.__split_fields =
+                                       (Station__station_record.__split_fields__content
+                                           Station__remove_top_module__s.s__split_fields) })).
+                            Station__station_record.rec__station__station_record__top_module_index))
+                        - (1 : int)))) /\
+                 ([@GP_Sloc:station.ads:57:73]
+                  [@GP_Pretty_Ada:1489]
+                  ((epsilon temp___result_369: bool.
+                      ((temp___result_369
+                          = (Station__sealedinvariant.sealedinvariant
+                               (Station__station_record.__split_fields__content
+                                   Station__s.s__split_fields))) /\
+                         ((Station__sealedinvariant.sealedinvariant__function_guard
+                             temp___result_369)
+                            (Station__station_record.__split_fields__content
+                                Station__s.s__split_fields))))
+                     = True))) }
+  = [@vc:divergent]
+    (([@GNAT-comment:Assume dynamic invariants of inputs of the subprogram station.ads:55]
+      ());
+     assume {
+       ((((Station__station_record___axiom.dynamic_invariant
+             { Station__station_record.__split_fields =
+                 (Station__station_record.__split_fields__content
+                     Station__s.s__split_fields) })
+            True)
+           False)
+          True)
+         True };
+     assume {
+       ((((Station__station_record___axiom.dynamic_invariant
+             { Station__station_record.__split_fields =
+                 (Station__station_record.__split_fields__content
+                     Station__remove_top_module__s.s__split_fields) })
+            True)
+           False)
+          True)
+         True };
+     ([@GNAT-comment:Assume moved pointers in outputs of the subprogram station.ads:55]
+      ());
+     ([@GNAT-comment:Check for RTE in the Pre of the subprogram station.ads:55]
+      ());
+     (begin
+        ensures { true }
+        let _ =
+          let _ =
+            (Boolean.andb
+               (Station__sealedinvariant___axiom.sealedinvariant ()))
+              ((Station__station_record__T4s__rep.to_rep
+                  ((Station__station_record.__split_fields
+                       { Station__station_record.__split_fields =
+                           (Station__station_record.__split_fields__content
+                               Station__remove_top_module__s.s__split_fields) }).
+                     Station__station_record.rec__station__station_record__top_module_index))
+                 > (0 : int)) in
+          () in
+        ()
+      end);
+     ([@GNAT-comment:Assume Pre of the subprogram station.ads:55] ());
+     assume {
+       (([@GP_Pretty_Ada:1468]
+         ((epsilon temp___result_368: bool.
+             ((temp___result_368
+                 = (Station__sealedinvariant.sealedinvariant
+                      (Station__station_record.__split_fields__content
+                          Station__s.s__split_fields))) /\
+                ((Station__sealedinvariant.sealedinvariant__function_guard
+                    temp___result_368)
+                   (Station__station_record.__split_fields__content
+                       Station__s.s__split_fields))))
+            = True)) /\
+          ([@GP_Pretty_Ada:1474]
+           ((Station__station_record__T4s__rep.to_rep
+               ((Station__station_record.__split_fields
+                    { Station__station_record.__split_fields =
+                        (Station__station_record.__split_fields__content
+                            Station__remove_top_module__s.s__split_fields) }).
+                  Station__station_record.rec__station__station_record__top_module_index))
+              > (0 : int)))) };
+     (let temp___old_365 =
+        { Station__station_record.__split_fields =
+            (Station__station_record.__split_fields__content
+                Station__remove_top_module__s.s__split_fields) } in
+      (try
+         ([#"station.adb" 87 0 0] ());
+         ([#"station.adb" 102 0 0] ());
+         ([@GP_Sloc:station.adb:87:4]
+          [#"station.adb" 87 0 0]
+          (([#"station.adb" 88 0 0]
+            [#"station.adb" 88 0 0]
+            (Station__remove_top_module__B_2__non_empty_found.non_empty_found.bool__content <-
+               (Boolean.of_int (0 : int))));
+           ([#"station.adb" 90 0 0] ());
+           ([@GP_Sloc:station.adb:90:32]
+            [#"station.adb" 90 0 0]
+            (let temp___351 = 1 : int in
+             let temp___352 = 3 : int in
+             ([@GNAT-comment:Translation of an unrolled Ada loop from station.adb:90]
+              ());
+             ([#"station.adb" 90 0 0]
+              (try
+                 ([@GNAT-comment:Unrolling of the loop statements of loop station.adb:90]
+                  ());
+                 ([#"station.adb" 90 0 0]
+                  (Station__remove_top_module__B_2__L_3__i.i.int__content <-
+                     (1 : int)));
+                 ([@GP_Sloc:station.adb:91:10]
+                  [#"station.adb" 91 0 0]
+                  (if (([#"station.adb" 91 0 0]
+                        [#"station.adb" 91 0 0]
+                        (([@branch_id=1113] Main.spark__branch).bool__content <-
+                           ((Station__module__rep.to_rep
+                               (let temp___354 =
+                                  (Station__station_record.__split_fields
+                                      { Station__station_record.__split_fields =
+                                          (Station__station_record.__split_fields__content
+                                              Station__remove_top_module__s.s__split_fields) }).
+                                    Station__station_record.rec__station__station_record__modules in
+                                (Array__Int__Station__module.get temp___354)
+                                  (Station__remove_top_module__B_2__L_3__i.i.int__content)))
+                              <> (3 : int))));
+                       (([@branch_id=1113] Main.spark__branch).bool__content)) then
+                     (([@GP_Sloc:station.adb:92:13]
+                       [#"station.adb" 92 0 0] ());
+                      ([@GP_Sloc:station.adb:92:29]
+                       [#"station.adb" 92 0 0]
+                       [#"station.adb" 92 0 0]
+                       (Station__remove_top_module__B_2__non_empty_found.non_empty_found.bool__content <-
+                          (Boolean.of_int (1 : int))));
+                      ([@GP_Sloc:station.adb:93:13]
+                       [#"station.adb" 93 0 0]
+                       [#"station.adb" 93 0 0]
+                       (raise Station__remove_top_module__B_2__L_3.L_3)))
+                   else ()));
+                 (Station__remove_top_module__B_2__L_3__i.i.int__content <-
+                    (2 : int));
+                 ([@GP_Sloc:station.adb:91:10]
+                  [#"station.adb" 91 0 0]
+                  (if (([#"station.adb" 91 0 0]
+                        [#"station.adb" 91 0 0]
+                        (([@branch_id=1113] Main.spark__branch).bool__content <-
+                           ((Station__module__rep.to_rep
+                               (let temp___354 =
+                                  (Station__station_record.__split_fields
+                                      { Station__station_record.__split_fields =
+                                          (Station__station_record.__split_fields__content
+                                              Station__remove_top_module__s.s__split_fields) }).
+                                    Station__station_record.rec__station__station_record__modules in
+                                (Array__Int__Station__module.get temp___354)
+                                  (Station__remove_top_module__B_2__L_3__i.i.int__content)))
+                              <> (3 : int))));
+                       (([@branch_id=1113] Main.spark__branch).bool__content)) then
+                     (([@GP_Sloc:station.adb:92:13]
+                       [#"station.adb" 92 0 0] ());
+                      ([@GP_Sloc:station.adb:92:29]
+                       [#"station.adb" 92 0 0]
+                       [#"station.adb" 92 0 0]
+                       (Station__remove_top_module__B_2__non_empty_found.non_empty_found.bool__content <-
+                          (Boolean.of_int (1 : int))));
+                      ([@GP_Sloc:station.adb:93:13]
+                       [#"station.adb" 93 0 0]
+                       [#"station.adb" 93 0 0]
+                       (raise Station__remove_top_module__B_2__L_3.L_3)))
+                   else ()));
+                 (Station__remove_top_module__B_2__L_3__i.i.int__content <-
+                    (3 : int));
+                 ([@GP_Sloc:station.adb:91:10]
+                  [#"station.adb" 91 0 0]
+                  (if (([#"station.adb" 91 0 0]
+                        [#"station.adb" 91 0 0]
+                        (([@branch_id=1113] Main.spark__branch).bool__content <-
+                           ((Station__module__rep.to_rep
+                               (let temp___354 =
+                                  (Station__station_record.__split_fields
+                                      { Station__station_record.__split_fields =
+                                          (Station__station_record.__split_fields__content
+                                              Station__remove_top_module__s.s__split_fields) }).
+                                    Station__station_record.rec__station__station_record__modules in
+                                (Array__Int__Station__module.get temp___354)
+                                  (Station__remove_top_module__B_2__L_3__i.i.int__content)))
+                              <> (3 : int))));
+                       (([@branch_id=1113] Main.spark__branch).bool__content)) then
+                     (([@GP_Sloc:station.adb:92:13]
+                       [#"station.adb" 92 0 0] ());
+                      ([@GP_Sloc:station.adb:92:29]
+                       [#"station.adb" 92 0 0]
+                       [#"station.adb" 92 0 0]
+                       (Station__remove_top_module__B_2__non_empty_found.non_empty_found.bool__content <-
+                          (Boolean.of_int (1 : int))));
+                      ([@GP_Sloc:station.adb:93:13]
+                       [#"station.adb" 93 0 0]
+                       [#"station.adb" 93 0 0]
+                       (raise Station__remove_top_module__B_2__L_3.L_3)))
+                   else ()))
+               with Station__remove_top_module__B_2__L_3.L_3 -> ()
+               end))));
+           ([@GP_Sloc:station.adb:96:14] [#"station.adb" 96 0 0] ());
+           ([@GP_Sloc:station.adb:96:7]
+            [#"station.adb" 96 0 0]
+            (if (([#"station.adb" 96 0 0]
+                  [#"station.adb" 96 0 0]
+                  (([@branch_id=1126] Main.spark__branch).bool__content <-
+                     (not (Station__remove_top_module__B_2__non_empty_found.non_empty_found.bool__content))));
+                 (([@branch_id=1126] Main.spark__branch).bool__content)) then
+               ([@GP_Sloc:station.adb:97:10]
+                [#"station.adb" 97 0 0]
+                [#"station.adb" 97 0 0]
+                [@GP_Id:12]
+                [@GP_Reason:VC_RAISE]
+                [@vc:annotation]
+                [@GP_Sloc:station.adb:97:10]
+                [@comment:         raise Program_Error with "Cannot remove top module as there are no non-empty modules.";          ^ station.adb:97:10:VC_RAISE]
+                [@GP_Shape:B_2_declblk__if__raise_program_error] absurd)
+             else ()))));
+         ([@GP_Sloc:station.adb:102:37]
+          [#"station.adb" 102 0 0]
+          (let temp___355 = 1 : int in
+           let temp___356 = 3 : int in
+           ([@GNAT-comment:Translation of an unrolled Ada loop from station.adb:102]
+            ());
+           ([#"station.adb" 102 0 0]
+            (try
+               let temp___loop_entry_362 =
+                 { Station__station_record.__split_fields =
+                     (Station__station_record.__split_fields__content
+                         Station__remove_top_module__s.s__split_fields) } in
+               ([@GNAT-comment:Unrolling of the loop statements of loop station.adb:102]
+                ());
+               ([#"station.adb" 102 0 0]
+                (Station__remove_top_module__L_4__i.i.int__content <-
+                   (3 : int)));
+               ([@GP_Sloc:station.adb:103:7]
+                [#"station.adb" 103 0 0]
+                (if (([#"station.adb" 103 0 0]
+                      [#"station.adb" 103 0 0]
+                      (([@branch_id=1142] Main.spark__branch).bool__content <-
+                         ((Station__module__rep.to_rep
+                             (let temp___361 =
+                                (Station__station_record.__split_fields
+                                    { Station__station_record.__split_fields =
+                                        (Station__station_record.__split_fields__content
+                                            Station__remove_top_module__s.s__split_fields) }).
+                                  Station__station_record.rec__station__station_record__modules in
+                              (Array__Int__Station__module.get temp___361)
+                                (Station__remove_top_module__L_4__i.i.int__content)))
+                            <> (3 : int))));
+                     (([@branch_id=1142] Main.spark__branch).bool__content)) then
+                   (([@GP_Sloc:station.adb:104:23]
+                     [#"station.adb" 104 0 0]
+                     (let temp___360 =
+                        let temp___359 =
+                          { Station__station_record.__split_fields =
+                              (Station__station_record.__split_fields__content
+                                  Station__remove_top_module__s.s__split_fields) } in
+                        ([#"station.adb" 104 0 0]
+                         (begin
+                            ensures { true }
+                            let _ =
+                              let _ =
+                                (Station__station_record.__split_fields
+                                    temp___359).Station__station_record.rec__station__station_record__modules in
+                              () in
+                            ()
+                          end));
+                        ({ temp___359 with
+                           Station__station_record.__split_fields =
+                             ({ (Station__station_record.__split_fields
+                                    temp___359) with
+                                Station__station_record.rec__station__station_record__modules =
+                                  (let temp___358 =
+                                     (Station__station_record.__split_fields
+                                         { Station__station_record.__split_fields =
+                                             (Station__station_record.__split_fields__content
+                                                 Station__remove_top_module__s.s__split_fields) }).
+                                       Station__station_record.rec__station__station_record__modules in
+                                   ((Array__Int__Station__module.set
+                                       ((Station__station_record.__split_fields
+                                            { Station__station_record.__split_fields =
+                                                (Station__station_record.__split_fields__content
+                                                    Station__remove_top_module__s.s__split_fields) }).
+                                          Station__station_record.rec__station__station_record__modules))
+                                      (Station__remove_top_module__L_4__i.i.int__content))
+                                     (Station__module__rep.of_rep (3 : int))) }) }) in
+                      [#"station.adb" 104 0 0]
+                      (Station__remove_top_module__s.s__split_fields.
+                         Station__station_record.__split_fields__content <-
+                         (Station__station_record.__split_fields temp___360))));
+                    ([@GP_Sloc:station.adb:105:10]
+                     [#"station.adb" 105 0 0]
+                     [#"station.adb" 105 0 0]
+                     (raise Station__remove_top_module__L_4.L_4)))
+                 else ()));
+               (Station__remove_top_module__L_4__i.i.int__content <-
+                  (2 : int));
+               ([@GP_Sloc:station.adb:103:7]
+                [#"station.adb" 103 0 0]
+                (if (([#"station.adb" 103 0 0]
+                      [#"station.adb" 103 0 0]
+                      (([@branch_id=1142] Main.spark__branch).bool__content <-
+                         ((Station__module__rep.to_rep
+                             (let temp___361 =
+                                (Station__station_record.__split_fields
+                                    { Station__station_record.__split_fields =
+                                        (Station__station_record.__split_fields__content
+                                            Station__remove_top_module__s.s__split_fields) }).
+                                  Station__station_record.rec__station__station_record__modules in
+                              (Array__Int__Station__module.get temp___361)
+                                (Station__remove_top_module__L_4__i.i.int__content)))
+                            <> (3 : int))));
+                     (([@branch_id=1142] Main.spark__branch).bool__content)) then
+                   (([@GP_Sloc:station.adb:104:23]
+                     [#"station.adb" 104 0 0]
+                     (let temp___360 =
+                        let temp___359 =
+                          { Station__station_record.__split_fields =
+                              (Station__station_record.__split_fields__content
+                                  Station__remove_top_module__s.s__split_fields) } in
+                        ([#"station.adb" 104 0 0]
+                         (begin
+                            ensures { true }
+                            let _ =
+                              let _ =
+                                (Station__station_record.__split_fields
+                                    temp___359).Station__station_record.rec__station__station_record__modules in
+                              () in
+                            ()
+                          end));
+                        ({ temp___359 with
+                           Station__station_record.__split_fields =
+                             ({ (Station__station_record.__split_fields
+                                    temp___359) with
+                                Station__station_record.rec__station__station_record__modules =
+                                  (let temp___358 =
+                                     (Station__station_record.__split_fields
+                                         { Station__station_record.__split_fields =
+                                             (Station__station_record.__split_fields__content
+                                                 Station__remove_top_module__s.s__split_fields) }).
+                                       Station__station_record.rec__station__station_record__modules in
+                                   ((Array__Int__Station__module.set
+                                       ((Station__station_record.__split_fields
+                                            { Station__station_record.__split_fields =
+                                                (Station__station_record.__split_fields__content
+                                                    Station__remove_top_module__s.s__split_fields) }).
+                                          Station__station_record.rec__station__station_record__modules))
+                                      (Station__remove_top_module__L_4__i.i.int__content))
+                                     (Station__module__rep.of_rep (3 : int))) }) }) in
+                      [#"station.adb" 104 0 0]
+                      (Station__remove_top_module__s.s__split_fields.
+                         Station__station_record.__split_fields__content <-
+                         (Station__station_record.__split_fields temp___360))));
+                    ([@GP_Sloc:station.adb:105:10]
+                     [#"station.adb" 105 0 0]
+                     [#"station.adb" 105 0 0]
+                     (raise Station__remove_top_module__L_4.L_4)))
+                 else ()));
+               (Station__remove_top_module__L_4__i.i.int__content <-
+                  (1 : int));
+               ([@GP_Sloc:station.adb:103:7]
+                [#"station.adb" 103 0 0]
+                (if (([#"station.adb" 103 0 0]
+                      [#"station.adb" 103 0 0]
+                      (([@branch_id=1142] Main.spark__branch).bool__content <-
+                         ((Station__module__rep.to_rep
+                             (let temp___361 =
+                                (Station__station_record.__split_fields
+                                    { Station__station_record.__split_fields =
+                                        (Station__station_record.__split_fields__content
+                                            Station__remove_top_module__s.s__split_fields) }).
+                                  Station__station_record.rec__station__station_record__modules in
+                              (Array__Int__Station__module.get temp___361)
+                                (Station__remove_top_module__L_4__i.i.int__content)))
+                            <> (3 : int))));
+                     (([@branch_id=1142] Main.spark__branch).bool__content)) then
+                   (([@GP_Sloc:station.adb:104:23]
+                     [#"station.adb" 104 0 0]
+                     (let temp___360 =
+                        let temp___359 =
+                          { Station__station_record.__split_fields =
+                              (Station__station_record.__split_fields__content
+                                  Station__remove_top_module__s.s__split_fields) } in
+                        ([#"station.adb" 104 0 0]
+                         (begin
+                            ensures { true }
+                            let _ =
+                              let _ =
+                                (Station__station_record.__split_fields
+                                    temp___359).Station__station_record.rec__station__station_record__modules in
+                              () in
+                            ()
+                          end));
+                        ({ temp___359 with
+                           Station__station_record.__split_fields =
+                             ({ (Station__station_record.__split_fields
+                                    temp___359) with
+                                Station__station_record.rec__station__station_record__modules =
+                                  (let temp___358 =
+                                     (Station__station_record.__split_fields
+                                         { Station__station_record.__split_fields =
+                                             (Station__station_record.__split_fields__content
+                                                 Station__remove_top_module__s.s__split_fields) }).
+                                       Station__station_record.rec__station__station_record__modules in
+                                   ((Array__Int__Station__module.set
+                                       ((Station__station_record.__split_fields
+                                            { Station__station_record.__split_fields =
+                                                (Station__station_record.__split_fields__content
+                                                    Station__remove_top_module__s.s__split_fields) }).
+                                          Station__station_record.rec__station__station_record__modules))
+                                      (Station__remove_top_module__L_4__i.i.int__content))
+                                     (Station__module__rep.of_rep (3 : int))) }) }) in
+                      [#"station.adb" 104 0 0]
+                      (Station__remove_top_module__s.s__split_fields.
+                         Station__station_record.__split_fields__content <-
+                         (Station__station_record.__split_fields temp___360))));
+                    ([@GP_Sloc:station.adb:105:10]
+                     [#"station.adb" 105 0 0]
+                     [#"station.adb" 105 0 0]
+                     (raise Station__remove_top_module__L_4.L_4)))
+                 else ()))
+             with Station__remove_top_module__L_4.L_4 -> ()
+             end))));
+         (raise Return__exc)
+       with Return__exc -> ()
+       end);
+      (begin
+         ensures { true }
+         let _ =
+           let _ =
+             (Boolean.andb
+                ((Station__station_record__T4s__rep.to_rep
+                    ((Station__station_record.__split_fields
+                         { Station__station_record.__split_fields =
+                             (Station__station_record.__split_fields__content
+                                 Station__remove_top_module__s.s__split_fields) }).
+                       Station__station_record.rec__station__station_record__top_module_index))
+                   = ((Station__station_record__T4s__rep.to_rep
+                         ((Station__station_record.__split_fields
+                              temp___old_365).Station__station_record.rec__station__station_record__top_module_index))
+                        - (1 : int))))
+               (Station__sealedinvariant___axiom.sealedinvariant ()) in
+           () in
+         ()
+       end)))
+end

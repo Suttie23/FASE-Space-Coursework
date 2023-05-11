@@ -1,0 +1,9 @@
+station.ads:48:39: error: no selector "Top_Module_Index" for type "Station_Record" defined at line 16
+station.ads:49:30: error: "I" is undefined (more references follow)
+station.ads:49:69: error: missing ")"
+station.ads:53:40: error: no selector "Top_Module_Index" for type "Station_Record" defined at line 16
+station.ads:53:67: error: no selector "Top_Module_Index" for type "Station_Record" defined at line 16
+station.ads:54:24: error: no selector "Top_Module_Index" for type "Station_Record" defined at line 16
+station.ads:54:52: error: no selector "Top_Module_Index" for type "Station_Record" defined at line 16
+station.ads:54:77: error: no selector "Top_Module_Index" for type "Station_Record" defined at line 16
+station.ads:54:105: error: no selector "Top_Module_Index" for type "Station_Record" defined at line 16

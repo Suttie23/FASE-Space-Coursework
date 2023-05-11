@@ -282,7 +282,6 @@ package body ada_main is
       E173 := E173 + 1;
       System.Tasking.Stages'Elab_Body;
       E161 := E161 + 1;
-      Station'Elab_Spec;
       E159 := E159 + 1;
    end adainit;
 

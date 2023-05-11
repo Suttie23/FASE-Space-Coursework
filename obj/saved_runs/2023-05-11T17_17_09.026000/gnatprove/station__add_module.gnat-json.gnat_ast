@@ -1,0 +1,1140 @@
+(* Module for axiomatizing type "airlock_door" defined at station.ads:9, created in Gnat2Why.Types.Translate_Type *)
+module Station__airlock_door
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  
+  type airlock_door  
+  
+  function   first () requires { True } ensures  { True } returns int = 0
+  
+  function   last () requires { True } ensures  { True } returns int = 1
+  
+  function   in_range (x : int) requires { True } ensures  { True } returns
+     = ((first <= x) /\ (x <= last))
+  
+  clone export ada__model.Static_Discrete with axiom . type t = airlock_door,
+    function first = first, function last = last,
+    predicate in_range = in_range
+  
+  type airlock_door__ref  = { mutable airlock_door__content : airlock_door }
+  
+  function   airlock_door__ref_airlock_door__content__projection
+    (a : airlock_door__ref) requires {  } ensures  {  } returns
+    airlock_door = a.airlock_door__content
+  
+  meta model_projection function airlock_door__ref_airlock_door__content__projection
+  
+  meta inline:no function airlock_door__ref_airlock_door__content__projection
+  
+  function   airlock_door__havoc (x : airlock_door__ref) requires {  }
+    ensures  {  } returns unit
+
+end
+
+(* Module defining to_rep/of_rep for type "airlock_door" defined at station.ads:9, created in Gnat2Why.Types.Translate_Type *)
+module Station__airlock_door__rep
+  
+  use        Station__airlock_door
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  clone export ada__model.Rep_Proj_Int with axiom . type t = Station__airlock_door.airlock_door,
+    predicate in_range = Station__airlock_door.in_range
+  
+  meta model_projection function to_rep
+  
+  meta inline:no function to_rep
+
+end
+
+(* Module for axiomatizing type "module" defined at station.ads:12, created in Gnat2Why.Types.Translate_Type *)
+module Station__module
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  
+  type module__  
+  
+  function   first () requires { True } ensures  { True } returns int = 0
+  
+  function   last () requires { True } ensures  { True } returns int = 3
+  
+  function   in_range (x : int) requires { True } ensures  { True } returns
+     = ((first <= x) /\ (x <= last))
+  
+  clone export ada__model.Static_Discrete with axiom . type t = module__,
+    function first = first, function last = last,
+    predicate in_range = in_range
+  
+  type module____ref  = { mutable module____content : module__ }
+  
+  function   module____ref_module____content__projection (a : module____ref)
+    requires {  } ensures  {  } returns module__ = a.module____content
+  
+  meta model_projection function module____ref_module____content__projection
+  
+  meta inline:no function module____ref_module____content__projection
+  
+  function   module____havoc (x : module____ref) requires {  } ensures  {  }
+    returns unit
+
+end
+
+(* Module defining to_rep/of_rep for type "module" defined at station.ads:12, created in Gnat2Why.Types.Translate_Type *)
+module Station__module__rep
+  
+  use        Station__module
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  clone export ada__model.Rep_Proj_Int with axiom . type t = Station__module.module__,
+    predicate in_range = Station__module.in_range
+  
+  meta model_projection function to_rep
+  
+  meta inline:no function to_rep
+
+end
+
+(* Module for axiomatizing the array theory associated to type "Tmodule_arrayB" defined at station.ads:13, created in Why.Gen.Arrays.Create_Rep_Array_Theory *)
+module Array__Int__Station__module
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  use        Station__module
+  use        Station__module__rep
+  
+  function   index_I1_one () requires { True } ensures  { True } returns
+    int = 1
+  
+  type component_type  = --pp_transparent_type_definition NOT IMPLEMENTED
+  
+  clone export _gnatprove_standard.Array__1 with axiom . type I1.t = int,
+    predicate I1.le = <=, predicate I1.lt = <, predicate I1.gt = >,
+    function I1.add = +, function I1.sub = -, function I1.one = index_I1_one,
+    type component_type = component_type
+  
+  function   bool_eq
+    (a : map a__first : int a__last : int b : map b__first : int
+    b__last : int) requires { True } ensures  { True } returns
+    bool = ((if (a__first <= a__last) then
+            ((b__first <= b__last) /\
+               ((a__last - a__first) = (b__last - b__first)))
+             else (b__first > b__last)) /\
+              --pp_universal_quantif NOT IMPLEMENTED)
+  
+  axiom bool_eq_rev : --pp_universal_quantif NOT IMPLEMENTED
+
+end
+
+(* Module for axiomatizing type "module_array" defined at station.ads:13, created in Gnat2Why.Types.Translate_Type *)
+module Station__module_array
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  use        Station__module
+  use        Array__Int__Station__module
+  
+  type component_type  = --pp_transparent_type_definition NOT IMPLEMENTED
+  
+  function   first () requires {  } ensures  {  } returns int = 1
+  
+  function   last () requires {  } ensures  {  } returns int = 3
+  
+  clone export ada__model.Constr_Array with axiom . type map = Array__Int__Station__module.map,
+    function array_bool_eq = Array__Int__Station__module.bool_eq,
+    function first = first, function last = last, type index_rep_type = int
+
+end
+
+(* Module for axiomatizing type "T3s" defined at station.ads:19, created in Gnat2Why.Types.Translate_Type *)
+module Station__station_record__T3s
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  
+  type t3s  = <range 820000 920000>
+  
+  function   first () requires { True } ensures  { True } returns
+    int = 820000
+  
+  function   last () requires { True } ensures  { True } returns int = 920000
+  
+  function   in_range (x : int) requires { True } ensures  { True } returns
+     = ((first <= x) /\ (x <= last))
+  
+  clone export ada__model.Static_Discrete with axiom . type t = t3s,
+    function first = first, function last = last,
+    predicate in_range = in_range
+  
+  type t3s__ref  = { mutable t3s__content : t3s }
+  
+  function   t3s__ref_t3s__content__projection (a : t3s__ref) requires {  }
+    ensures  {  } returns t3s = a.t3s__content
+  
+  meta model_projection function t3s__ref_t3s__content__projection
+  
+  meta inline:no function t3s__ref_t3s__content__projection
+  
+  function   t3s__havoc (x : t3s__ref) requires {  } ensures  {  } returns
+    unit
+
+end
+
+(* Module defining to_rep/of_rep for type "T3s" defined at station.ads:19, created in Gnat2Why.Types.Translate_Type *)
+module Station__station_record__T3s__rep
+  
+  use        Station__station_record__T3s
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  function   to_rep (x : Station__station_record__T3s.t3s) requires { True }
+    ensures  { True } returns int = (Station__station_record__T3s.t3s'int x)
+  
+  clone export ada__model.Rep_Proj_Int with axiom . type t = Station__station_record__T3s.t3s,
+    predicate in_range = Station__station_record__T3s.in_range,
+    function to_rep = to_rep
+  
+  meta model_projection function to_rep
+  
+  meta inline:no function to_rep
+
+end
+
+(* Module for axiomatizing type "T4s" defined at station.ads:21, created in Gnat2Why.Types.Translate_Type *)
+module Station__station_record__T4s
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  
+  type t4s  = <range 0 3>
+  
+  function   first () requires { True } ensures  { True } returns int = 0
+  
+  function   last () requires { True } ensures  { True } returns int = 3
+  
+  function   in_range (x : int) requires { True } ensures  { True } returns
+     = ((first <= x) /\ (x <= last))
+  
+  clone export ada__model.Static_Discrete with axiom . type t = t4s,
+    function first = first, function last = last,
+    predicate in_range = in_range
+  
+  type t4s__ref  = { mutable t4s__content : t4s }
+  
+  function   t4s__ref_t4s__content__projection (a : t4s__ref) requires {  }
+    ensures  {  } returns t4s = a.t4s__content
+  
+  meta model_projection function t4s__ref_t4s__content__projection
+  
+  meta inline:no function t4s__ref_t4s__content__projection
+  
+  function   t4s__havoc (x : t4s__ref) requires {  } ensures  {  } returns
+    unit
+
+end
+
+(* Module defining to_rep/of_rep for type "T4s" defined at station.ads:21, created in Gnat2Why.Types.Translate_Type *)
+module Station__station_record__T4s__rep
+  
+  use        Station__station_record__T4s
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  function   to_rep (x : Station__station_record__T4s.t4s) requires { True }
+    ensures  { True } returns int = (Station__station_record__T4s.t4s'int x)
+  
+  clone export ada__model.Rep_Proj_Int with axiom . type t = Station__station_record__T4s.t4s,
+    predicate in_range = Station__station_record__T4s.in_range,
+    function to_rep = to_rep
+  
+  meta model_projection function to_rep
+  
+  meta inline:no function to_rep
+
+end
+
+(* Module for axiomatizing the record theory associated to type "station_record" defined at station.ads:16, created in Why.Gen.Records.Create_Rep_Record_Theory_If_Needed *)
+module Station__station_record__rep
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use        Station__airlock_door
+  use        Station__airlock_door__rep
+  use        Station__module_array
+  use        Station__station_record__T3s
+  use        Station__station_record__T3s__rep
+  use        Station__station_record__T4s
+  use        Station__station_record__T4s__rep
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  
+  type __split_fields  = { [model_trace:.1193]
+                           [name:Door1]rec__station__station_record__door1 : Station__airlock_door.airlock_door;
+                           [model_trace:.1199]
+                           [name:Door2]rec__station__station_record__door2 : Station__airlock_door.airlock_door;
+                           [model_trace:.1204]
+                           [name:Altitude]rec__station__station_record__altitude : Station__station_record__T3s.t3s;
+                           [model_trace:.1213]
+                           [name:Modules]rec__station__station_record__modules : Array__Int__Station__module.map;
+                           [name:Top_Module_Index]
+                           [model_trace:.1217]rec__station__station_record__top_module_index : Station__station_record__T4s.t4s }
+  
+  function [model_trace:.1193] [name:Door1] 
+    __split_fields_rec__station__station_record__door1__projection
+    (a : __split_fields) requires {  } ensures  {  } returns
+    Station__airlock_door.airlock_door = a.rec__station__station_record__door1
+  
+  meta model_projection function __split_fields_rec__station__station_record__door1__projection
+  
+  meta inline:no function __split_fields_rec__station__station_record__door1__projection
+  
+  function [model_trace:.1199] [name:Door2] 
+    __split_fields_rec__station__station_record__door2__projection
+    (a : __split_fields) requires {  } ensures  {  } returns
+    Station__airlock_door.airlock_door = a.rec__station__station_record__door2
+  
+  meta model_projection function __split_fields_rec__station__station_record__door2__projection
+  
+  meta inline:no function __split_fields_rec__station__station_record__door2__projection
+  
+  function [model_trace:.1204] [name:Altitude] 
+    __split_fields_rec__station__station_record__altitude__projection
+    (a : __split_fields) requires {  } ensures  {  } returns
+    Station__station_record__T3s.t3s = a.rec__station__station_record__altitude
+  
+  meta model_projection function __split_fields_rec__station__station_record__altitude__projection
+  
+  meta inline:no function __split_fields_rec__station__station_record__altitude__projection
+  
+  function [model_trace:.1213] [name:Modules] 
+    __split_fields_rec__station__station_record__modules__projection
+    (a : __split_fields) requires {  } ensures  {  } returns
+    Array__Int__Station__module.map = a.rec__station__station_record__modules
+  
+  meta model_projection function __split_fields_rec__station__station_record__modules__projection
+  
+  meta inline:no function __split_fields_rec__station__station_record__modules__projection
+  
+  function [name:Top_Module_Index] [model_trace:.1217] 
+    __split_fields_rec__station__station_record__top_module_index__projection
+    (a : __split_fields) requires {  } ensures  {  } returns
+    Station__station_record__T4s.t4s = a.rec__station__station_record__top_module_index
+  
+  meta model_projection function __split_fields_rec__station__station_record__top_module_index__projection
+  
+  meta inline:no function __split_fields_rec__station__station_record__top_module_index__projection
+  
+  type __split_fields__ref  = { mutable __split_fields__content : __split_fields }
+  
+  function   __split_fields__ref___split_fields__content__projection
+    (a : __split_fields__ref) requires {  } ensures  {  } returns
+    __split_fields = a.__split_fields__content
+  
+  meta model_projection function __split_fields__ref___split_fields__content__projection
+  
+  meta inline:no function __split_fields__ref___split_fields__content__projection
+  
+  function   __split_fields__havoc (x : __split_fields__ref) requires {  }
+    ensures  {  } returns unit
+  
+  type __rep  = { __split_fields : __split_fields }
+  
+  function   __rep___split_fields__projection (a : __rep) requires {  }
+    ensures  {  } returns __split_fields = a.__split_fields
+  
+  meta model_projection function __rep___split_fields__projection
+  
+  meta inline:no function __rep___split_fields__projection
+  
+  function   to_base (a : __rep) requires { True } ensures  { True } returns
+    __rep = a
+  
+  function   of_base (a : __rep) requires { True } ensures  { True } returns
+    __rep = a
+  
+  function   station__station_record__door1__pred (a : __rep) requires
+    { True } ensures  { True } returns  = True
+  
+  function   rec__station__station_record__door1_ (a : __rep) requires
+    { (station__station_record__door1__pred a) } ensures 
+    { (result = a.__split_fields.rec__station__station_record__door1) }
+    returns Station__airlock_door.airlock_door
+  
+  function   station__station_record__door2__pred (a : __rep) requires
+    { True } ensures  { True } returns  = True
+  
+  function   rec__station__station_record__door2_ (a : __rep) requires
+    { (station__station_record__door2__pred a) } ensures 
+    { (result = a.__split_fields.rec__station__station_record__door2) }
+    returns Station__airlock_door.airlock_door
+  
+  function   station__station_record__altitude__pred (a : __rep) requires
+    { True } ensures  { True } returns  = True
+  
+  function   rec__station__station_record__altitude_ (a : __rep) requires
+    { (station__station_record__altitude__pred a) } ensures 
+    { (result = a.__split_fields.rec__station__station_record__altitude) }
+    returns Station__station_record__T3s.t3s
+  
+  function   station__station_record__modules__pred (a : __rep) requires
+    { True } ensures  { True } returns  = True
+  
+  function   rec__station__station_record__modules_ (a : __rep) requires
+    { (station__station_record__modules__pred a) } ensures 
+    { (result = a.__split_fields.rec__station__station_record__modules) }
+    returns Array__Int__Station__module.map
+  
+  function   station__station_record__top_module_index__pred (a : __rep)
+    requires { True } ensures  { True } returns  = True
+  
+  function   rec__station__station_record__top_module_index_ (a : __rep)
+    requires { (station__station_record__top_module_index__pred a) } ensures 
+    { (result
+         = a.__split_fields.rec__station__station_record__top_module_index) }
+    returns Station__station_record__T4s.t4s
+  
+  function   bool_eq (a : __rep b : __rep) requires { True } ensures 
+    { True } returns
+    bool = (if
+           (((Station__airlock_door__rep.to_rep
+                a.__split_fields.rec__station__station_record__door1)
+               = (Station__airlock_door__rep.to_rep
+                    b.__split_fields.rec__station__station_record__door1)) /\
+              ((Station__airlock_door__rep.to_rep
+                  a.__split_fields.rec__station__station_record__door2)
+                 = (Station__airlock_door__rep.to_rep
+                      b.__split_fields.rec__station__station_record__door2))
+              /\
+              ((Station__station_record__T3s__rep.to_rep
+                  a.__split_fields.rec__station__station_record__altitude)
+                 = (Station__station_record__T3s__rep.to_rep
+                      b.__split_fields.rec__station__station_record__altitude))
+              /\
+              (Station__module_array.bool_eq
+                 a.__split_fields.rec__station__station_record__modules
+                 b.__split_fields.rec__station__station_record__modules) /\
+              ((Station__station_record__T4s__rep.to_rep
+                  a.__split_fields.rec__station__station_record__top_module_index)
+                 = (Station__station_record__T4s__rep.to_rep
+                      b.__split_fields.rec__station__station_record__top_module_index)))
+           then True  else False)
+
+end
+
+(* Module for axiomatizing type "station_record" defined at station.ads:16, created in Gnat2Why.Types.Translate_Type *)
+module Station__station_record
+  
+  use export Station__station_record__rep
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  
+  type station_record  = --pp_transparent_type_definition NOT IMPLEMENTED
+  
+  function   value__size () requires {  } ensures  {  } returns int
+  
+  function   object__size () requires {  } ensures  {  } returns int
+  
+  function   alignment () requires {  } ensures  {  } returns int
+  
+  axiom value__size_axiom : ((value__size ) >= 0)
+  
+  axiom object__size_axiom : ((object__size ) >= 0)
+  
+  axiom alignment_axiom : ((alignment ) >= 0)
+  
+  function   station__station_record__door1__first__bit () requires {  }
+    ensures  {  } returns int
+  
+  function   station__station_record__door1__last__bit () requires {  }
+    ensures  {  } returns int
+  
+  function   station__station_record__door1__position () requires {  }
+    ensures  {  } returns int
+  
+  axiom station__station_record__door1__first__bit_axiom : ((station__station_record__door1__first__bit
+                                                               ) >= 0)
+  
+  axiom station__station_record__door1__last__bit_axiom : ((station__station_record__door1__last__bit
+                                                              )
+                                                             > (station__station_record__door1__first__bit
+                                                                  ))
+  
+  axiom station__station_record__door1__position_axiom : ((station__station_record__door1__position
+                                                             ) >= 0)
+  
+  function   station__station_record__door2__first__bit () requires {  }
+    ensures  {  } returns int
+  
+  function   station__station_record__door2__last__bit () requires {  }
+    ensures  {  } returns int
+  
+  function   station__station_record__door2__position () requires {  }
+    ensures  {  } returns int
+  
+  axiom station__station_record__door2__first__bit_axiom : ((station__station_record__door2__first__bit
+                                                               ) >= 0)
+  
+  axiom station__station_record__door2__last__bit_axiom : ((station__station_record__door2__last__bit
+                                                              )
+                                                             > (station__station_record__door2__first__bit
+                                                                  ))
+  
+  axiom station__station_record__door2__position_axiom : ((station__station_record__door2__position
+                                                             ) >= 0)
+  
+  function   station__station_record__altitude__first__bit () requires {  }
+    ensures  {  } returns int
+  
+  function   station__station_record__altitude__last__bit () requires {  }
+    ensures  {  } returns int
+  
+  function   station__station_record__altitude__position () requires {  }
+    ensures  {  } returns int
+  
+  axiom station__station_record__altitude__first__bit_axiom : ((station__station_record__altitude__first__bit
+                                                                  ) >= 0)
+  
+  axiom station__station_record__altitude__last__bit_axiom : ((station__station_record__altitude__last__bit
+                                                                 )
+                                                                > (station__station_record__altitude__first__bit
+                                                                    ))
+  
+  axiom station__station_record__altitude__position_axiom : ((station__station_record__altitude__position
+                                                                ) >= 0)
+  
+  function   station__station_record__modules__first__bit () requires {  }
+    ensures  {  } returns int
+  
+  function   station__station_record__modules__last__bit () requires {  }
+    ensures  {  } returns int
+  
+  function   station__station_record__modules__position () requires {  }
+    ensures  {  } returns int
+  
+  axiom station__station_record__modules__first__bit_axiom : ((station__station_record__modules__first__bit
+                                                                 ) >= 0)
+  
+  axiom station__station_record__modules__last__bit_axiom : ((station__station_record__modules__last__bit
+                                                                )
+                                                               > (station__station_record__modules__first__bit
+                                                                    ))
+  
+  axiom station__station_record__modules__position_axiom : ((station__station_record__modules__position
+                                                               ) >= 0)
+  
+  function   station__station_record__top_module_index__first__bit ()
+    requires {  } ensures  {  } returns int
+  
+  function   station__station_record__top_module_index__last__bit () requires
+    {  } ensures  {  } returns int
+  
+  function   station__station_record__top_module_index__position () requires
+    {  } ensures  {  } returns int
+  
+  axiom station__station_record__top_module_index__first__bit_axiom : 
+  ((station__station_record__top_module_index__first__bit ) >= 0)
+  
+  axiom station__station_record__top_module_index__last__bit_axiom : 
+  ((station__station_record__top_module_index__last__bit )
+     > (station__station_record__top_module_index__first__bit ))
+  
+  axiom station__station_record__top_module_index__position_axiom : ((station__station_record__top_module_index__position
+                                                                    ) >= 0)
+  
+  function   user_eq (a : station_record b : station_record) requires
+    { True } ensures  { True } returns bool
+  
+  function   dummy () requires {  } ensures  {  } returns station_record
+  
+  type station_record__ref  = { mutable station_record__content : station_record }
+  
+  function   station_record__ref_station_record__content__projection
+    (a : station_record__ref) requires {  } ensures  {  } returns
+    station_record = a.station_record__content
+  
+  meta model_projection function station_record__ref_station_record__content__projection
+  
+  meta inline:no function station_record__ref_station_record__content__projection
+  
+  function   station_record__havoc (x : station_record__ref) requires {  }
+    ensures  {  } returns unit
+
+end
+
+(* Module for defining a ref holding the value of variable "s" defined at station.ads:24, created in Gnat2Why.Decls.Translate_Variable *)
+module Station__s
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use        Station__station_record
+  
+  val s__split_fields [model_projected] [model_trace:1229]
+  [name:S] [sloc:station.ads:24]: Station__station_record.__split_fields
+
+end
+
+(* Module giving axioms for type "station_record" defined at station.ads:16, created in Gnat2Why.Types.Generate_Type_Completion *)
+module Station__station_record___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  use        Station__station_record
+  use        Station__airlock_door
+  use        Station__airlock_door__rep
+  use        Station__station_record__T4s
+  use        Station__station_record__T4s__rep
+  
+  function   dynamic_invariant
+    (([mlw:proxy_symbol]
+    [introduced] temp___expr_193) : Station__station_record.station_record
+    ([mlw:proxy_symbol] [introduced] temp___is_init_189) : bool
+    ([mlw:proxy_symbol] [introduced] temp___skip_constant_190) : bool
+    ([mlw:proxy_symbol] [introduced] temp___do_toplevel_191) : bool
+    ([mlw:proxy_symbol] [introduced] temp___do_typ_inv_192) : bool) requires
+    { True } ensures  { True } returns  = True
+  
+  function   default_initial_assumption
+    (([mlw:proxy_symbol]
+    [introduced] temp___expr_195) : Station__station_record.station_record
+    ([mlw:proxy_symbol] [introduced] temp___skip_top_level_196) : bool)
+    requires { True } ensures  { True } returns
+     = ((if
+        (Station__station_record.station__station_record__door1__pred
+           ([mlw:proxy_symbol] [introduced] temp___expr_195))
+        then
+        (( (Station__airlock_door__rep.to_rep ([mlw:proxy_symbol]
+              [introduced] temp___expr_195).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__door1))
+           = ( 1))
+        ) /\
+          (if
+          (Station__station_record.station__station_record__door2__pred
+             ([mlw:proxy_symbol] [introduced] temp___expr_195))
+          then
+          (( (Station__airlock_door__rep.to_rep ([mlw:proxy_symbol]
+                [introduced] temp___expr_195).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__door2))
+             = ( 1))
+          ) /\
+          (if
+          (Station__station_record.station__station_record__top_module_index__pred
+             ([mlw:proxy_symbol] [introduced] temp___expr_195))
+          then
+          (( (Station__station_record__T4s__rep.to_rep ([mlw:proxy_symbol]
+                [introduced] temp___expr_195).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__top_module_index))
+             = ( 0))
+          ))
+
+end
+
+(* Module for possibly declaring a logic function for "sealedinvariant" defined at station.ads:29, created in Gnat2Why.Subprograms.Translate_Subprogram_Spec *)
+module Station__sealedinvariant
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use        Station__station_record
+  
+  function   sealedinvariant
+    (Station__s___s__split_fields___ : Station__station_record.__split_fields)
+    requires { True } ensures  { True } returns bool
+  
+  function   sealedinvariant__function_guard
+    (([mlw:proxy_symbol] [introduced] temp___result_162) : bool
+    Station__s___s__split_fields___ : Station__station_record.__split_fields)
+    requires { True } ensures  { True } returns bool
+
+end
+
+(* Module giving a program function and a defining axiom for the expression function "sealedinvariant" defined at station.ads:29, created in Gnat2Why.Subprograms.Translate_Expression_Function_Body *)
+module Station__sealedinvariant___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  use        Station__s
+  use        Station__station_record
+  use        Station__station_record___axiom
+  use        Station__sealedinvariant
+  use        Station__airlock_door
+  use        Station__airlock_door__rep
+  
+  function   sealedinvariant (__void_param : unit) requires { True } ensures 
+    { ((result
+          = (Station__sealedinvariant.sealedinvariant
+               !Station__s.s__split_fields)) /\
+         (Station__sealedinvariant.sealedinvariant__function_guard result
+            !Station__s.s__split_fields) /\
+         (result
+            = (((((Station__airlock_door__rep.to_rep
+                     ( --pp_record_aggregate NOT IMPLEMENTED).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__door1)
+                    = 0) /\
+                   ((Station__airlock_door__rep.to_rep
+                       ( --pp_record_aggregate NOT IMPLEMENTED).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__door2)
+                      = 1)) \/
+                  (((Station__airlock_door__rep.to_rep
+                       ( --pp_record_aggregate NOT IMPLEMENTED).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__door1)
+                      = 1) /\
+                     ((Station__airlock_door__rep.to_rep
+                         ( --pp_record_aggregate NOT IMPLEMENTED).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__door2)
+                        = 0))) \/
+                 (((Station__airlock_door__rep.to_rep
+                      ( --pp_record_aggregate NOT IMPLEMENTED).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__door1)
+                     = 1) /\
+                    ((Station__airlock_door__rep.to_rep
+                        ( --pp_record_aggregate NOT IMPLEMENTED).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__door2)
+                       = 1))))) } returns bool
+  
+  axiom sealedinvariant__post_axiom : --pp_universal_quantif NOT IMPLEMENTED
+  
+  axiom sealedinvariant__def_axiom : --pp_universal_quantif NOT IMPLEMENTED
+
+end
+
+(* Module for defining a ref holding the value of variable "s" defined at station.ads:49, created in Gnat2Why.Decls.Translate_Variable *)
+module Station__add_module__s
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use        Station__station_record
+  
+  val s__split_fields [model_projected] [name:S]
+  [model_trace:1393] [sloc:station.ads:49]: Station__station_record.__split_fields
+
+end
+
+(* Module for defining the constant "new_module" defined at station.ads:49, created in Gnat2Why.Decls.Translate_Constant *)
+module Station__add_module__new_module
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  function [name:New_Module] [model_trace:1396] [sloc:station.ads:49]
+    new_module () requires {  } ensures  {  } returns int
+
+end
+
+(* Module for defining a ref holding the value of variable "i" defined at station.adb:76, created in Gnat2Why.Decls.Translate_Variable *)
+module Station__add_module__L_1__i
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  val i [model_projected] [name:I]
+  [model_trace:1056] [sloc:station.adb:76]: int
+
+end
+
+(* Module giving axioms for type "module" defined at station.ads:12, created in Gnat2Why.Types.Generate_Type_Completion *)
+module Station__module___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  use        Station__module
+  
+  function   dynamic_invariant
+    (([mlw:proxy_symbol] [introduced] temp___expr_176) : int
+    ([mlw:proxy_symbol] [introduced] temp___is_init_172) : bool
+    ([mlw:proxy_symbol] [introduced] temp___skip_constant_173) : bool
+    ([mlw:proxy_symbol] [introduced] temp___do_toplevel_174) : bool
+    ([mlw:proxy_symbol] [introduced] temp___do_typ_inv_175) : bool) requires
+    { True } ensures  { True } returns
+     = (if
+       ((([mlw:proxy_symbol] [introduced] temp___is_init_172) = True) \/
+          (Station__module.first <= Station__module.last))
+       then
+       (Station__module.dynamic_property Station__module.first
+          Station__module.last ([mlw:proxy_symbol]
+          [introduced] temp___expr_176))
+       )
+  
+  function   default_initial_assumption
+    (([mlw:proxy_symbol] [introduced] temp___expr_177) : int
+    ([mlw:proxy_symbol] [introduced] temp___skip_top_level_178) : bool)
+    requires { True } ensures  { True } returns  = True
+
+end
+
+(* Module for defining the loop exit exception for the loop "L_1" defined at station.adb:76, created in Gnat2Why.Decls.Translate_Loop_Entity *)
+module Station__add_module__L_1
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  --pp_exception_declaration NOT IMPLEMENTED
+
+end
+
+(* Module giving an empty axiom for the entity "i" defined at station.adb:76, created in Gnat2Why.Driver.Translate_Entity.Generate_Empty_Axiom_Theory *)
+module Station__add_module__L_1__i___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  
+
+end
+
+(* Module giving an empty axiom for the entity "L_1" defined at station.adb:76, created in Gnat2Why.Driver.Translate_Entity.Generate_Empty_Axiom_Theory *)
+module Station__add_module__L_1___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  
+
+end
+
+(* Module giving axioms for type "airlock_door" defined at station.ads:9, created in Gnat2Why.Types.Generate_Type_Completion *)
+module Station__airlock_door___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  use        Station__airlock_door
+  
+  function   dynamic_invariant
+    (([mlw:proxy_symbol] [introduced] temp___expr_169) : int
+    ([mlw:proxy_symbol] [introduced] temp___is_init_165) : bool
+    ([mlw:proxy_symbol] [introduced] temp___skip_constant_166) : bool
+    ([mlw:proxy_symbol] [introduced] temp___do_toplevel_167) : bool
+    ([mlw:proxy_symbol] [introduced] temp___do_typ_inv_168) : bool) requires
+    { True } ensures  { True } returns
+     = (if
+       ((([mlw:proxy_symbol] [introduced] temp___is_init_165) = True) \/
+          (Station__airlock_door.first <= Station__airlock_door.last))
+       then
+       (Station__airlock_door.dynamic_property Station__airlock_door.first
+          Station__airlock_door.last ([mlw:proxy_symbol]
+          [introduced] temp___expr_169))
+       )
+  
+  function   default_initial_assumption
+    (([mlw:proxy_symbol] [introduced] temp___expr_170) : int
+    ([mlw:proxy_symbol] [introduced] temp___skip_top_level_171) : bool)
+    requires { True } ensures  { True } returns  = True
+
+end
+
+(* Module giving axioms for type "module_array" defined at station.ads:13, created in Gnat2Why.Types.Generate_Type_Completion *)
+module Station__module_array___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  
+  function   dynamic_invariant
+    (([mlw:proxy_symbol]
+    [introduced] temp___expr_183) : Array__Int__Station__module.map
+    ([mlw:proxy_symbol] [introduced] temp___is_init_179) : bool
+    ([mlw:proxy_symbol] [introduced] temp___skip_constant_180) : bool
+    ([mlw:proxy_symbol] [introduced] temp___do_toplevel_181) : bool
+    ([mlw:proxy_symbol] [introduced] temp___do_typ_inv_182) : bool) requires
+    { True } ensures  { True } returns  = True
+  
+  function   default_initial_assumption
+    (([mlw:proxy_symbol]
+    [introduced] temp___expr_185) : Array__Int__Station__module.map
+    ([mlw:proxy_symbol] [introduced] temp___skip_top_level_186) : bool)
+    requires { True } ensures  { True } returns  = True
+
+end
+
+(* Module giving an empty axiom for the entity "s" defined at station.ads:24, created in Gnat2Why.Driver.Translate_Entity.Generate_Empty_Axiom_Theory *)
+module Station__s___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  
+
+end
+
+(* Module giving an empty axiom for the entity "s" defined at station.ads:49, created in Gnat2Why.Driver.Translate_Entity.Generate_Empty_Axiom_Theory *)
+module Station__add_module__s___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  
+
+end
+
+(* Module giving an empty axiom for the entity "new_module" defined at station.ads:49, created in Gnat2Why.Driver.Translate_Entity.Generate_Empty_Axiom_Theory *)
+module Station__add_module__new_module___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  
+
+end
+
+(* Module giving axioms for type "T3s" defined at station.ads:19, created in Gnat2Why.Types.Generate_Type_Completion *)
+module Station__station_record__T3s___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  
+
+end
+
+(* Module giving axioms for type "T4s" defined at station.ads:21, created in Gnat2Why.Types.Generate_Type_Completion *)
+module Station__station_record__T4s___axiom
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  
+  
+
+end
+
+(* Module for checking contracts and absence of run-time errors in subprogram "add_module" defined at station.ads:49, created in Gnat2Why.Subprograms.Generate_VCs_For_Subprogram *)
+module Station__add_module__subprogram_def
+  
+  use import _gnatprove_standard.Main
+  use import int.Int
+  use import int.Int
+  use        _gnatprove_standard.Boolean
+  use        Station__s
+  use        Station__station_record
+  use        Station__station_record___axiom
+  use        Station__sealedinvariant
+  use        Station__sealedinvariant___axiom
+  use        Station__add_module__s
+  use        Station__add_module__new_module
+  use        Station__add_module__L_1__i
+  use        Station__module
+  use        Station__module___axiom
+  use        Station__module__rep
+  use        Array__Int__Station__module
+  use        Station__add_module__L_1
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Array__Int__Station__module
+  use        Station__add_module__L_1__i___axiom
+  use        Station__add_module__L_1___axiom
+  use        Station__airlock_door___axiom
+  use        Station__module___axiom
+  use        Station__module_array___axiom
+  use        Station__station_record___axiom
+  use        Station__s___axiom
+  use        Station__sealedinvariant___axiom
+  use        Station__add_module__s___axiom
+  use        Station__add_module__new_module___axiom
+  use        Station__station_record__T3s___axiom
+  use        Station__station_record__T4s___axiom
+  
+  function [GP_Subp:station.ads:49] [sloc:station.ads:49] def
+    (__void_param : unit) requires { True } ensures 
+    { ([sloc:station.ads:51] ([GP_Reason:VC_POSTCONDITION]
+                             [comment:     Post => (S.Modules(1) = New_Module) and              ^ station.ads:51:14:VC_POSTCONDITION]
+                             [model_vc_post] [GP_Id:0]
+                             [GP_Shape:pragargs__and]
+                             [GP_Sloc:station.ads:51:14] ((([GP_Pretty_Ada:1419]
+                                                           [GP_Sloc:station.ads:51:14] (
+                                                           (Station__module__rep.to_rep
+                                                              (let ([mlw:proxy_symbol]
+                                                              [introduced] temp___261)
+                                                              =
+                                                              ( --pp_record_aggregate NOT IMPLEMENTED).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__modules
+                                                              in
+                                                              (Array__Int__Station__module.get
+                                                                 ([mlw:proxy_symbol]
+                                                                 [introduced] temp___261)
+                                                                 1)))
+                                                             = Station__add_module__new_module.new_module))
+                                                             /\
+                                                             --pp_universal_quantif NOT IMPLEMENTED)
+                                                            /\
+                                                            ([GP_Sloc:station.ads:52:83]
+                                                            [GP_Pretty_Ada:1446] (
+                                                            (epsilon ([mlw:proxy_symbol]
+                                                            [introduced] temp___result_264) : bool {
+                                                            ((([mlw:proxy_symbol]
+                                                                [introduced] temp___result_264)
+                                                                = (Station__sealedinvariant.sealedinvariant
+                                                                    !Station__s.s__split_fields))
+                                                               /\
+                                                               (Station__sealedinvariant.sealedinvariant__function_guard
+                                                                  ([mlw:proxy_symbol]
+                                                                  [introduced] temp___result_264)
+                                                                  !Station__s.s__split_fields))})
+                                                              = True))))) }
+    returns
+     = (* Assume dynamic invariants of inputs of the subprogram station.ads:49 *);
+        assume
+        { (Station__station_record___axiom.dynamic_invariant
+             --pp_record_aggregate NOT IMPLEMENTED True False True True) };
+        assume
+        { (Station__station_record___axiom.dynamic_invariant
+             --pp_record_aggregate NOT IMPLEMENTED True False True True) };
+        assume
+        { (Station__module___axiom.dynamic_invariant
+             Station__add_module__new_module.new_module True False True True) };
+        (* Assume moved pointers in outputs of the subprogram station.ads:49 *);
+        (* Check for RTE in the Pre of the subprogram station.ads:49 *);
+        abstract ensures
+        { True } begin  (let _ =
+                       (_gnatprove_standard.Boolean.andb
+                          (Station__sealedinvariant___axiom.sealedinvariant
+                             ())
+                          (Station__add_module__new_module.new_module <> 3))
+                       in ())  end;
+        (* Assume Pre of the subprogram station.ads:49 *);
+        assume
+        { (([GP_Pretty_Ada:1405] ((epsilon ([mlw:proxy_symbol]
+                                  [introduced] temp___result_260) : bool {
+                                  ((([mlw:proxy_symbol]
+                                      [introduced] temp___result_260)
+                                      = (Station__sealedinvariant.sealedinvariant
+                                           !Station__s.s__split_fields)) /\
+                                     (Station__sealedinvariant.sealedinvariant__function_guard
+                                        ([mlw:proxy_symbol]
+                                        [introduced] temp___result_260)
+                                        !Station__s.s__split_fields))})
+                                    = True)) /\
+             ([GP_Pretty_Ada:1409] (Station__add_module__new_module.new_module
+                                      <> 3))) };
+        (let ([mlw:proxy_symbol] [introduced] temp___old_254) =
+        ( --pp_record_aggregate NOT IMPLEMENTED) in (try
+        ();
+          ([sloc:station.adb:76] ());
+          ();
+          ([GP_Sloc:station.adb:76:42] ([sloc:station.adb:76] (let ([mlw:proxy_symbol]
+                                       [introduced] temp___238) = 2 in
+                                       (let ([mlw:proxy_symbol]
+                                       [introduced] temp___239) = 3 in
+                                       (* Translation of an unrolled Ada loop from station.adb:76 *);
+                                       (try
+                                       (let temp___loop_entry_245 =
+                                         --pp_record_aggregate NOT IMPLEMENTED
+                                         in
+                                         (* Unrolling of the loop statements of loop station.adb:76 *);
+                                         ( Station__add_module__L_1__i.i :=
+                                         3);
+                                         ();
+                                         ([GP_Sloc:station.adb:77:23] 
+                                         ([sloc:station.adb:77] (let ([mlw:proxy_symbol]
+                                         [introduced] temp___244) =
+                                         (let ([mlw:proxy_symbol]
+                                           [introduced] temp___243) =
+                                           ( --pp_record_aggregate NOT IMPLEMENTED)
+                                           in abstract ensures
+                                           { True } begin  (let _ =
+                                                          ([mlw:proxy_symbol]
+                                                            [introduced] temp___243).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__modules
+                                                          in ())  end;
+                                           --pp_record_update NOT IMPLEMENTED)
+                                         in (
+                                         Station__add_module__s.s__split_fields
+                                         :=
+                                         ([mlw:proxy_symbol]
+                                           [introduced] temp___244).Station__station_record.__split_fields))));
+                                         ( Station__add_module__L_1__i.i :=
+                                         2);
+                                         ();
+                                         ([GP_Sloc:station.adb:77:23] 
+                                         ([sloc:station.adb:77] (let ([mlw:proxy_symbol]
+                                         [introduced] temp___244) =
+                                         (let ([mlw:proxy_symbol]
+                                           [introduced] temp___243) =
+                                           ( --pp_record_aggregate NOT IMPLEMENTED)
+                                           in abstract ensures
+                                           { True } begin  (let _ =
+                                                          ([mlw:proxy_symbol]
+                                                            [introduced] temp___243).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__modules
+                                                          in ())  end;
+                                           --pp_record_update NOT IMPLEMENTED)
+                                         in (
+                                         Station__add_module__s.s__split_fields
+                                         :=
+                                         ([mlw:proxy_symbol]
+                                           [introduced] temp___244).Station__station_record.__split_fields))))) with
+                                       | Station__add_module__L_1.L_1  -> ())))));
+          ([GP_Sloc:station.adb:80:20] ([sloc:station.adb:80] (let ([mlw:proxy_symbol]
+                                       [introduced] temp___250) =
+                                       (let ([mlw:proxy_symbol]
+                                         [introduced] temp___249) =
+                                         ( --pp_record_aggregate NOT IMPLEMENTED)
+                                         in abstract ensures
+                                         { True } begin  (let _ =
+                                                        ([mlw:proxy_symbol]
+                                                          [introduced] temp___249).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__modules
+                                                        in ())  end;
+                                         --pp_record_update NOT IMPLEMENTED)
+                                       in (
+                                       Station__add_module__s.s__split_fields
+                                       :=
+                                       ([mlw:proxy_symbol]
+                                         [introduced] temp___250).Station__station_record.__split_fields))));
+          raise Return__exc with | Return__exc  -> ());
+        abstract ensures
+        { True } begin  (let _ =
+                       (_gnatprove_standard.Boolean.andb
+                          (_gnatprove_standard.Boolean.andb
+                             ((Station__module__rep.to_rep
+                                 (let ([mlw:proxy_symbol]
+                                 [introduced] temp___252) =
+                                 ( --pp_record_aggregate NOT IMPLEMENTED).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__modules
+                                 in
+                                 (Array__Int__Station__module.get
+                                    ([mlw:proxy_symbol]
+                                    [introduced] temp___252) 1)))
+                                = Station__add_module__new_module.new_module)
+                             (let i = ( any  pre {} post {} return int) in
+                          (if
+                          (_gnatprove_standard.Boolean.andb (2 <= i) (i <= 3))
+                          then
+                          abstract ensures
+                          { True } begin  (let _ =
+                                         ((Station__module__rep.to_rep
+                                             (let ([mlw:proxy_symbol]
+                                             [introduced] temp___253) =
+                                             ( --pp_record_aggregate NOT IMPLEMENTED).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__modules
+                                             in
+                                             (Array__Int__Station__module.get
+                                                ([mlw:proxy_symbol]
+                                                [introduced] temp___253) i)))
+                                            = (Station__module__rep.to_rep
+                                                 (let ([mlw:proxy_symbol]
+                                                 [introduced] temp___255) =
+                                                 ( ([mlw:proxy_symbol]
+                                                 [introduced] temp___old_254)).Station__station_record.__split_fields.Station__station_record.rec__station__station_record__modules
+                                                 in
+                                                 (Array__Int__Station__module.get
+                                                    ([mlw:proxy_symbol]
+                                                    [introduced] temp___255)
+                                                    (i - 1)))))
+                                         in ())  end
+                          ));
+                          ( any  pre {} post
+                          {((result = True) <->
+                              --pp_universal_quantif NOT IMPLEMENTED)} return
+                          bool))
+                       (Station__sealedinvariant___axiom.sealedinvariant ()))
+    in ())  end)
+
+end
