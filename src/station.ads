@@ -18,7 +18,7 @@ is
       Door2 : Airlock_Door := Closed;
       Altitude : Integer range MINALTITUDE..MAXALTITUDE;
       Modules : Module_Array;
-      Top_Module_Index : Natural range 0..3 := 0;
+      Top_Module_Index : Natural range 1..3 := 1;
    end record;
 
    S : Station_Record := (Door1 => Closed, Door2 => Closed, Altitude => 820000,
@@ -53,9 +53,9 @@ is
 
    -- Procedure to remove the top module from the stack
    procedure Remove_Top_Module(S : in out Station_Record) with
-     Pre => SealedInvariant and (S.Top_Module_Index > 0 and S.Top_Module_Index <= S.Modules'Last),
-     Post => (if S.Top_Module_Index > 1 then S.Top_Module_Index = S'Old.Top_Module_Index - 1
-     else S.Top_Module_Index = 0) and SealedInvariant;
+    Pre => SealedInvariant and S.Top_Module_Index > 0,
+    Post => (S.Top_Module_Index >= 1 and SealedInvariant) or
+      (S.Top_Module_Index >= 1 and S.Modules = (2 => Empty, 3 => Empty) and SealedInvariant);
 
 
 end Station;

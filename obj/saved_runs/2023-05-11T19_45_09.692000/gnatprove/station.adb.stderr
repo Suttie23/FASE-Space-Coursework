@@ -1,0 +1,2 @@
+station.adb:92:54: medium: range check might fail [reason for check: result of subtraction must fit in the target type of the assignment] [possible fix: precondition of subprogram at station.ads:55 should mention S][#0]
+station.ads:57:14: medium: postcondition might fail[#1]

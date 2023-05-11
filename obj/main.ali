@@ -19,7 +19,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_IMPLEMENTATION_PRAGMAS
 RV MAX_TASKS=1+
 
-U main%b		main.adb		67b539e6 NE OO SU
+U main%b		main.adb		7a827e5d NE OO SU
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 Z ada.real_time%s	a-reatim.adb		a-reatim.ali
@@ -54,7 +54,7 @@ D i-c.ads		20210520051132 d9beded9 interfaces.c%s
 D i-cstrin.ads		20210520051132 341d0ddf interfaces.c.strings%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
 D main.adb		20230511165150 c6790e06 main%b
-D station.ads		20230511165020 0f38e28d station%s
+D station.ads		20230511190556 120fa536 station%s
 D system.ads		20210520051136 2ffa5114 system%s
 D s-atacco.ads		20210520051132 4c36d12f system.address_to_access_conversions%s
 D s-conca2.ads		20210520051132 02a0d7d0 system.concat_2%s
@@ -108,7 +108,7 @@ X 18 main.adb
 9t9 ControlPanel 50b14 90l8 90t20
 11U14 DashboardControls 11b14 48l8 48t25 53s10
 X 19 station.ads
-1K9*Station 18|1w6 1r19 19|60e12
+1K9*Station 18|1w6 1r19 19|61e12
 12n20*CrewQuarters{12E9} 18|81r42
 12n34*CommunicationsArray{12E9} 18|82r42
 12n55*ResearchBay{12E9} 18|80r42
