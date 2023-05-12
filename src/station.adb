@@ -115,9 +115,23 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       return;
    end if;
 
-   -- Remove the top module
+   -- Check whether a crewmember is occupying the top level module
    for i in reverse S.Modules'Range loop
-      if S.Modules(i) /= Empty then
+         if S.Modules(i) /= Empty then
+            for k in S.Crew'Range loop
+               -- If so, send them to the bottom level module
+               if S.Crew(k).Location = S.Modules(i) then
+                  S.Crew(k).Location := S.Modules(1);
+                  Put_Line ("");
+                  delay 0.8;
+                  Put_Line(S.Modules(i)'Image & "Is occupied by " & S.Crew(k).Name'Image & ".");
+                  delay 0.8;
+                  Put_Line("Moving " & S.Crew(k).Name'Image & "to the " & S.Modules(1)'Image & " Module");
+                  delay 0.8;
+               end if;
+            end loop;
+
+            -- Remove the top module
             S.Modules(i) := Empty;
             S.Top_Module_Index := S.Top_Module_Index - 1;
             exit;
