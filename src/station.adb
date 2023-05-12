@@ -118,9 +118,46 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
    end loop;
    end Remove_Top_Module;
 
-   procedure Attempt_Spacewalk(S : in out Station_Record) is
+   procedure Attempt_Spacewalk(S : in out Station_Record; CM : in Integer) is
+      Top_CM : Integer := 0;
+      Bottom_CM : Integer := 0;
    begin
-      S.Crew(1).Status := Monitoring;
+
+      -- Check whether the station is fully functional
+      for i in S.Modules'Range loop
+         if S.Modules(i) = Empty then
+            Put_Line("SPACEWALK IS ONLY AVALIABLE WITH A FULLY FUNCTIONAL STATION!");
+            return;
+         end if;
+      end loop;
+
+      -- Check whether selected Crewmembers is avaliable
+      if S.Crew(CM).Status /= Spacewalk then
+         Put_Line(S.Crew(CM).Name'Image & " IS AVALIABLE FOR A SPACEWALK");
+      else
+         Put_Line(S.Crew(CM).Name'Image & " IS ALREADY ON A SPACEWALK");
+         return;
+      end if;
+
+      -- Update the status of the selected Crewmembers to spacewalk
+      S.Crew(CM).Status := Spacewalk;
+
+   for i in S.Crew'Range loop
+      if i /= CM and S.Crew(i).Status /= Spacewalk then
+         if Top_CM = 0 then
+            Top_CM := i;
+         else
+            Bottom_CM := i;
+            exit; -- Exit the loop once the bottom crew member has been identified
+         end if;
+      end if;
+   end loop;
+
+      Put_Line(S.Crew(CM).Name'Image & " IS ON A SPACEWALK");
+      Put_Line(S.Crew(Top_CM).Name'Image & " IS MONITORING");
+      Put_Line(S.Crew(Bottom_CM).Name'Image & " IS MONITORING");
+
+
    end Attempt_Spacewalk;
 
 

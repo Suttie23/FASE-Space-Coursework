@@ -35,11 +35,11 @@ is
    end record;
 
    S : Station_Record := (Door1 => Closed, Door2 => Closed, Altitude => MINALTITUDE,
-                          Modules => (1 => CrewQuarters, 2 => CommunicationsArray, 3 => Empty),
+                          Modules => (1 => CrewQuarters, 2 => CommunicationsArray, 3 => ResearchBay),
                           Top_Module_Index => 2, Crew =>
-                            ((Name => Jebediah, Status => Relaxing, Location => CrewQuarters),
+                            ((Name => Jebediah, Status => Relaxing, Location => ResearchBay),
                             (Name => Valentina, Status => Relaxing, Location => CrewQuarters),
-                            (Name => Bill, Status => Relaxing, Location => CrewQuarters)));
+                            (Name => Bill, Status => Relaxing, Location => CommunicationsArray)));
 
    function SealedInvariant return Boolean is
      ((S.Door1 = Open and S.Door2 = Closed) or (S.Door1 = Closed and S.Door2 = Open)
@@ -75,7 +75,7 @@ is
     Post => (S.Top_Module_Index >= 1 and SealedInvariant) or
      (S.Top_Module_Index >= 1 and S.Modules = (2 => Empty, 3 => Empty) and SealedInvariant);
 
-  procedure Attempt_Spacewalk(S : in out Station_Record);
+   procedure Attempt_Spacewalk(S : in out Station_Record; CM : in Integer);
 
 
 end Station;

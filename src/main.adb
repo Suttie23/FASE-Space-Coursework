@@ -85,7 +85,18 @@ procedure Main is
                when others => exit;
             end case;
          when 'f' => Remove_Top_Module(S);
-            when 'g' => Attempt_Spacewalk(S);
+            when 'g' =>
+              Put_Line("Which Crewmember is going on a spacewalk?: ");
+              Put_Line("(1) Jebediah");
+              Put_Line("(2) Valentina");
+              Put_Line("(3) Bill");
+               Get_Line(Str, Last);
+               case Str(1) is
+               when '1' => Attempt_Spacewalk(S, 1);
+               when '2' => Attempt_Spacewalk(S, 2);
+               when '3' => Attempt_Spacewalk(S, 3);
+               when others => exit;
+            end case;
          when others => exit;
          end case;
       end loop;
