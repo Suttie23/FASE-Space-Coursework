@@ -47,6 +47,8 @@ procedure Main is
       Put_Line("(g) - Attempt Spacewalk");
          Put_Line("");
       Put_Line("Enter command:");
+      Put_Line("");
+
    end DashboardControls;
 
    task body ControlPanel is
@@ -64,12 +66,14 @@ procedure Main is
             Put_Line("(2) + 25000ft");
             Put_Line("(3) - 10000ft");
             Put_Line("(4) - 25000ft");
+                     Put_Line("");
             Get_Line(Str, Last);
                case Str(1) is
                when '1' => Update_Height(S, S.Altitude + 10000);
                when '2' => Update_Height(S, S.Altitude + 25000);
                when '3' => Update_Height(S, S.Altitude - 10000);
                when '4' => Update_Height(S, S.Altitude - 25000);
+                           Put_Line("");
                when others => exit;
             end case;
          when 'e' =>
@@ -77,11 +81,13 @@ procedure Main is
             Put_Line("(1) Research Bay");
             Put_Line("(2) Crew Quarters");
             Put_Line("(3) Communications Array");
+                     Put_Line("");
                Get_Line(Str, Last);
                case Str(1) is
                when '1' => Add_Module(S, ResearchBay);
                when '2' => Add_Module(S, CrewQuarters);
                when '3' => Add_Module(S, CommunicationsArray);
+                           Put_Line("");
                when others => exit;
             end case;
          when 'f' => Remove_Top_Module(S);
@@ -89,7 +95,8 @@ procedure Main is
               Put_Line("Which Crewmember is going on a spacewalk?: ");
               Put_Line("(1) Jebediah");
               Put_Line("(2) Valentina");
-              Put_Line("(3) Bill");
+               Put_Line("(3) Bill");
+                        Put_Line("");
                Get_Line(Str, Last);
                case Str(1) is
                when '1' => Attempt_Spacewalk(S, 1);

@@ -7,6 +7,9 @@ is
    -- Open Airlock Door
 procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
    begin
+
+      Put_Line("");
+
       if Airlock_Number = 1 and SealedInvariant then
          S.Door1 := Open;
          S.Door2 := Closed;
@@ -55,6 +58,9 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
    procedure Update_Height(S : in out Station_Record; New_Height : in Integer)
    is
    begin
+
+      Put_Line("");
+
       if (New_Height >= 820000 and New_Height <= 920000) and SealedInvariant then
          S.Altitude := New_Height;
       else
@@ -72,6 +78,8 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
    -- Procedure to add a module to the stack
    procedure Add_Module(S : in out Station_Record; New_Module : in Module) is
    begin
+
+      Put_Line("");
 
       -- Ensure that additional modules cannot be added
       if S.Top_Module_Index = 3 then
@@ -96,6 +104,8 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
    -- Procedure to remove the top module from the stack
    procedure Remove_Top_Module(S : in out Station_Record) is
    begin
+
+      Put_Line("");
 
       -- Ensure the final module cannot be removed
       if S.Top_Module_Index = 1 then
@@ -123,6 +133,7 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       Bottom_CM : Integer := 0;
    begin
 
+      Put_Line("");
       -- Check whether the station is fully functional
       for i in S.Modules'Range loop
          if S.Modules(i) = Empty then
@@ -131,7 +142,15 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
          end if;
       end loop;
 
-      -- Check whether selected Crewmembers is avaliable
+      -- Check whether there is an ongoing spacewalk
+      for i in S.Crew'Range loop
+         if S.Crew(i).Status = Spacewalk then
+            Put_Line("SPACEWALK IN PROGRESS, CANNOT PERFORM ANOTHER UNTIL CREWMAN HAS RETURNED");
+            return;
+         end if;
+      end loop;
+
+      -- Check whether selected Crewmember is avaliable
       if S.Crew(CM).Status /= Spacewalk then
          Put_Line(S.Crew(CM).Name'Image & " IS AVALIABLE FOR A SPACEWALK");
       else
@@ -153,9 +172,36 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       end if;
    end loop;
 
+      -- Moving Crewmember (TOP) and setting their status
+      S.Crew(Top_CM).Status := Monitoring;
+      S.Crew(Top_CM).Location := S.Modules(3);
+
+      -- Moving Crewmember (BOTTOM) and setting their status
+      S.Crew(Bottom_CM).Status := Monitoring;
+      S.Crew(Bottom_CM).Location := S.Modules(1);
+
+      Put_Line(S.Crew(Top_CM).Name'Image & " Is moving to the " & S.Crew(Top_CM).Location'Image & " Module...");
+      delay 0.8;
+      delay 0.8;
+      Put_Line(S.Crew(Bottom_CM).Name'Image & " Is moving to the " & S.Crew(Bottom_CM).Location'Image & " Module...");
+      delay 0.8;
+      delay 0.8;
+      Put_Line("Crew standing by for spacewalk...");
+
+      Open_Door(S, 1);
+      delay 0.8;
+      Put_Line(S.Crew(CM).Name'Image & " Is inside the airlock...");
+      Put_Line("");
+      delay 0.8;
+      Open_Door(S, 2);
+      delay 0.8;
+      Put_Line(S.Crew(CM).Name'Image & " Has left the airlock...");
+      Put_Line("");
+      delay 0.8;
+      Seal_Airlock(S);
       Put_Line(S.Crew(CM).Name'Image & " IS ON A SPACEWALK");
-      Put_Line(S.Crew(Top_CM).Name'Image & " IS MONITORING");
-      Put_Line(S.Crew(Bottom_CM).Name'Image & " IS MONITORING");
+
+      S.Crew(CM).Location := Space;
 
 
    end Attempt_Spacewalk;

@@ -9,12 +9,11 @@ is
    type Airlock_Door is (Open, Closed);
 
    -- Module Types
-   type Module is (CrewQuarters, CommunicationsArray, ResearchBay, Empty);
+   type Module is (CrewQuarters, CommunicationsArray, ResearchBay, Empty, Space);
    type Module_Array is array (1..3) of Module;
 
    type CrewMember is (Jebediah, Valentina, Bill);
    type CrewMemberStatus is (Spacewalk, Monitoring, Relaxing);
-   type CrewMemberLocation is (TopModule, MiddleModule, BottomModule, EVA);
 
    type Crew_Record is record
       Name : CrewMember;
@@ -36,7 +35,7 @@ is
 
    S : Station_Record := (Door1 => Closed, Door2 => Closed, Altitude => MINALTITUDE,
                           Modules => (1 => CrewQuarters, 2 => CommunicationsArray, 3 => ResearchBay),
-                          Top_Module_Index => 2, Crew =>
+                          Top_Module_Index => 3, Crew =>
                             ((Name => Jebediah, Status => Relaxing, Location => ResearchBay),
                             (Name => Valentina, Status => Relaxing, Location => CrewQuarters),
                             (Name => Bill, Status => Relaxing, Location => CommunicationsArray)));
