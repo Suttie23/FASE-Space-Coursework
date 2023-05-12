@@ -89,8 +89,9 @@ is
      (SealedInvariant and AltitudeInvariant and CM >= 1 and CM < S.Crew'Length) and then
        (for all i in S.Modules'Range => S.Modules(i) /= Empty) and then
        (for all i in S.Crew'Range => S.Crew(i).Status /= Spacewalk) and then
-       (S.Crew(CM).Status /= Spacewalk),
-       Post => (SealedInvariant and AltitudeInvariant and S.Crew(CM).Location = Space);
+       (S.Crew(CM).Status /= Spacewalk and S.ActiveSpaceWalk = false),
+       Post => (SealedInvariant and AltitudeInvariant and S.Crew(CM).Location = Space) and
+       (S.ActiveSpaceWalk = True);
 
    procedure Return_From_Spacewalk(S : in out Station_Record) with
      Pre => (SealedInvariant and AltitudeInvariant) and then
