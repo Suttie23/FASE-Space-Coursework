@@ -15,14 +15,14 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_IMPLEMENTATION_PRAGMAS
 RV NO_IMPLICIT_LOOPS
 
-U station%b		station.adb		94448143 NE OO PK
+U station%b		station.adb		69574b4f NE OO PK
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
 Z system.concat_2%s	s-conca2.adb		s-conca2.ali
 
-U station%s		station.ads		120fa536 EE NE OO PK
+U station%s		station.ads		d546368e EE NE OO PK
 Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
 
 D ada.ads		20210520051132 76789da1 ada%s
@@ -39,8 +39,8 @@ D a-textio.ads		20210520051130 aef4d56d ada.text_io%s
 D a-unccon.ads		20210520051130 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20210520051132 edec285f interfaces%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
-D station.ads		20230511190556 120fa536 station%s
-D station.adb		20230511191244 28bff118 station%b
+D station.ads		20230512122124 d546368e station%s
+D station.adb		20230512121704 12e5a8ac station%b
 D system.ads		20210520051136 2ffa5114 system%s
 D s-conca2.ads		20210520051132 02a0d7d0 system.concat_2%s
 D s-crtl.ads		20210520051132 0ebbdb71 system.crtl%s
@@ -62,64 +62,67 @@ G a e
 G c Z s s [Tmodule_arrayBIP station 13 4 none]
 G c Z s s [station_recordIP station 16 9 none]
 G c Z s s [sealedinvariant station 29 13 none]
-G c Z s b [open_door station 34 14 none]
-G c Z s b [seal_airlock station 39 14 none]
-G c Z s b [update_height station 44 14 none]
-G c Z s b [add_module station 49 14 none]
-G c Z s b [remove_top_module station 55 14 none]
+G c Z s s [altitudeinvariant station 33 13 none]
+G c Z s b [open_door station 37 14 none]
+G c Z s b [seal_airlock station 42 14 none]
+G c Z s b [update_height station 47 14 none]
+G c Z s b [add_module station 52 14 none]
+G c Z s b [remove_top_module station 58 14 none]
 X 1 ada.ads
 16K9*Ada 20e8 16|1r6 1r23
 X 11 a-textio.ads
 58K13*Text_IO 725e16 16|1w10 1r27
 506U14*Put_Line 16|13s10 15s10 16s10 17s10 23s10 25s10 26s10 27s10 31s10
-. 32s10 33s10 46s4 48s4 49s4 50s4 61s10 62s10 64s10 66s10 68s10 77s10 95s7
+. 32s10 33s10 46s4 48s4 49s4 50s4 61s10 62s10 64s10 66s10 68s10 79s10 80s10
+. 82s10 102s10 103s10
 X 15 station.ads
-1K9*Station 61l5 61e12 16|3b14 112l5 112t12
-5N4*MINALTITUDE 19r32
-6N4*MAXALTITUDE 19r45
+1K9*Station 64l5 64e12 16|3b14 121l5 121t12
+5N4*MINALTITUDE 19r32 24r73 34r22
+6N4*MAXALTITUDE 19r45 34r52
 9E9*Airlock_Door 9e39 17r15 18r15
-9n26*Open{9E9} 30r18 30r80 40r24 40r65 16|11r21 20r21 40r23 42r23
-9n32*Closed{9E9} 17r31 18r31 24r36 24r53 30r37 30r59 31r20 31r41 40r43 40r84
-. 41r24 41r45 16|12r21 21r21 29r21 30r21 41r21 43r21
-12E9*Module 12e74 13r41 49r68 16|73r68
+9n26*Open{9E9} 30r18 30r80 43r24 43r65 16|11r21 20r21 40r23 42r23
+9n32*Closed{9E9} 17r31 18r31 24r36 24r53 30r37 30r59 31r21 31r42 43r43 43r84
+. 44r24 44r45 16|12r21 21r21 29r21 30r21 41r21 43r21
+12E9*Module 12e74 13r41 52r68 16|73r68
 12n20*CrewQuarters{12E9} 25r44
 12n34*CommunicationsArray{12E9} 25r63
 12n55*ResearchBay{12E9}
-12n68*Empty{12E9} 25r89 58r54 58r66 16|101r26 102r29
+12n68*Empty{12E9} 25r89 61r54 61r66 16|110r26 111r29
 13A9*Module_Array(12E9)<integer> 20r17
-16R9*Station_Record 22e14 24r8 34r36 39r39 44r39 49r36 55r43 16|8r33 38r39
-. 55r39 73r36 91r43
-17e7*Door1{9E9} 24m27 30r10 30r51 31r12 40r16 40r76 41r16 16|11m12 15r37
+16R9*Station_Record 22e14 24r8 37r36 42r39 47r39 52r36 58r43 16|8r33 38r39
+. 55r39 73r36 97r43
+17e7*Door1{9E9} 24m27 30r10 30r51 31r13 43r16 43r76 44r16 16|11m12 15r37
 . 21m12 25r38 30m12 40r15 41m12 48r32
-18e7*Door2{9E9} 24m44 30r29 30r72 31r33 40r35 40r57 41r37 16|12m12 16r37
+18e7*Door2{9E9} 24m44 30r29 30r72 31r34 43r35 43r57 44r37 16|12m12 16r37
 . 20m12 26r38 29m12 42r15 43m12 49r32
-19i7*Altitude{integer} 24m61 46r16 16|59m12
-20a7*Modules{13A9} 25m27 50r57 51r17 52r25 52r43 52r62 58r38 16|82r29 83m12
-. 83r28 86m9 100r23 101r12 102m15 105r22
-21i7*Top_Module_Index{integer} 26m26 50r36 51r49 51r74 56r34 57r17 57r42
-. 58r10 16|76r12 87m9 87r31 94r12 103m15 103r37 105r42 107m9
-24r4*S{16R9} 30r8 30r27 30r49 30r70 31r10 31r31
-29V13*SealedInvariant{boolean} 35s13 36s14 45s65 46s42 50s13 52s80 56s12
-. 57s68 58s77 16|10s33 19s36 58s62
-34U14*Open_Door 34=25 34>52 16|8b11 35l8 35t17
-34r25 S{16R9} 16|8b22 11m10 12m10 15r35 16r35 20m10 21m10 25r36 26r36 29m10
+19i7*Altitude{integer} 24m61 34r10 34r40 49r17 16|59m12
+20a7*Modules{13A9} 25m27 53r57 54r17 55r25 55r43 55r62 61r38 16|88r29 89m12
+. 89r28 92m9 109r23 110r12 111m15 114r22
+21i7*Top_Module_Index{integer} 26m26 53r36 54r49 54r74 59r34 60r16 61r10
+. 16|77r12 93m9 93r31 101r12 112m15 112r37 114r42 116m9
+24r4*S{16R9} 30r8 30r27 30r49 30r70 31r11 31r32 34r8 34r38
+29V13*SealedInvariant{boolean} 38s13 39s14 48s65 49s43 53s13 55s80 59s12
+. 60s42 61s77 16|10s33 19s36 58s62
+33V13*AltitudeInvariant{boolean} 49s63
+37U14*Open_Door 37=25 37>52 16|8b11 35l8 35t17
+37r25 S{16R9} 16|8b22 11m10 12m10 15r35 16r35 20m10 21m10 25r36 26r36 29m10
 . 30m10
-34i52 Airlock_Number{integer} 16|8b49 10r10 19r13
-39U14*Seal_Airlock 39=28 16|38b14 52l8 52t20
-39r28 S{16R9} 40r14 40r33 40r55 40r74 41r14 41r35 16|38b28 40r13 41m10 42r13
+37i52 Airlock_Number{integer} 16|8b49 10r10 19r13
+42U14*Seal_Airlock 42=28 16|38b14 52l8 52t20
+42r28 S{16R9} 43r14 43r33 43r55 43r74 44r14 44r35 16|38b28 40r13 41m10 42r13
 . 43m10 48r30 49r30
-44U14*Update_Height 44=28 44>55 16|55b14 70l8 70t21
-44r28 S{16R9} 46r14 16|55b28 59m10
-44i55 New_Height{integer} 45r14 45r39 46r27 16|55b55 58r11 58r36 59r24
-49U14*Add_Module 49=25 49>52 16|73b14 88l8 88t18
-49r25 S{16R9} 50r34 50r55 51r15 51r47 51r68 52r23 52r41 52r56 16|73b25 76r10
-. 82r27 83m10 83r26 86m7 87m7 87r29
-49e52 New_Module{12E9} 51r30 16|73b52 86r23
-52i15 i{integer} 52r51 52r70
-55U14*Remove_Top_Module 55=32 16|91b14 110l5 110t22
-55r32 S{16R9} 56r32 57r15 57r36 58r8 58r36 16|91b32 94r10 100r21 101r10 102m13
-. 103m13 103r35 105r20 105r40 107m7
+47U14*Update_Height 47=28 47>55 16|55b14 70l8 70t21
+47r28 S{16R9} 49r15 16|55b28 59m10
+47i55 New_Height{integer} 48r14 48r39 49r28 16|55b55 58r11 58r36 59r24
+52U14*Add_Module 52=25 52>52 16|73b14 94l8 94t18
+52r25 S{16R9} 53r34 53r55 54r15 54r47 54r68 55r23 55r41 55r56 16|73b25 77r10
+. 88r27 89m10 89r26 92m7 93m7 93r29
+52e52 New_Module{12E9} 54r30 16|73b52 92r23
+55i15 i{integer} 55r51 55r70
+58U14*Remove_Top_Module 58=32 16|97b14 119l5 119t22
+58r32 S{16R9} 59r32 60r14 61r8 61r36 16|97b32 101r10 109r21 110r10 111m13
+. 112m13 112r35 114r20 114r40 116m7
 X 16 station.adb
-82i11 I{integer} 83r20 83r36
-100i8 i{integer} 101r20 102r23 105r16
+88i11 I{integer} 89r20 89r36
+109i8 i{integer} 110r20 111r23 114r16
 

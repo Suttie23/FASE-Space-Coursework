@@ -26,13 +26,14 @@ procedure Main is
       Put_Line("Moudle: " & S.Modules(2)'Image);
       Put_Line("Module: " & S.Modules(3)'Image);
          Put_Line("");
+      Put_Line("Index of Top Module:" & S.Top_Module_Index'Image);
+         Put_Line("");
       Put_Line("------------------------------");
       Put_Line("Crew Status");
       Put_Line("------------------------------");
       Put_Line("Crew Member 1: " & "Living Quarters");
       Put_Line("Crew Member 2: " & "Active Spacewalk");
       Put_Line("Crew Member 3: " & "R&D Wing");
-         Put_Line("");
          Put_Line("");
       Put_Line("------------------------------");
       Put_Line("Napier Space Station Control Panel");

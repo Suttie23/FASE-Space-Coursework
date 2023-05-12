@@ -73,8 +73,14 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
    procedure Add_Module(S : in out Station_Record; New_Module : in Module) is
    begin
 
+      -- Ensure that additional modules cannot be added
       if S.Top_Module_Index = 3 then
+         delay 0.8;
+         Put_Line ("");
          Put_Line("WARNING: ALL MODULES ARE OCCUPIED");
+         delay 0.8;
+         Put_Line("WARNING: PLEASE REMOVE A MODULE");
+         delay 0.8;
          return;
       end if;
 
@@ -91,8 +97,11 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
    procedure Remove_Top_Module(S : in out Station_Record) is
    begin
 
+      -- Ensure the final module cannot be removed
       if S.Top_Module_Index = 1 then
-      Put_Line("WARNING: CANNOT REMOVE FINAL STATION MODULE");
+         Put_Line ("");
+         Put_Line("WARNING: CANNOT REMOVE FINAL STATION MODULE");
+         delay 0.8;
       return;
    end if;
 
@@ -103,7 +112,7 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
             S.Top_Module_Index := S.Top_Module_Index - 1;
             exit;
          elsif i = S.Modules'First and S.Top_Module_Index > 1 then
-      -- All modules are empty
+      -- Ensure top module is 1, as no further modules can be removed
       S.Top_Module_Index := 1;
       end if;
    end loop;

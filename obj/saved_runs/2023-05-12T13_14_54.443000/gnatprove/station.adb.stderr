@@ -1,0 +1,1 @@
+station.adb:110:37: medium: array index check might fail [reason for check: result of addition must be a valid index into the array][#0]
