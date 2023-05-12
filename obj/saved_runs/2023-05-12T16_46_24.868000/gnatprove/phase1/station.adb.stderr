@@ -1,0 +1,2 @@
+station.ads:81:71: error: expected type "Standard.Boolean"
+station.ads:81:71: error: found a composite type

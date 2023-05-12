@@ -1,0 +1,1 @@
+station.adb:154:17: medium: array index check might fail [reason for check: value must be a valid index into the array] [possible fix: precondition of subprogram at station.ads:77 should mention CM][#0]

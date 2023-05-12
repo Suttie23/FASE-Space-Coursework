@@ -1,0 +1,1 @@
+station.ads:83:57: medium: postcondition might fail, cannot prove S.Crew(CM).Status = Spacewalk [possible fix: postcondition of call at station.adb:201 should mention S (for argument S)][#0]

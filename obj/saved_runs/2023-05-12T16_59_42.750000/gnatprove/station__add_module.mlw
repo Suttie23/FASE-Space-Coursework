@@ -1,0 +1,3462 @@
+module Standard__integer
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type integer = <range -2147483648 2147483647>
+  
+  val function first : int
+    ensures { result = ((- 2147483648) : int) }
+  
+  val function last : int
+    ensures { result = (2147483647 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = integer,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type integer__ref = { mutable integer__content : integer }
+  
+  function integer__ref_integer__content__projection (a: integer__ref) : integer =
+    a.integer__content
+  
+  meta "model_projection" function integer__ref_integer__content__projection
+  
+  meta "inline:no" function integer__ref_integer__content__projection
+  
+  val integer__havoc (x: integer__ref) : unit
+    writes { x }
+end
+
+module Standard__positive
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type positive = <range 1 2147483647>
+  
+  val function first : int
+    ensures { result = (1 : int) }
+  
+  val function last : int
+    ensures { result = (2147483647 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = positive,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type positive__ref = { mutable positive__content : positive }
+  
+  function positive__ref_positive__content__projection (a: positive__ref) : positive =
+    a.positive__content
+  
+  meta "model_projection" function positive__ref_positive__content__projection
+  
+  meta "inline:no" function positive__ref_positive__content__projection
+  
+  val positive__havoc (x: positive__ref) : unit
+    writes { x }
+end
+
+module Standard__character
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type character
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (255 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = character,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type character__ref = { mutable character__content : character }
+  
+  function character__ref_character__content__projection (a: character__ref) : character =
+    a.character__content
+  
+  meta "model_projection" function character__ref_character__content__projection
+  
+  meta "inline:no" function character__ref_character__content__projection
+  
+  val character__havoc (x: character__ref) : unit
+    writes { x }
+end
+
+module Standard__character__rep
+  use Standard__character as Standard__character
+  use _gnatprove_standard.Main
+  use int.Int
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Standard__character.character,
+    predicate in_range = Standard__character.in_range
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Array__Int__Standard__character
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__character as Standard__character
+  use Standard__character__rep as Standard__character__rep
+  
+  function index_I1_one : int = 1 : int
+  
+  type component_type = Standard__character.character
+  
+  clone export _gnatprove_standard.Array__1 with
+    axiom .,
+    type I1.t = int,
+    predicate I1.le = Int.( <= ),
+    predicate I1.lt = Int.( < ),
+    predicate I1.gt = Int.( > ),
+    function I1.add = Int.( + ),
+    function I1.sub = Int.( - ),
+    function I1.one = index_I1_one,
+    type component_type = component_type
+  
+  function bool_eq (a: map) (a__first: int) (a__last: int) (b: map) (b__first: int) (b__last: int) : bool =
+    ((if (a__first <= a__last) then
+        ((b__first <= b__last) /\
+           ((a__last - a__first) = (b__last - b__first)))
+      else (b__first > b__last)) /\
+       (forall temp___idx_98 : int.
+          if ((a__first <= temp___idx_98) /\ (temp___idx_98 <= a__last)) then
+            ((Standard__character__rep.to_rep ((get a) temp___idx_98))
+               = (Standard__character__rep.to_rep
+                    ((get b) ((b__first - a__first) + temp___idx_98))))
+          else true))
+  
+  val bool_eq (a: map) (a__first: int) (a__last: int) (b: map) (b__first: int) (b__last: int) : 
+    bool
+    ensures { result
+      =
+      ((((((bool_eq (a : map)) (a__first : int)) (a__last : int)) (b : map))
+          (b__first : int))
+         (b__last : int)) }
+  
+  axiom bool_eq_rev:
+    forall a : map, b : map.
+      forall a__first : int, a__last : int, b__first : int, b__last : int.
+        ((((((((bool_eq b) b__first) b__last) a) a__first) a__last) = True) ->
+           ((if (a__first <= a__last) then
+               ((b__first <= b__last) /\
+                  ((a__last - a__first) = (b__last - b__first)))
+             else (b__first > b__last)) /\
+              (forall temp___idx_98 : int.
+                 if ((a__first <= temp___idx_98) /\
+                       (temp___idx_98 <= a__last)) then
+                   ((Standard__character__rep.to_rep ((get a) temp___idx_98))
+                      = (Standard__character__rep.to_rep
+                           ((get b) ((b__first - a__first) + temp___idx_98))))
+                 else true)))
+end
+
+module Standard__integer__rep
+  use Standard__integer as Standard__integer
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  function to_rep (x: Standard__integer.integer) : int =
+    Standard__integer.integer'int x
+  
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Standard__integer.integer,
+    predicate in_range = Standard__integer.in_range,
+    function to_rep = to_rep
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Standard__string
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__integer as Standard__integer
+  use Standard__positive as Standard__positive
+  use Standard__character as Standard__character
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Standard__integer__rep as Standard__integer__rep
+  
+  type component_type = Standard__character.character
+  
+  function index_1_id (x: int) : int = x
+  
+  clone export ada__model.Unconstr_Array with
+    axiom .,
+    type map = Array__Int__Standard__character.map,
+    function array_bool_eq = Array__Int__Standard__character.bool_eq,
+    type index_base_type = Standard__integer.integer,
+    type index_rep_type = int,
+    function to_rep = Standard__integer__rep.to_rep,
+    function rep_to_int = index_1_id,
+    predicate in_range_base = Standard__integer.in_range,
+    predicate index_dynamic_property = Standard__positive.dynamic_property,
+    predicate index_rep_le = Int.( <= )
+  
+  type string__ = __t
+  
+  meta "model_projection" function to_array
+  
+  meta "inline:no" function to_array
+  
+  meta "model_projection" function first
+  
+  meta "inline:no" function first
+  
+  meta "model_projection" function last
+  
+  meta "inline:no" function last
+  
+  type string____ref = { mutable string____content : string__ }
+  
+  function string____ref_string____content__projection (a: string____ref) : string__ =
+    a.string____content
+  
+  meta "model_projection" function string____ref_string____content__projection
+  
+  meta "inline:no" function string____ref_string____content__projection
+  
+  val string____havoc (x: string____ref) : unit
+    writes { x }
+end
+
+module Station__airlock_door
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type airlock_door
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (1 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = airlock_door,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type airlock_door__ref = { mutable airlock_door__content : airlock_door }
+  
+  function airlock_door__ref_airlock_door__content__projection (a: airlock_door__ref) : airlock_door =
+    a.airlock_door__content
+  
+  meta "model_projection" function airlock_door__ref_airlock_door__content__projection
+  
+  meta "inline:no" function airlock_door__ref_airlock_door__content__projection
+  
+  val airlock_door__havoc (x: airlock_door__ref) : unit
+    writes { x }
+end
+
+module Station__airlock_door__rep
+  use Station__airlock_door as Station__airlock_door
+  use _gnatprove_standard.Main
+  use int.Int
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Station__airlock_door.airlock_door,
+    predicate in_range = Station__airlock_door.in_range
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Station__module
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type module__
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (4 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = module__,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type module____ref = { mutable module____content : module__ }
+  
+  function module____ref_module____content__projection (a: module____ref) : module__ =
+    a.module____content
+  
+  meta "model_projection" function module____ref_module____content__projection
+  
+  meta "inline:no" function module____ref_module____content__projection
+  
+  val module____havoc (x: module____ref) : unit
+    writes { x }
+end
+
+module Station__module__rep
+  use Station__module as Station__module
+  use _gnatprove_standard.Main
+  use int.Int
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Station__module.module__,
+    predicate in_range = Station__module.in_range
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Array__Int__Station__module
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__module as Station__module
+  use Station__module__rep as Station__module__rep
+  
+  function index_I1_one : int = 1 : int
+  
+  type component_type = Station__module.module__
+  
+  clone export _gnatprove_standard.Array__1 with
+    axiom .,
+    type I1.t = int,
+    predicate I1.le = Int.( <= ),
+    predicate I1.lt = Int.( < ),
+    predicate I1.gt = Int.( > ),
+    function I1.add = Int.( + ),
+    function I1.sub = Int.( - ),
+    function I1.one = index_I1_one,
+    type component_type = component_type
+  
+  function bool_eq (a: map) (a__first: int) (a__last: int) (b: map) (b__first: int) (b__last: int) : bool =
+    ((if (a__first <= a__last) then
+        ((b__first <= b__last) /\
+           ((a__last - a__first) = (b__last - b__first)))
+      else (b__first > b__last)) /\
+       (forall temp___idx_161 : int.
+          if ((a__first <= temp___idx_161) /\ (temp___idx_161 <= a__last)) then
+            ((Station__module__rep.to_rep ((get a) temp___idx_161))
+               = (Station__module__rep.to_rep
+                    ((get b) ((b__first - a__first) + temp___idx_161))))
+          else true))
+  
+  val bool_eq (a: map) (a__first: int) (a__last: int) (b: map) (b__first: int) (b__last: int) : 
+    bool
+    ensures { result
+      =
+      ((((((bool_eq (a : map)) (a__first : int)) (a__last : int)) (b : map))
+          (b__first : int))
+         (b__last : int)) }
+  
+  axiom bool_eq_rev:
+    forall a : map, b : map.
+      forall a__first : int, a__last : int, b__first : int, b__last : int.
+        ((((((((bool_eq b) b__first) b__last) a) a__first) a__last) = True) ->
+           ((if (a__first <= a__last) then
+               ((b__first <= b__last) /\
+                  ((a__last - a__first) = (b__last - b__first)))
+             else (b__first > b__last)) /\
+              (forall temp___idx_161 : int.
+                 if ((a__first <= temp___idx_161) /\
+                       (temp___idx_161 <= a__last)) then
+                   ((Station__module__rep.to_rep ((get a) temp___idx_161))
+                      = (Station__module__rep.to_rep
+                           ((get b) ((b__first - a__first) + temp___idx_161))))
+                 else true)))
+end
+
+module Station__module_array
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__module as Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  
+  type component_type = Station__module.module__
+  
+  val function first : int
+    ensures { result = (1 : int) }
+  
+  val function last : int
+    ensures { result = (3 : int) }
+  
+  clone export ada__model.Constr_Array with
+    axiom .,
+    type map = Array__Int__Station__module.map,
+    function array_bool_eq = Array__Int__Station__module.bool_eq,
+    function first = first,
+    function last = last,
+    type index_rep_type = int
+end
+
+module Station__crewmember
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type crewmember
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (2 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = crewmember,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type crewmember__ref = { mutable crewmember__content : crewmember }
+  
+  function crewmember__ref_crewmember__content__projection (a: crewmember__ref) : crewmember =
+    a.crewmember__content
+  
+  meta "model_projection" function crewmember__ref_crewmember__content__projection
+  
+  meta "inline:no" function crewmember__ref_crewmember__content__projection
+  
+  val crewmember__havoc (x: crewmember__ref) : unit
+    writes { x }
+end
+
+module Station__crewmember__rep
+  use Station__crewmember as Station__crewmember
+  use _gnatprove_standard.Main
+  use int.Int
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Station__crewmember.crewmember,
+    predicate in_range = Station__crewmember.in_range
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Station__crewmemberstatus
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type crewmemberstatus
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (2 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = crewmemberstatus,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type crewmemberstatus__ref = {
+                              mutable crewmemberstatus__content :
+                                crewmemberstatus
+                              }
+  
+  function crewmemberstatus__ref_crewmemberstatus__content__projection (a: crewmemberstatus__ref) : crewmemberstatus =
+    a.crewmemberstatus__content
+  
+  meta "model_projection" function crewmemberstatus__ref_crewmemberstatus__content__projection
+  
+  meta "inline:no" function crewmemberstatus__ref_crewmemberstatus__content__projection
+  
+  val crewmemberstatus__havoc (x: crewmemberstatus__ref) : unit
+    writes { x }
+end
+
+module Station__crewmemberstatus__rep
+  use Station__crewmemberstatus as Station__crewmemberstatus
+  use _gnatprove_standard.Main
+  use int.Int
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Station__crewmemberstatus.crewmemberstatus,
+    predicate in_range = Station__crewmemberstatus.in_range
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Station__crew_record__rep
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__module as Station__module
+  use Station__module__rep as Station__module__rep
+  use Station__crewmember as Station__crewmember
+  use Station__crewmember__rep as Station__crewmember__rep
+  use Station__crewmemberstatus as Station__crewmemberstatus
+  use Station__crewmemberstatus__rep as Station__crewmemberstatus__rep
+  
+  type __split_fields = {
+                       rec__station__crew_record__name :
+                         Station__crewmember.crewmember;
+                       rec__station__crew_record__status :
+                         Station__crewmemberstatus.crewmemberstatus;
+                       rec__station__crew_record__location :
+                         Station__module.module__
+                       }
+  
+  function __split_fields_rec__station__crew_record__name__projection (a: __split_fields) : 
+    Station__crewmember.crewmember =
+    a.rec__station__crew_record__name
+  
+  meta "model_projection" function __split_fields_rec__station__crew_record__name__projection
+  
+  meta "inline:no" function __split_fields_rec__station__crew_record__name__projection
+  
+  function __split_fields_rec__station__crew_record__status__projection (a: __split_fields) : 
+    Station__crewmemberstatus.crewmemberstatus =
+    a.rec__station__crew_record__status
+  
+  meta "model_projection" function __split_fields_rec__station__crew_record__status__projection
+  
+  meta "inline:no" function __split_fields_rec__station__crew_record__status__projection
+  
+  function __split_fields_rec__station__crew_record__location__projection (a: __split_fields) : 
+    Station__module.module__ =
+    a.rec__station__crew_record__location
+  
+  meta "model_projection" function __split_fields_rec__station__crew_record__location__projection
+  
+  meta "inline:no" function __split_fields_rec__station__crew_record__location__projection
+  
+  type __split_fields__ref = {
+                            mutable __split_fields__content : __split_fields
+                            }
+  
+  function __split_fields__ref___split_fields__content__projection (a: __split_fields__ref) : __split_fields =
+    __split_fields__content a
+  
+  meta "model_projection" function __split_fields__ref___split_fields__content__projection
+  
+  meta "inline:no" function __split_fields__ref___split_fields__content__projection
+  
+  val __split_fields__havoc (x: __split_fields__ref) : unit
+    writes { x }
+  
+  type __rep = { __split_fields : __split_fields }
+  
+  function __rep___split_fields__projection (a: __rep) : __split_fields =
+    __split_fields a
+  
+  meta "model_projection" function __rep___split_fields__projection
+  
+  meta "inline:no" function __rep___split_fields__projection
+  
+  function to_base (a: __rep) : __rep = a
+  
+  val to_base (a: __rep) : __rep
+    ensures { result = (to_base (a : __rep)) }
+  
+  function of_base (a: __rep) : __rep = a
+  
+  val of_base (a: __rep) : __rep
+    ensures { result = (of_base (a : __rep)) }
+  
+  predicate station__crew_record__name__pred (a: __rep) = true
+  
+  val station__crew_record__name__pred (a: __rep) : bool
+    ensures { result <-> (station__crew_record__name__pred (a : __rep)) }
+  
+  val rec__station__crew_record__name_ (a: __rep) : Station__crewmember.crewmember
+    requires { station__crew_record__name__pred a }
+    ensures { (result = ((__split_fields a).rec__station__crew_record__name)) }
+  
+  predicate station__crew_record__status__pred (a: __rep) = true
+  
+  val station__crew_record__status__pred (a: __rep) : bool
+    ensures { result <-> (station__crew_record__status__pred (a : __rep)) }
+  
+  val rec__station__crew_record__status_ (a: __rep) : Station__crewmemberstatus.crewmemberstatus
+    requires { station__crew_record__status__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__crew_record__status)) }
+  
+  predicate station__crew_record__location__pred (a: __rep) = true
+  
+  val station__crew_record__location__pred (a: __rep) : bool
+    ensures { result <-> (station__crew_record__location__pred (a : __rep)) }
+  
+  val rec__station__crew_record__location_ (a: __rep) : Station__module.module__
+    requires { station__crew_record__location__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__crew_record__location)) }
+  
+  function bool_eq (a: __rep) (b: __rep) : bool =
+    if ((((Station__crewmember__rep.to_rep
+             ((__split_fields a).rec__station__crew_record__name))
+            = (Station__crewmember__rep.to_rep
+                 ((__split_fields b).rec__station__crew_record__name))) /\
+           ((Station__crewmemberstatus__rep.to_rep
+               ((__split_fields a).rec__station__crew_record__status))
+              = (Station__crewmemberstatus__rep.to_rep
+                   ((__split_fields b).rec__station__crew_record__status)))) /\
+          ((Station__module__rep.to_rep
+              ((__split_fields a).rec__station__crew_record__location))
+             = (Station__module__rep.to_rep
+                  ((__split_fields b).rec__station__crew_record__location)))) then
+      True
+    else False
+  
+  val bool_eq (a: __rep) (b: __rep) : bool
+    ensures { result = ((bool_eq (a : __rep)) (b : __rep)) }
+end
+
+module Station__crew_record
+  use export Station__crew_record__rep
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type crew_record = __rep
+  
+  val function value__size : int
+  
+  val function object__size : int
+  
+  val function alignment : int
+  
+  axiom value__size_axiom: (value__size >= (0 : int))
+  
+  axiom object__size_axiom: (object__size >= (0 : int))
+  
+  axiom alignment_axiom: (alignment >= (0 : int))
+  
+  val function station__crew_record__name__first__bit : int
+  
+  val function station__crew_record__name__last__bit : int
+  
+  val function station__crew_record__name__position : int
+  
+  axiom station__crew_record__name__first__bit_axiom:
+    (station__crew_record__name__first__bit >= (0 : int))
+  
+  axiom station__crew_record__name__last__bit_axiom:
+    (station__crew_record__name__last__bit
+       > station__crew_record__name__first__bit)
+  
+  axiom station__crew_record__name__position_axiom:
+    (station__crew_record__name__position >= (0 : int))
+  
+  val function station__crew_record__status__first__bit : int
+  
+  val function station__crew_record__status__last__bit : int
+  
+  val function station__crew_record__status__position : int
+  
+  axiom station__crew_record__status__first__bit_axiom:
+    (station__crew_record__status__first__bit >= (0 : int))
+  
+  axiom station__crew_record__status__last__bit_axiom:
+    (station__crew_record__status__last__bit
+       > station__crew_record__status__first__bit)
+  
+  axiom station__crew_record__status__position_axiom:
+    (station__crew_record__status__position >= (0 : int))
+  
+  val function station__crew_record__location__first__bit : int
+  
+  val function station__crew_record__location__last__bit : int
+  
+  val function station__crew_record__location__position : int
+  
+  axiom station__crew_record__location__first__bit_axiom:
+    (station__crew_record__location__first__bit >= (0 : int))
+  
+  axiom station__crew_record__location__last__bit_axiom:
+    (station__crew_record__location__last__bit
+       > station__crew_record__location__first__bit)
+  
+  axiom station__crew_record__location__position_axiom:
+    (station__crew_record__location__position >= (0 : int))
+  
+  val function user_eq (a: crew_record) (b: crew_record) : bool
+  
+  val function dummy : crew_record
+  
+  type crew_record__ref = { mutable crew_record__content : crew_record }
+  
+  function crew_record__ref_crew_record__content__projection (a: crew_record__ref) : crew_record =
+    a.crew_record__content
+  
+  meta "model_projection" function crew_record__ref_crew_record__content__projection
+  
+  meta "inline:no" function crew_record__ref_crew_record__content__projection
+  
+  val crew_record__havoc (x: crew_record__ref) : unit
+    writes { x }
+end
+
+module Array__Int__Station__crew_record
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__crew_record as Station__crew_record
+  
+  function index_I1_one : int = 1 : int
+  
+  type component_type = Station__crew_record.crew_record
+  
+  clone export _gnatprove_standard.Array__1 with
+    axiom .,
+    type I1.t = int,
+    predicate I1.le = Int.( <= ),
+    predicate I1.lt = Int.( < ),
+    predicate I1.gt = Int.( > ),
+    function I1.add = Int.( + ),
+    function I1.sub = Int.( - ),
+    function I1.one = index_I1_one,
+    type component_type = component_type
+  
+  function bool_eq (a: map) (a__first: int) (a__last: int) (b: map) (b__first: int) (b__last: int) : bool =
+    ((if (a__first <= a__last) then
+        ((b__first <= b__last) /\
+           ((a__last - a__first) = (b__last - b__first)))
+      else (b__first > b__last)) /\
+       (forall temp___idx_162 : int.
+          if ((a__first <= temp___idx_162) /\ (temp___idx_162 <= a__last)) then
+            ((Station__crew_record.bool_eq ((get a) temp___idx_162))
+               ((get b) ((b__first - a__first) + temp___idx_162)))
+          else true))
+  
+  val bool_eq (a: map) (a__first: int) (a__last: int) (b: map) (b__first: int) (b__last: int) : 
+    bool
+    ensures { result
+      =
+      ((((((bool_eq (a : map)) (a__first : int)) (a__last : int)) (b : map))
+          (b__first : int))
+         (b__last : int)) }
+  
+  axiom bool_eq_rev:
+    forall a : map, b : map.
+      forall a__first : int, a__last : int, b__first : int, b__last : int.
+        ((((((((bool_eq b) b__first) b__last) a) a__first) a__last) = True) ->
+           ((if (a__first <= a__last) then
+               ((b__first <= b__last) /\
+                  ((a__last - a__first) = (b__last - b__first)))
+             else (b__first > b__last)) /\
+              (forall temp___idx_162 : int.
+                 if ((a__first <= temp___idx_162) /\
+                       (temp___idx_162 <= a__last)) then
+                   ((Station__crew_record.bool_eq ((get a) temp___idx_162))
+                      ((get b) ((b__first - a__first) + temp___idx_162)))
+                 else true)))
+end
+
+module Station__crew_array
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__crew_record as Station__crew_record
+  use Array__Int__Station__crew_record as Array__Int__Station__crew_record
+  
+  type component_type = Station__crew_record.crew_record
+  
+  val function first : int
+    ensures { result = (1 : int) }
+  
+  val function last : int
+    ensures { result = (3 : int) }
+  
+  clone export ada__model.Constr_Array with
+    axiom .,
+    type map = Array__Int__Station__crew_record.map,
+    function array_bool_eq = Array__Int__Station__crew_record.bool_eq,
+    function first = first,
+    function last = last,
+    type index_rep_type = int
+end
+
+module Station__station_record__T5s
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type t5s = <range 820000 920000>
+  
+  val function first : int
+    ensures { result = (820000 : int) }
+  
+  val function last : int
+    ensures { result = (920000 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = t5s,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type t5s__ref = { mutable t5s__content : t5s }
+  
+  function t5s__ref_t5s__content__projection (a: t5s__ref) : t5s =
+    a.t5s__content
+  
+  meta "model_projection" function t5s__ref_t5s__content__projection
+  
+  meta "inline:no" function t5s__ref_t5s__content__projection
+  
+  val t5s__havoc (x: t5s__ref) : unit
+    writes { x }
+end
+
+module Station__station_record__T5s__rep
+  use Station__station_record__T5s as Station__station_record__T5s
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  function to_rep (x: Station__station_record__T5s.t5s) : int =
+    Station__station_record__T5s.t5s'int x
+  
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Station__station_record__T5s.t5s,
+    predicate in_range = Station__station_record__T5s.in_range,
+    function to_rep = to_rep
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Station__station_record__T6s
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type t6s = <range 1 3>
+  
+  val function first : int
+    ensures { result = (1 : int) }
+  
+  val function last : int
+    ensures { result = (3 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = t6s,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type t6s__ref = { mutable t6s__content : t6s }
+  
+  function t6s__ref_t6s__content__projection (a: t6s__ref) : t6s =
+    a.t6s__content
+  
+  meta "model_projection" function t6s__ref_t6s__content__projection
+  
+  meta "inline:no" function t6s__ref_t6s__content__projection
+  
+  val t6s__havoc (x: t6s__ref) : unit
+    writes { x }
+end
+
+module Station__station_record__T6s__rep
+  use Station__station_record__T6s as Station__station_record__T6s
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  function to_rep (x: Station__station_record__T6s.t6s) : int =
+    Station__station_record__T6s.t6s'int x
+  
+  clone export ada__model.Rep_Proj_Int with
+    axiom .,
+    type t = Station__station_record__T6s.t6s,
+    predicate in_range = Station__station_record__T6s.in_range,
+    function to_rep = to_rep
+  
+  meta "model_projection" function to_rep
+  
+  meta "inline:no" function to_rep
+end
+
+module Station__station_record__rep
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__airlock_door as Station__airlock_door
+  use Station__airlock_door__rep as Station__airlock_door__rep
+  use Station__module_array as Station__module_array
+  use Station__crew_array as Station__crew_array
+  use Station__station_record__T5s as Station__station_record__T5s
+  use Station__station_record__T5s__rep as Station__station_record__T5s__rep
+  use Station__station_record__T6s as Station__station_record__T6s
+  use Station__station_record__T6s__rep as Station__station_record__T6s__rep
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__crew_record as Array__Int__Station__crew_record
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__crew_record as Array__Int__Station__crew_record
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__crew_record as Array__Int__Station__crew_record
+  use Array__Int__Station__crew_record as Array__Int__Station__crew_record
+  
+  type __split_fields = {
+                       rec__station__station_record__door1 :
+                         Station__airlock_door.airlock_door;
+                       rec__station__station_record__door2 :
+                         Station__airlock_door.airlock_door;
+                       rec__station__station_record__altitude :
+                         Station__station_record__T5s.t5s;
+                       rec__station__station_record__modules :
+                         Array__Int__Station__module.map;
+                       rec__station__station_record__top_module_index :
+                         Station__station_record__T6s.t6s;
+                       rec__station__station_record__crew :
+                         Array__Int__Station__crew_record.map
+                       }
+  
+  function __split_fields_rec__station__station_record__door1__projection (a: __split_fields) : 
+    Station__airlock_door.airlock_door =
+    a.rec__station__station_record__door1
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__door1__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__door1__projection
+  
+  function __split_fields_rec__station__station_record__door2__projection (a: __split_fields) : 
+    Station__airlock_door.airlock_door =
+    a.rec__station__station_record__door2
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__door2__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__door2__projection
+  
+  function __split_fields_rec__station__station_record__altitude__projection (a: __split_fields) : 
+    Station__station_record__T5s.t5s =
+    a.rec__station__station_record__altitude
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__altitude__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__altitude__projection
+  
+  function __split_fields_rec__station__station_record__modules__projection (a: __split_fields) : 
+    Array__Int__Station__module.map =
+    a.rec__station__station_record__modules
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__modules__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__modules__projection
+  
+  function __split_fields_rec__station__station_record__top_module_index__projection (a: __split_fields) : 
+    Station__station_record__T6s.t6s =
+    a.rec__station__station_record__top_module_index
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__top_module_index__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__top_module_index__projection
+  
+  function __split_fields_rec__station__station_record__crew__projection (a: __split_fields) : 
+    Array__Int__Station__crew_record.map =
+    a.rec__station__station_record__crew
+  
+  meta "model_projection" function __split_fields_rec__station__station_record__crew__projection
+  
+  meta "inline:no" function __split_fields_rec__station__station_record__crew__projection
+  
+  type __split_fields__ref = {
+                            mutable __split_fields__content : __split_fields
+                            }
+  
+  function __split_fields__ref___split_fields__content__2__projection (a: __split_fields__ref) : __split_fields =
+    __split_fields__content a
+  
+  meta "model_projection" function __split_fields__ref___split_fields__content__2__projection
+  
+  meta "inline:no" function __split_fields__ref___split_fields__content__2__projection
+  
+  val __split_fields__havoc (x: __split_fields__ref) : unit
+    writes { x }
+  
+  type __rep = { __split_fields : __split_fields }
+  
+  function __rep___split_fields__2__projection (a: __rep) : __split_fields =
+    __split_fields a
+  
+  meta "model_projection" function __rep___split_fields__2__projection
+  
+  meta "inline:no" function __rep___split_fields__2__projection
+  
+  function to_base (a: __rep) : __rep = a
+  
+  val to_base (a: __rep) : __rep
+    ensures { result = (to_base (a : __rep)) }
+  
+  function of_base (a: __rep) : __rep = a
+  
+  val of_base (a: __rep) : __rep
+    ensures { result = (of_base (a : __rep)) }
+  
+  predicate station__station_record__door1__pred (a: __rep) = true
+  
+  val station__station_record__door1__pred (a: __rep) : bool
+    ensures { result <-> (station__station_record__door1__pred (a : __rep)) }
+  
+  val rec__station__station_record__door1_ (a: __rep) : Station__airlock_door.airlock_door
+    requires { station__station_record__door1__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__door1)) }
+  
+  predicate station__station_record__door2__pred (a: __rep) = true
+  
+  val station__station_record__door2__pred (a: __rep) : bool
+    ensures { result <-> (station__station_record__door2__pred (a : __rep)) }
+  
+  val rec__station__station_record__door2_ (a: __rep) : Station__airlock_door.airlock_door
+    requires { station__station_record__door2__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__door2)) }
+  
+  predicate station__station_record__altitude__pred (a: __rep) = true
+  
+  val station__station_record__altitude__pred (a: __rep) : bool
+    ensures { result
+                <->
+                (station__station_record__altitude__pred (a : __rep)) }
+  
+  val rec__station__station_record__altitude_ (a: __rep) : Station__station_record__T5s.t5s
+    requires { station__station_record__altitude__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__altitude)) }
+  
+  predicate station__station_record__modules__pred (a: __rep) = true
+  
+  val station__station_record__modules__pred (a: __rep) : bool
+    ensures { result <-> (station__station_record__modules__pred (a : __rep)) }
+  
+  val rec__station__station_record__modules_ (a: __rep) : Array__Int__Station__module.map
+    requires { station__station_record__modules__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__modules)) }
+  
+  predicate station__station_record__top_module_index__pred (a: __rep) = true
+  
+  val station__station_record__top_module_index__pred (a: __rep) : bool
+    ensures { result
+                <->
+                (station__station_record__top_module_index__pred (a : __rep)) }
+  
+  val rec__station__station_record__top_module_index_ (a: __rep) : Station__station_record__T6s.t6s
+    requires { station__station_record__top_module_index__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__top_module_index)) }
+  
+  predicate station__station_record__crew__pred (a: __rep) = true
+  
+  val station__station_record__crew__pred (a: __rep) : bool
+    ensures { result <-> (station__station_record__crew__pred (a : __rep)) }
+  
+  val rec__station__station_record__crew_ (a: __rep) : Array__Int__Station__crew_record.map
+    requires { station__station_record__crew__pred a }
+    ensures { (result
+                 = ((__split_fields a).rec__station__station_record__crew)) }
+  
+  function bool_eq (a: __rep) (b: __rep) : bool =
+    if ((((Station__airlock_door__rep.to_rep
+             ((__split_fields a).rec__station__station_record__door1))
+            = (Station__airlock_door__rep.to_rep
+                 ((__split_fields b).rec__station__station_record__door1))) /\
+           ((Station__airlock_door__rep.to_rep
+               ((__split_fields a).rec__station__station_record__door2))
+              = (Station__airlock_door__rep.to_rep
+                   ((__split_fields b).rec__station__station_record__door2)))) /\
+          ((((Station__station_record__T5s__rep.to_rep
+                ((__split_fields a).rec__station__station_record__altitude))
+               = (Station__station_record__T5s__rep.to_rep
+                    ((__split_fields b).rec__station__station_record__altitude))) /\
+              ((Station__module_array.bool_eq
+                  ((__split_fields a).rec__station__station_record__modules))
+                 ((__split_fields b).rec__station__station_record__modules))) /\
+             (((Station__station_record__T6s__rep.to_rep
+                  ((__split_fields a).rec__station__station_record__top_module_index))
+                 = (Station__station_record__T6s__rep.to_rep
+                      ((__split_fields b).rec__station__station_record__top_module_index))) /\
+                ((Station__crew_array.bool_eq
+                    ((__split_fields a).rec__station__station_record__crew))
+                   ((__split_fields b).rec__station__station_record__crew))))) then
+      True
+    else False
+  
+  val bool_eq (a: __rep) (b: __rep) : bool
+    ensures { result = ((bool_eq (a : __rep)) (b : __rep)) }
+end
+
+module Station__station_record
+  use export Station__station_record__rep
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type station_record = __rep
+  
+  val function value__size : int
+  
+  val function object__size : int
+  
+  val function alignment : int
+  
+  axiom value__size_axiom: (value__size >= (0 : int))
+  
+  axiom object__size_axiom: (object__size >= (0 : int))
+  
+  axiom alignment_axiom: (alignment >= (0 : int))
+  
+  val function station__station_record__door1__first__bit : int
+  
+  val function station__station_record__door1__last__bit : int
+  
+  val function station__station_record__door1__position : int
+  
+  axiom station__station_record__door1__first__bit_axiom:
+    (station__station_record__door1__first__bit >= (0 : int))
+  
+  axiom station__station_record__door1__last__bit_axiom:
+    (station__station_record__door1__last__bit
+       > station__station_record__door1__first__bit)
+  
+  axiom station__station_record__door1__position_axiom:
+    (station__station_record__door1__position >= (0 : int))
+  
+  val function station__station_record__door2__first__bit : int
+  
+  val function station__station_record__door2__last__bit : int
+  
+  val function station__station_record__door2__position : int
+  
+  axiom station__station_record__door2__first__bit_axiom:
+    (station__station_record__door2__first__bit >= (0 : int))
+  
+  axiom station__station_record__door2__last__bit_axiom:
+    (station__station_record__door2__last__bit
+       > station__station_record__door2__first__bit)
+  
+  axiom station__station_record__door2__position_axiom:
+    (station__station_record__door2__position >= (0 : int))
+  
+  val function station__station_record__altitude__first__bit : int
+  
+  val function station__station_record__altitude__last__bit : int
+  
+  val function station__station_record__altitude__position : int
+  
+  axiom station__station_record__altitude__first__bit_axiom:
+    (station__station_record__altitude__first__bit >= (0 : int))
+  
+  axiom station__station_record__altitude__last__bit_axiom:
+    (station__station_record__altitude__last__bit
+       > station__station_record__altitude__first__bit)
+  
+  axiom station__station_record__altitude__position_axiom:
+    (station__station_record__altitude__position >= (0 : int))
+  
+  val function station__station_record__modules__first__bit : int
+  
+  val function station__station_record__modules__last__bit : int
+  
+  val function station__station_record__modules__position : int
+  
+  axiom station__station_record__modules__first__bit_axiom:
+    (station__station_record__modules__first__bit >= (0 : int))
+  
+  axiom station__station_record__modules__last__bit_axiom:
+    (station__station_record__modules__last__bit
+       > station__station_record__modules__first__bit)
+  
+  axiom station__station_record__modules__position_axiom:
+    (station__station_record__modules__position >= (0 : int))
+  
+  val function station__station_record__top_module_index__first__bit : 
+    int
+  
+  val function station__station_record__top_module_index__last__bit : 
+    int
+  
+  val function station__station_record__top_module_index__position : 
+    int
+  
+  axiom station__station_record__top_module_index__first__bit_axiom:
+    (station__station_record__top_module_index__first__bit >= (0 : int))
+  
+  axiom station__station_record__top_module_index__last__bit_axiom:
+    (station__station_record__top_module_index__last__bit
+       > station__station_record__top_module_index__first__bit)
+  
+  axiom station__station_record__top_module_index__position_axiom:
+    (station__station_record__top_module_index__position >= (0 : int))
+  
+  val function station__station_record__crew__first__bit : int
+  
+  val function station__station_record__crew__last__bit : int
+  
+  val function station__station_record__crew__position : int
+  
+  axiom station__station_record__crew__first__bit_axiom:
+    (station__station_record__crew__first__bit >= (0 : int))
+  
+  axiom station__station_record__crew__last__bit_axiom:
+    (station__station_record__crew__last__bit
+       > station__station_record__crew__first__bit)
+  
+  axiom station__station_record__crew__position_axiom:
+    (station__station_record__crew__position >= (0 : int))
+  
+  val function user_eq (a: station_record) (b: station_record) : bool
+  
+  val function dummy : station_record
+  
+  type station_record__ref = {
+                            mutable station_record__content : station_record
+                            }
+  
+  function station_record__ref_station_record__content__projection (a: station_record__ref) : station_record =
+    a.station_record__content
+  
+  meta "model_projection" function station_record__ref_station_record__content__projection
+  
+  meta "inline:no" function station_record__ref_station_record__content__projection
+  
+  val station_record__havoc (x: station_record__ref) : unit
+    writes { x }
+end
+
+module Station__s
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__station_record as Station__station_record
+  
+  val s__split_fields : Station__station_record.__split_fields__ref
+end
+
+module Station__station_record___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__station_record as Station__station_record
+  use Station__airlock_door as Station__airlock_door
+  use Station__airlock_door__rep as Station__airlock_door__rep
+  
+  predicate dynamic_invariant (temp___expr_232: Station__station_record.station_record) (temp___is_init_228: bool) (temp___skip_constant_229: bool) (temp___do_toplevel_230: bool) (temp___do_typ_inv_231: bool) =
+    true
+  
+  val dynamic_invariant (temp___expr_232: Station__station_record.station_record) (temp___is_init_228: bool) (temp___skip_constant_229: bool) (temp___do_toplevel_230: bool) (temp___do_typ_inv_231: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant
+                       (temp___expr_232 :
+                          Station__station_record.station_record))
+                      (temp___is_init_228 : bool))
+                     (temp___skip_constant_229 : bool))
+                    (temp___do_toplevel_230 : bool))
+                   (temp___do_typ_inv_231 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_235: Station__station_record.station_record) (temp___skip_top_level_236: bool) =
+    ((if (Station__station_record.station__station_record__door1__pred
+            temp___expr_235) then
+        ((Station__airlock_door__rep.to_rep
+            ((Station__station_record.__split_fields temp___expr_235).
+               Station__station_record.rec__station__station_record__door1))
+           = (1 : int))
+      else true) /\
+       (if (Station__station_record.station__station_record__door2__pred
+              temp___expr_235) then
+          ((Station__airlock_door__rep.to_rep
+              ((Station__station_record.__split_fields temp___expr_235).
+                 Station__station_record.rec__station__station_record__door2))
+             = (1 : int))
+        else true))
+  
+  val default_initial_assumption (temp___expr_235: Station__station_record.station_record) (temp___skip_top_level_236: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption
+                    (temp___expr_235 : Station__station_record.station_record))
+                   (temp___skip_top_level_236 : bool)) }
+end
+
+module Station__sealedinvariant
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__station_record as Station__station_record
+  
+  val function sealedinvariant (Station__s___s__split_fields___: Station__station_record.__split_fields) : 
+    bool
+  
+  val predicate sealedinvariant__function_guard (temp___result_163: bool) (Station__s___s__split_fields___: 
+    Station__station_record.__split_fields)
+end
+
+module Station__sealedinvariant___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__s as Station__s
+  use Station__station_record as Station__station_record
+  use Station__station_record___axiom as Station__station_record___axiom
+  use Station__sealedinvariant as Station__sealedinvariant
+  use Station__airlock_door as Station__airlock_door
+  use Station__airlock_door__rep as Station__airlock_door__rep
+  
+  val sealedinvariant (__void_param: unit) : bool
+    reads { Station__s.s__split_fields }
+    requires { true }
+    writes {  }
+    ensures { (((result
+                   = (Station__sealedinvariant.sealedinvariant
+                        (Station__station_record.__split_fields__content
+                            Station__s.s__split_fields))) /\
+                  ((Station__sealedinvariant.sealedinvariant__function_guard
+                      result)
+                     (Station__station_record.__split_fields__content
+                         Station__s.s__split_fields))) /\
+                 (result
+                    = (((((Station__airlock_door__rep.to_rep
+                             ((Station__station_record.__split_fields
+                                  { Station__station_record.__split_fields =
+                                      (Station__station_record.__split_fields__content
+                                          Station__s.s__split_fields) }).
+                                Station__station_record.rec__station__station_record__door1))
+                            = (0 : int)) /\
+                           ((Station__airlock_door__rep.to_rep
+                               ((Station__station_record.__split_fields
+                                    { Station__station_record.__split_fields =
+                                        (Station__station_record.__split_fields__content
+                                            Station__s.s__split_fields) }).
+                                  Station__station_record.rec__station__station_record__door2))
+                              = (1 : int))) \/
+                          (((Station__airlock_door__rep.to_rep
+                               ((Station__station_record.__split_fields
+                                    { Station__station_record.__split_fields =
+                                        (Station__station_record.__split_fields__content
+                                            Station__s.s__split_fields) }).
+                                  Station__station_record.rec__station__station_record__door1))
+                              = (1 : int)) /\
+                             ((Station__airlock_door__rep.to_rep
+                                 ((Station__station_record.__split_fields
+                                      { Station__station_record.__split_fields =
+                                          (Station__station_record.__split_fields__content
+                                              Station__s.s__split_fields) }).
+                                    Station__station_record.rec__station__station_record__door2))
+                                = (0 : int)))) \/
+                         (((Station__airlock_door__rep.to_rep
+                              ((Station__station_record.__split_fields
+                                   { Station__station_record.__split_fields =
+                                       (Station__station_record.__split_fields__content
+                                           Station__s.s__split_fields) }).
+                                 Station__station_record.rec__station__station_record__door1))
+                             = (1 : int)) /\
+                            ((Station__airlock_door__rep.to_rep
+                                ((Station__station_record.__split_fields
+                                     { Station__station_record.__split_fields =
+                                         (Station__station_record.__split_fields__content
+                                             Station__s.s__split_fields) }).
+                                   Station__station_record.rec__station__station_record__door2))
+                               = (1 : int)))))) }
+  
+  axiom sealedinvariant__post_axiom:
+    forall Station__s___s__split_fields___ : Station__station_record.__split_fields
+          [Station__sealedinvariant.sealedinvariant
+             Station__s___s__split_fields___].
+      ((((((Station__station_record___axiom.dynamic_invariant
+              { Station__station_record.__split_fields =
+                  Station__s___s__split_fields___ })
+             True)
+            True)
+           True)
+          True) ->
+         (let result =
+            Station__sealedinvariant.sealedinvariant
+              Station__s___s__split_fields___ in
+          if ((Station__sealedinvariant.sealedinvariant__function_guard
+                 result)
+                Station__s___s__split_fields___) then
+            ((true /\ true) /\ true)
+          else true))
+  
+  axiom sealedinvariant__def_axiom:
+    forall Station__s___s__split_fields___ : Station__station_record.__split_fields
+          [Station__sealedinvariant.sealedinvariant
+             Station__s___s__split_fields___].
+      ((Station__sealedinvariant.sealedinvariant
+          Station__s___s__split_fields___)
+         = (((((Station__airlock_door__rep.to_rep
+                  ((Station__station_record.__split_fields
+                       { Station__station_record.__split_fields =
+                           Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door1))
+                 = (0 : int)) /\
+                ((Station__airlock_door__rep.to_rep
+                    ((Station__station_record.__split_fields
+                         { Station__station_record.__split_fields =
+                             Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door2))
+                   = (1 : int))) \/
+               (((Station__airlock_door__rep.to_rep
+                    ((Station__station_record.__split_fields
+                         { Station__station_record.__split_fields =
+                             Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door1))
+                   = (1 : int)) /\
+                  ((Station__airlock_door__rep.to_rep
+                      ((Station__station_record.__split_fields
+                           { Station__station_record.__split_fields =
+                               Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door2))
+                     = (0 : int)))) \/
+              (((Station__airlock_door__rep.to_rep
+                   ((Station__station_record.__split_fields
+                        { Station__station_record.__split_fields =
+                            Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door1))
+                  = (1 : int)) /\
+                 ((Station__airlock_door__rep.to_rep
+                     ((Station__station_record.__split_fields
+                          { Station__station_record.__split_fields =
+                              Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__door2))
+                    = (1 : int)))))
+end
+
+module Station__altitudeinvariant
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__station_record as Station__station_record
+  
+  val function altitudeinvariant (Station__s___s__split_fields___: Station__station_record.__split_fields) : 
+    bool
+  
+  val predicate altitudeinvariant__function_guard (temp___result_164: bool) (Station__s___s__split_fields___: 
+    Station__station_record.__split_fields)
+end
+
+module Station__altitudeinvariant___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__s as Station__s
+  use Station__station_record as Station__station_record
+  use Station__station_record___axiom as Station__station_record___axiom
+  use Station__altitudeinvariant as Station__altitudeinvariant
+  use Station__station_record__T5s as Station__station_record__T5s
+  use Station__station_record__T5s__rep as Station__station_record__T5s__rep
+  
+  val altitudeinvariant (__void_param: unit) : bool
+    reads { Station__s.s__split_fields }
+    requires { true }
+    writes {  }
+    ensures { (((result
+                   = (Station__altitudeinvariant.altitudeinvariant
+                        (Station__station_record.__split_fields__content
+                            Station__s.s__split_fields))) /\
+                  ((Station__altitudeinvariant.altitudeinvariant__function_guard
+                      result)
+                     (Station__station_record.__split_fields__content
+                         Station__s.s__split_fields))) /\
+                 (result
+                    = (((Station__station_record__T5s__rep.to_rep
+                           ((Station__station_record.__split_fields
+                                { Station__station_record.__split_fields =
+                                    (Station__station_record.__split_fields__content
+                                        Station__s.s__split_fields) }).
+                              Station__station_record.rec__station__station_record__altitude))
+                          >= (820000 : int)) /\
+                         ((Station__station_record__T5s__rep.to_rep
+                             ((Station__station_record.__split_fields
+                                  { Station__station_record.__split_fields =
+                                      (Station__station_record.__split_fields__content
+                                          Station__s.s__split_fields) }).
+                                Station__station_record.rec__station__station_record__altitude))
+                            <= (920000 : int))))) }
+  
+  axiom altitudeinvariant__post_axiom:
+    forall Station__s___s__split_fields___ : Station__station_record.__split_fields
+          [Station__altitudeinvariant.altitudeinvariant
+             Station__s___s__split_fields___].
+      ((((((Station__station_record___axiom.dynamic_invariant
+              { Station__station_record.__split_fields =
+                  Station__s___s__split_fields___ })
+             True)
+            True)
+           True)
+          True) ->
+         (let result =
+            Station__altitudeinvariant.altitudeinvariant
+              Station__s___s__split_fields___ in
+          if ((Station__altitudeinvariant.altitudeinvariant__function_guard
+                 result)
+                Station__s___s__split_fields___) then
+            ((true /\ true) /\ true)
+          else true))
+  
+  axiom altitudeinvariant__def_axiom:
+    forall Station__s___s__split_fields___ : Station__station_record.__split_fields
+          [Station__altitudeinvariant.altitudeinvariant
+             Station__s___s__split_fields___].
+      ((Station__altitudeinvariant.altitudeinvariant
+          Station__s___s__split_fields___)
+         = (((Station__station_record__T5s__rep.to_rep
+                ((Station__station_record.__split_fields
+                     { Station__station_record.__split_fields =
+                         Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__altitude))
+               >= (820000 : int)) /\
+              ((Station__station_record__T5s__rep.to_rep
+                  ((Station__station_record.__split_fields
+                       { Station__station_record.__split_fields =
+                           Station__s___s__split_fields___ }).Station__station_record.rec__station__station_record__altitude))
+                 <= (920000 : int))))
+end
+
+module Station__add_module__s
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__station_record as Station__station_record
+  
+  val s__split_fields : Station__station_record.__split_fields__ref
+end
+
+module Station__add_module__new_module
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val function new_module : int
+end
+
+module Ada___ada__text_io__line_length__2
+  use _gnatprove_standard.Main
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  
+  val function line_length (Ada___ada__text_io__file_system___file_system___: 
+    Main.__private) (Ada___ada__text_io__standard_in___standard_in___: 
+    Main.__private) (Ada___ada__text_io__standard_out___standard_out___: 
+    Main.__private) (Ada___ada__text_io__standard_err___standard_err___: 
+    Main.__private) (Ada___ada__text_io__current_in___current_in___: 
+    Main.__private) (Ada___ada__text_io__current_out___current_out___: 
+    Main.__private) (Ada___ada__text_io__current_err___current_err___: 
+    Main.__private) : int
+  
+  val predicate line_length__function_guard (temp___result_165: int) (Ada___ada__text_io__file_system___file_system___: 
+    Main.__private) (Ada___ada__text_io__standard_in___standard_in___: 
+    Main.__private) (Ada___ada__text_io__standard_out___standard_out___: 
+    Main.__private) (Ada___ada__text_io__standard_err___standard_err___: 
+    Main.__private) (Ada___ada__text_io__current_in___current_in___: 
+    Main.__private) (Ada___ada__text_io__current_out___current_out___: 
+    Main.__private) (Ada___ada__text_io__current_err___current_err___: 
+    Main.__private)
+end
+
+module Ada___ada__text_io__page_length__2
+  use _gnatprove_standard.Main
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  
+  val function page_length (Ada___ada__text_io__file_system___file_system___: 
+    Main.__private) (Ada___ada__text_io__standard_in___standard_in___: 
+    Main.__private) (Ada___ada__text_io__standard_out___standard_out___: 
+    Main.__private) (Ada___ada__text_io__standard_err___standard_err___: 
+    Main.__private) (Ada___ada__text_io__current_in___current_in___: 
+    Main.__private) (Ada___ada__text_io__current_out___current_out___: 
+    Main.__private) (Ada___ada__text_io__current_err___current_err___: 
+    Main.__private) : int
+  
+  val predicate page_length__function_guard (temp___result_166: int) (Ada___ada__text_io__file_system___file_system___: 
+    Main.__private) (Ada___ada__text_io__standard_in___standard_in___: 
+    Main.__private) (Ada___ada__text_io__standard_out___standard_out___: 
+    Main.__private) (Ada___ada__text_io__standard_err___standard_err___: 
+    Main.__private) (Ada___ada__text_io__current_in___current_in___: 
+    Main.__private) (Ada___ada__text_io__current_out___current_out___: 
+    Main.__private) (Ada___ada__text_io__current_err___current_err___: 
+    Main.__private)
+end
+
+module Ada___ada__text_io__file_system
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val file_system : Main.__private__ref
+end
+
+module Ada___ada__text_io__standard_in
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val standard_in : Main.__private__ref
+end
+
+module Ada___ada__text_io__standard_out
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val standard_out : Main.__private__ref
+end
+
+module Ada___ada__text_io__standard_err
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val standard_err : Main.__private__ref
+end
+
+module Ada___ada__text_io__current_in
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val current_in : Main.__private__ref
+end
+
+module Ada___ada__text_io__current_out
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val current_out : Main.__private__ref
+end
+
+module Ada___ada__text_io__current_err
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val current_err : Main.__private__ref
+end
+
+module Ada___ada__text_io__put_line__2___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  use Standard__string as Standard__string
+  use Ada___ada__text_io__line_length__2 as Ada___ada__text_io__line_length__2
+  use Ada___ada__text_io__page_length__2 as Ada___ada__text_io__page_length__2
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  
+  val put_line (item: Standard__string.string__) : unit
+    reads { Ada___ada__text_io__file_system.file_system,
+      Ada___ada__text_io__standard_in.standard_in,
+      Ada___ada__text_io__standard_out.standard_out,
+      Ada___ada__text_io__standard_err.standard_err,
+      Ada___ada__text_io__current_in.current_in,
+      Ada___ada__text_io__current_out.current_out,
+      Ada___ada__text_io__current_err.current_err }
+    requires { true }
+    writes { Ada___ada__text_io__file_system.file_system, Ada___ada__text_io__standard_in.standard_in, Ada___ada__text_io__standard_out.standard_out, Ada___ada__text_io__standard_err.standard_err, Ada___ada__text_io__current_in.current_in, Ada___ada__text_io__current_out.current_out, Ada___ada__text_io__current_err.current_err }
+    ensures { (([@GP_Pretty_Ada:4387]
+                ((old (((((((Ada___ada__text_io__line_length__2.line_length
+                               (Main.__private__content
+                                   Ada___ada__text_io__file_system.file_system))
+                              (Main.__private__content
+                                  Ada___ada__text_io__standard_in.standard_in))
+                             (Main.__private__content
+                                 Ada___ada__text_io__standard_out.standard_out))
+                            (Main.__private__content
+                                Ada___ada__text_io__standard_err.standard_err))
+                           (Main.__private__content
+                               Ada___ada__text_io__current_in.current_in))
+                          (Main.__private__content
+                              Ada___ada__text_io__current_out.current_out))
+                         (Main.__private__content
+                             Ada___ada__text_io__current_err.current_err)))
+                   = (((((((Ada___ada__text_io__line_length__2.line_length
+                              (Main.__private__content
+                                  Ada___ada__text_io__file_system.file_system))
+                             (Main.__private__content
+                                 Ada___ada__text_io__standard_in.standard_in))
+                            (Main.__private__content
+                                Ada___ada__text_io__standard_out.standard_out))
+                           (Main.__private__content
+                               Ada___ada__text_io__standard_err.standard_err))
+                          (Main.__private__content
+                              Ada___ada__text_io__current_in.current_in))
+                         (Main.__private__content
+                             Ada___ada__text_io__current_out.current_out))
+                        (Main.__private__content
+                            Ada___ada__text_io__current_err.current_err)))) /\
+                 ([@GP_Pretty_Ada:4393]
+                  ((old (((((((Ada___ada__text_io__page_length__2.page_length
+                                 (Main.__private__content
+                                     Ada___ada__text_io__file_system.file_system))
+                                (Main.__private__content
+                                    Ada___ada__text_io__standard_in.standard_in))
+                               (Main.__private__content
+                                   Ada___ada__text_io__standard_out.standard_out))
+                              (Main.__private__content
+                                  Ada___ada__text_io__standard_err.standard_err))
+                             (Main.__private__content
+                                 Ada___ada__text_io__current_in.current_in))
+                            (Main.__private__content
+                                Ada___ada__text_io__current_out.current_out))
+                           (Main.__private__content
+                               Ada___ada__text_io__current_err.current_err)))
+                     = (((((((Ada___ada__text_io__page_length__2.page_length
+                                (Main.__private__content
+                                    Ada___ada__text_io__file_system.file_system))
+                               (Main.__private__content
+                                   Ada___ada__text_io__standard_in.standard_in))
+                              (Main.__private__content
+                                  Ada___ada__text_io__standard_out.standard_out))
+                             (Main.__private__content
+                                 Ada___ada__text_io__standard_err.standard_err))
+                            (Main.__private__content
+                                Ada___ada__text_io__current_in.current_in))
+                           (Main.__private__content
+                               Ada___ada__text_io__current_out.current_out))
+                          (Main.__private__content
+                              Ada___ada__text_io__current_err.current_err))))) }
+end
+
+module Station__add_module__L_1__i
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  val i : int__ref
+end
+
+module Station__module___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__module as Station__module
+  
+  predicate dynamic_invariant (temp___expr_178: int) (temp___is_init_174: bool) (temp___skip_constant_175: bool) (temp___do_toplevel_176: bool) (temp___do_typ_inv_177: bool) =
+    if ((temp___is_init_174 = True) \/
+          (Station__module.first <= Station__module.last)) then
+      (((Station__module.dynamic_property Station__module.first)
+          Station__module.last)
+         temp___expr_178)
+    else true
+  
+  val dynamic_invariant (temp___expr_178: int) (temp___is_init_174: bool) (temp___skip_constant_175: bool) (temp___do_toplevel_176: bool) (temp___do_typ_inv_177: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_178 : int))
+                      (temp___is_init_174 : bool))
+                     (temp___skip_constant_175 : bool))
+                    (temp___do_toplevel_176 : bool))
+                   (temp___do_typ_inv_177 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_179: int) (temp___skip_top_level_180: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_179: int) (temp___skip_top_level_180: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_179 : int))
+                   (temp___skip_top_level_180 : bool)) }
+end
+
+module Station__add_module__L_1
+  use _gnatprove_standard.Main
+  use int.Int
+  
+  exception L_1
+end
+
+module Temp___String_Literal_461
+  use _gnatprove_standard.Main
+  use int.Int
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  
+  val function temp___String_Literal_461 (__void_param: unit) : Array__Int__Standard__character.map
+  
+  axiom temp___String_Literal_461__def_axiom:
+    forall __void_param : unit [temp___String_Literal_461 __void_param]. true
+end
+
+module Temp___String_Literal_463
+  use _gnatprove_standard.Main
+  use int.Int
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  
+  val function temp___String_Literal_463 (__void_param: unit) : Array__Int__Standard__character.map
+  
+  axiom temp___String_Literal_463__def_axiom:
+    forall __void_param : unit [temp___String_Literal_463 __void_param]. true
+end
+
+module Temp___String_Literal_465
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__character as Standard__character
+  use Standard__character__rep as Standard__character__rep
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  
+  val function temp___String_Literal_465 (__void_param: unit) : Array__Int__Standard__character.map
+  
+  axiom temp___String_Literal_465__def_axiom:
+    forall __void_param : unit [temp___String_Literal_465 __void_param].
+      ((((Standard__character__rep.to_rep
+            ((Array__Int__Standard__character.get
+                (temp___String_Literal_465 __void_param))
+               (1 : int)))
+           = (87 : int)) /\
+          ((Standard__character__rep.to_rep
+              ((Array__Int__Standard__character.get
+                  (temp___String_Literal_465 __void_param))
+                 (2 : int)))
+             = (65 : int))) /\
+         (((((((Standard__character__rep.to_rep
+                  ((Array__Int__Standard__character.get
+                      (temp___String_Literal_465 __void_param))
+                     (3 : int)))
+                 = (82 : int)) /\
+                ((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_465 __void_param))
+                       (4 : int)))
+                   = (78 : int))) /\
+               (((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_465 __void_param))
+                       (5 : int)))
+                   = (73 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_465 __void_param))
+                         (6 : int)))
+                     = (78 : int)))) /\
+              ((((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_465 __void_param))
+                       (7 : int)))
+                   = (71 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_465 __void_param))
+                         (8 : int)))
+                     = (58 : int))) /\
+                 (((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_465 __void_param))
+                         (9 : int)))
+                     = (32 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_465 __void_param))
+                           (10 : int)))
+                       = (65 : int))))) /\
+             (((((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_465 __void_param))
+                       (11 : int)))
+                   = (76 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_465 __void_param))
+                         (12 : int)))
+                     = (76 : int))) /\
+                 (((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_465 __void_param))
+                         (13 : int)))
+                     = (32 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_465 __void_param))
+                           (14 : int)))
+                       = (77 : int)))) /\
+                ((((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_465 __void_param))
+                         (15 : int)))
+                     = (79 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_465 __void_param))
+                           (16 : int)))
+                       = (68 : int))) /\
+                   (((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_465 __void_param))
+                           (17 : int)))
+                       = (85 : int)) /\
+                      ((Standard__character__rep.to_rep
+                          ((Array__Int__Standard__character.get
+                              (temp___String_Literal_465 __void_param))
+                             (18 : int)))
+                         = (76 : int)))))) /\
+            ((((((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_465 __void_param))
+                       (19 : int)))
+                   = (69 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_465 __void_param))
+                         (20 : int)))
+                     = (83 : int))) /\
+                 (((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_465 __void_param))
+                         (21 : int)))
+                     = (32 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_465 __void_param))
+                           (22 : int)))
+                       = (65 : int)))) /\
+                ((((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_465 __void_param))
+                         (23 : int)))
+                     = (82 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_465 __void_param))
+                           (24 : int)))
+                       = (69 : int))) /\
+                   (((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_465 __void_param))
+                           (25 : int)))
+                       = (32 : int)) /\
+                      ((Standard__character__rep.to_rep
+                          ((Array__Int__Standard__character.get
+                              (temp___String_Literal_465 __void_param))
+                             (26 : int)))
+                         = (79 : int))))) /\
+               (((((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_465 __void_param))
+                         (27 : int)))
+                     = (67 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_465 __void_param))
+                           (28 : int)))
+                       = (67 : int))) /\
+                   (((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_465 __void_param))
+                           (29 : int)))
+                       = (85 : int)) /\
+                      ((Standard__character__rep.to_rep
+                          ((Array__Int__Standard__character.get
+                              (temp___String_Literal_465 __void_param))
+                             (30 : int)))
+                         = (80 : int)))) /\
+                  ((((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_465 __void_param))
+                           (31 : int)))
+                       = (73 : int)) /\
+                      ((Standard__character__rep.to_rep
+                          ((Array__Int__Standard__character.get
+                              (temp___String_Literal_465 __void_param))
+                             (32 : int)))
+                         = (69 : int))) /\
+                     ((Standard__character__rep.to_rep
+                         ((Array__Int__Standard__character.get
+                             (temp___String_Literal_465 __void_param))
+                            (33 : int)))
+                        = (68 : int)))))))
+end
+
+module Temp___String_Literal_467
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__character as Standard__character
+  use Standard__character__rep as Standard__character__rep
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  
+  val function temp___String_Literal_467 (__void_param: unit) : Array__Int__Standard__character.map
+  
+  axiom temp___String_Literal_467__def_axiom:
+    forall __void_param : unit [temp___String_Literal_467 __void_param].
+      ((((Standard__character__rep.to_rep
+            ((Array__Int__Standard__character.get
+                (temp___String_Literal_467 __void_param))
+               (1 : int)))
+           = (87 : int)) /\
+          ((Standard__character__rep.to_rep
+              ((Array__Int__Standard__character.get
+                  (temp___String_Literal_467 __void_param))
+                 (2 : int)))
+             = (65 : int))) /\
+         (((((((Standard__character__rep.to_rep
+                  ((Array__Int__Standard__character.get
+                      (temp___String_Literal_467 __void_param))
+                     (3 : int)))
+                 = (82 : int)) /\
+                ((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_467 __void_param))
+                       (4 : int)))
+                   = (78 : int))) /\
+               (((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_467 __void_param))
+                       (5 : int)))
+                   = (73 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_467 __void_param))
+                         (6 : int)))
+                     = (78 : int)))) /\
+              ((((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_467 __void_param))
+                       (7 : int)))
+                   = (71 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_467 __void_param))
+                         (8 : int)))
+                     = (58 : int))) /\
+                 (((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_467 __void_param))
+                         (9 : int)))
+                     = (32 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_467 __void_param))
+                           (10 : int)))
+                       = (80 : int))))) /\
+             (((((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_467 __void_param))
+                       (11 : int)))
+                   = (76 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_467 __void_param))
+                         (12 : int)))
+                     = (69 : int))) /\
+                 (((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_467 __void_param))
+                         (13 : int)))
+                     = (65 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_467 __void_param))
+                           (14 : int)))
+                       = (83 : int)))) /\
+                ((((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_467 __void_param))
+                         (15 : int)))
+                     = (69 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_467 __void_param))
+                           (16 : int)))
+                       = (32 : int))) /\
+                   ((Standard__character__rep.to_rep
+                       ((Array__Int__Standard__character.get
+                           (temp___String_Literal_467 __void_param))
+                          (17 : int)))
+                      = (82 : int))))) /\
+            ((((((Standard__character__rep.to_rep
+                    ((Array__Int__Standard__character.get
+                        (temp___String_Literal_467 __void_param))
+                       (18 : int)))
+                   = (69 : int)) /\
+                  ((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_467 __void_param))
+                         (19 : int)))
+                     = (77 : int))) /\
+                 (((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_467 __void_param))
+                         (20 : int)))
+                     = (79 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_467 __void_param))
+                           (21 : int)))
+                       = (86 : int)))) /\
+                ((((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_467 __void_param))
+                         (22 : int)))
+                     = (69 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_467 __void_param))
+                           (23 : int)))
+                       = (32 : int))) /\
+                   ((Standard__character__rep.to_rep
+                       ((Array__Int__Standard__character.get
+                           (temp___String_Literal_467 __void_param))
+                          (24 : int)))
+                      = (65 : int)))) /\
+               (((((Standard__character__rep.to_rep
+                      ((Array__Int__Standard__character.get
+                          (temp___String_Literal_467 __void_param))
+                         (25 : int)))
+                     = (32 : int)) /\
+                    ((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_467 __void_param))
+                           (26 : int)))
+                       = (77 : int))) /\
+                   (((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_467 __void_param))
+                           (27 : int)))
+                       = (79 : int)) /\
+                      ((Standard__character__rep.to_rep
+                          ((Array__Int__Standard__character.get
+                              (temp___String_Literal_467 __void_param))
+                             (28 : int)))
+                         = (68 : int)))) /\
+                  ((((Standard__character__rep.to_rep
+                        ((Array__Int__Standard__character.get
+                            (temp___String_Literal_467 __void_param))
+                           (29 : int)))
+                       = (85 : int)) /\
+                      ((Standard__character__rep.to_rep
+                          ((Array__Int__Standard__character.get
+                              (temp___String_Literal_467 __void_param))
+                             (30 : int)))
+                         = (76 : int))) /\
+                     ((Standard__character__rep.to_rep
+                         ((Array__Int__Standard__character.get
+                             (temp___String_Literal_467 __void_param))
+                            (31 : int)))
+                        = (69 : int)))))))
+end
+
+module Standard__positive___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__positive as Standard__positive
+  
+  predicate dynamic_invariant (temp___expr_53: int) (temp___is_init_49: bool) (temp___skip_constant_50: bool) (temp___do_toplevel_51: bool) (temp___do_typ_inv_52: bool) =
+    if ((temp___is_init_49 = True) \/
+          (Standard__positive.first <= Standard__positive.last)) then
+      (((Standard__positive.dynamic_property Standard__positive.first)
+          Standard__positive.last)
+         temp___expr_53)
+    else true
+  
+  val dynamic_invariant (temp___expr_53: int) (temp___is_init_49: bool) (temp___skip_constant_50: bool) (temp___do_toplevel_51: bool) (temp___do_typ_inv_52: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_53 : int))
+                      (temp___is_init_49 : bool))
+                     (temp___skip_constant_50 : bool))
+                    (temp___do_toplevel_51 : bool))
+                   (temp___do_typ_inv_52 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_54: int) (temp___skip_top_level_55: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_54: int) (temp___skip_top_level_55: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_54 : int))
+                   (temp___skip_top_level_55 : bool)) }
+end
+
+module Standard__character___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__character as Standard__character
+  
+  predicate dynamic_invariant (temp___expr_81: int) (temp___is_init_77: bool) (temp___skip_constant_78: bool) (temp___do_toplevel_79: bool) (temp___do_typ_inv_80: bool) =
+    if ((temp___is_init_77 = True) \/
+          (Standard__character.first <= Standard__character.last)) then
+      (((Standard__character.dynamic_property Standard__character.first)
+          Standard__character.last)
+         temp___expr_81)
+    else true
+  
+  val dynamic_invariant (temp___expr_81: int) (temp___is_init_77: bool) (temp___skip_constant_78: bool) (temp___do_toplevel_79: bool) (temp___do_typ_inv_80: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_81 : int))
+                      (temp___is_init_77 : bool))
+                     (temp___skip_constant_78 : bool))
+                    (temp___do_toplevel_79 : bool))
+                   (temp___do_typ_inv_80 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_82: int) (temp___skip_top_level_83: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_82: int) (temp___skip_top_level_83: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_82 : int))
+                   (temp___skip_top_level_83 : bool)) }
+end
+
+module Standard__string___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use Standard__positive as Standard__positive
+  use Standard__string as Standard__string
+  
+  predicate dynamic_invariant (temp___expr_103: Standard__string.string__) (temp___is_init_99: bool) (temp___skip_constant_100: bool) (temp___do_toplevel_101: bool) (temp___do_typ_inv_102: bool) =
+    if temp___skip_constant_100 then true
+    else
+      ((((Standard__string.dynamic_property Standard__positive.first)
+           Standard__positive.last)
+          (Standard__string.first temp___expr_103))
+         (Standard__string.last temp___expr_103))
+  
+  val dynamic_invariant (temp___expr_103: Standard__string.string__) (temp___is_init_99: bool) (temp___skip_constant_100: bool) (temp___do_toplevel_101: bool) (temp___do_typ_inv_102: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant
+                       (temp___expr_103 : Standard__string.string__))
+                      (temp___is_init_99 : bool))
+                     (temp___skip_constant_100 : bool))
+                    (temp___do_toplevel_101 : bool))
+                   (temp___do_typ_inv_102 : bool)) }
+end
+
+module Standard__integer___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Standard__integer as Standard__integer
+  
+  predicate dynamic_invariant (temp___expr_18: int) (temp___is_init_14: bool) (temp___skip_constant_15: bool) (temp___do_toplevel_16: bool) (temp___do_typ_inv_17: bool) =
+    if ((temp___is_init_14 = True) \/
+          (Standard__integer.first <= Standard__integer.last)) then
+      (((Standard__integer.dynamic_property Standard__integer.first)
+          Standard__integer.last)
+         temp___expr_18)
+    else true
+  
+  val dynamic_invariant (temp___expr_18: int) (temp___is_init_14: bool) (temp___skip_constant_15: bool) (temp___do_toplevel_16: bool) (temp___do_typ_inv_17: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_18 : int))
+                      (temp___is_init_14 : bool))
+                     (temp___skip_constant_15 : bool))
+                    (temp___do_toplevel_16 : bool))
+                   (temp___do_typ_inv_17 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_19: int) (temp___skip_top_level_20: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_19: int) (temp___skip_top_level_20: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_19 : int))
+                   (temp___skip_top_level_20 : bool)) }
+end
+
+module Station__add_module__L_1__i___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__add_module__L_1___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__airlock_door___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__airlock_door as Station__airlock_door
+  
+  predicate dynamic_invariant (temp___expr_171: int) (temp___is_init_167: bool) (temp___skip_constant_168: bool) (temp___do_toplevel_169: bool) (temp___do_typ_inv_170: bool) =
+    if ((temp___is_init_167 = True) \/
+          (Station__airlock_door.first <= Station__airlock_door.last)) then
+      (((Station__airlock_door.dynamic_property Station__airlock_door.first)
+          Station__airlock_door.last)
+         temp___expr_171)
+    else true
+  
+  val dynamic_invariant (temp___expr_171: int) (temp___is_init_167: bool) (temp___skip_constant_168: bool) (temp___do_toplevel_169: bool) (temp___do_typ_inv_170: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_171 : int))
+                      (temp___is_init_167 : bool))
+                     (temp___skip_constant_168 : bool))
+                    (temp___do_toplevel_169 : bool))
+                   (temp___do_typ_inv_170 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_172: int) (temp___skip_top_level_173: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_172: int) (temp___skip_top_level_173: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_172 : int))
+                   (temp___skip_top_level_173 : bool)) }
+end
+
+module Station__module_array___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  
+  predicate dynamic_invariant (temp___expr_185: Array__Int__Station__module.map) (temp___is_init_181: bool) (temp___skip_constant_182: bool) (temp___do_toplevel_183: bool) (temp___do_typ_inv_184: bool) =
+    true
+  
+  val dynamic_invariant (temp___expr_185: Array__Int__Station__module.map) (temp___is_init_181: bool) (temp___skip_constant_182: bool) (temp___do_toplevel_183: bool) (temp___do_typ_inv_184: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant
+                       (temp___expr_185 : Array__Int__Station__module.map))
+                      (temp___is_init_181 : bool))
+                     (temp___skip_constant_182 : bool))
+                    (temp___do_toplevel_183 : bool))
+                   (temp___do_typ_inv_184 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_187: Array__Int__Station__module.map) (temp___skip_top_level_188: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_187: Array__Int__Station__module.map) (temp___skip_top_level_188: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption
+                    (temp___expr_187 : Array__Int__Station__module.map))
+                   (temp___skip_top_level_188 : bool)) }
+end
+
+module Station__crewmember___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__crewmember as Station__crewmember
+  
+  predicate dynamic_invariant (temp___expr_195: int) (temp___is_init_191: bool) (temp___skip_constant_192: bool) (temp___do_toplevel_193: bool) (temp___do_typ_inv_194: bool) =
+    if ((temp___is_init_191 = True) \/
+          (Station__crewmember.first <= Station__crewmember.last)) then
+      (((Station__crewmember.dynamic_property Station__crewmember.first)
+          Station__crewmember.last)
+         temp___expr_195)
+    else true
+  
+  val dynamic_invariant (temp___expr_195: int) (temp___is_init_191: bool) (temp___skip_constant_192: bool) (temp___do_toplevel_193: bool) (temp___do_typ_inv_194: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_195 : int))
+                      (temp___is_init_191 : bool))
+                     (temp___skip_constant_192 : bool))
+                    (temp___do_toplevel_193 : bool))
+                   (temp___do_typ_inv_194 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_196: int) (temp___skip_top_level_197: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_196: int) (temp___skip_top_level_197: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_196 : int))
+                   (temp___skip_top_level_197 : bool)) }
+end
+
+module Station__crewmemberstatus___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Station__crewmemberstatus as Station__crewmemberstatus
+  
+  predicate dynamic_invariant (temp___expr_202: int) (temp___is_init_198: bool) (temp___skip_constant_199: bool) (temp___do_toplevel_200: bool) (temp___do_typ_inv_201: bool) =
+    if ((temp___is_init_198 = True) \/
+          (Station__crewmemberstatus.first <= Station__crewmemberstatus.last)) then
+      (((Station__crewmemberstatus.dynamic_property
+           Station__crewmemberstatus.first)
+          Station__crewmemberstatus.last)
+         temp___expr_202)
+    else true
+  
+  val dynamic_invariant (temp___expr_202: int) (temp___is_init_198: bool) (temp___skip_constant_199: bool) (temp___do_toplevel_200: bool) (temp___do_typ_inv_201: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_202 : int))
+                      (temp___is_init_198 : bool))
+                     (temp___skip_constant_199 : bool))
+                    (temp___do_toplevel_200 : bool))
+                   (temp___do_typ_inv_201 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_203: int) (temp___skip_top_level_204: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_203: int) (temp___skip_top_level_204: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_203 : int))
+                   (temp___skip_top_level_204 : bool)) }
+end
+
+module Station__crew_record___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use Station__crew_record as Station__crew_record
+  
+  predicate dynamic_invariant (temp___expr_209: Station__crew_record.crew_record) (temp___is_init_205: bool) (temp___skip_constant_206: bool) (temp___do_toplevel_207: bool) (temp___do_typ_inv_208: bool) =
+    true
+  
+  val dynamic_invariant (temp___expr_209: Station__crew_record.crew_record) (temp___is_init_205: bool) (temp___skip_constant_206: bool) (temp___do_toplevel_207: bool) (temp___do_typ_inv_208: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant
+                       (temp___expr_209 : Station__crew_record.crew_record))
+                      (temp___is_init_205 : bool))
+                     (temp___skip_constant_206 : bool))
+                    (temp___do_toplevel_207 : bool))
+                   (temp___do_typ_inv_208 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_210: Station__crew_record.crew_record) (temp___skip_top_level_211: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_210: Station__crew_record.crew_record) (temp___skip_top_level_211: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption
+                    (temp___expr_210 : Station__crew_record.crew_record))
+                   (temp___skip_top_level_211 : bool)) }
+end
+
+module Station__crew_array___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use Array__Int__Station__crew_record as Array__Int__Station__crew_record
+  use Array__Int__Station__crew_record as Array__Int__Station__crew_record
+  
+  predicate dynamic_invariant (temp___expr_219: Array__Int__Station__crew_record.map) (temp___is_init_215: bool) (temp___skip_constant_216: bool) (temp___do_toplevel_217: bool) (temp___do_typ_inv_218: bool) =
+    true
+  
+  val dynamic_invariant (temp___expr_219: Array__Int__Station__crew_record.map) (temp___is_init_215: bool) (temp___skip_constant_216: bool) (temp___do_toplevel_217: bool) (temp___do_typ_inv_218: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant
+                       (temp___expr_219 :
+                          Array__Int__Station__crew_record.map))
+                      (temp___is_init_215 : bool))
+                     (temp___skip_constant_216 : bool))
+                    (temp___do_toplevel_217 : bool))
+                   (temp___do_typ_inv_218 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_221: Array__Int__Station__crew_record.map) (temp___skip_top_level_222: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_221: Array__Int__Station__crew_record.map) (temp___skip_top_level_222: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption
+                    (temp___expr_221 : Array__Int__Station__crew_record.map))
+                   (temp___skip_top_level_222 : bool)) }
+end
+
+module Station__s___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__add_module__s___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__add_module__new_module___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Ada___ada__text_io__count
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  
+  type count = <range 0 2147483647>
+  
+  val function first : int
+    ensures { result = (0 : int) }
+  
+  val function last : int
+    ensures { result = (2147483647 : int) }
+  
+  predicate in_range (x: int) = ((first <= x) /\ (x <= last))
+  
+  val in_range (x: int) : bool
+    ensures { result <-> (in_range (x : int)) }
+  
+  clone export ada__model.Static_Discrete with
+    axiom .,
+    type t = count,
+    function first = first,
+    function last = last,
+    predicate in_range = in_range
+  
+  type count__ref = { mutable count__content : count }
+  
+  function count__ref_count__content__projection (a: count__ref) : count =
+    a.count__content
+  
+  meta "model_projection" function count__ref_count__content__projection
+  
+  meta "inline:no" function count__ref_count__content__projection
+  
+  val count__havoc (x: count__ref) : unit
+    writes { x }
+end
+
+module Ada___ada__text_io__count___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use Ada___ada__text_io__count as Ada___ada__text_io__count
+  
+  predicate dynamic_invariant (temp___expr_329: int) (temp___is_init_325: bool) (temp___skip_constant_326: bool) (temp___do_toplevel_327: bool) (temp___do_typ_inv_328: bool) =
+    if ((temp___is_init_325 = True) \/
+          (Ada___ada__text_io__count.first <= Ada___ada__text_io__count.last)) then
+      (((Ada___ada__text_io__count.dynamic_property
+           Ada___ada__text_io__count.first)
+          Ada___ada__text_io__count.last)
+         temp___expr_329)
+    else true
+  
+  val dynamic_invariant (temp___expr_329: int) (temp___is_init_325: bool) (temp___skip_constant_326: bool) (temp___do_toplevel_327: bool) (temp___do_typ_inv_328: bool) : 
+    bool
+    ensures { result
+                <->
+                (((((dynamic_invariant (temp___expr_329 : int))
+                      (temp___is_init_325 : bool))
+                     (temp___skip_constant_326 : bool))
+                    (temp___do_toplevel_327 : bool))
+                   (temp___do_typ_inv_328 : bool)) }
+  
+  predicate default_initial_assumption (temp___expr_330: int) (temp___skip_top_level_331: bool) =
+    true
+  
+  val default_initial_assumption (temp___expr_330: int) (temp___skip_top_level_331: bool) : 
+    bool
+    ensures { result
+                <->
+                ((default_initial_assumption (temp___expr_330 : int))
+                   (temp___skip_top_level_331 : bool)) }
+end
+
+module Ada___ada__text_io__line_length__2___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  use Ada___ada__text_io__line_length__2 as Ada___ada__text_io__line_length__2
+  use Ada___ada__text_io__count___axiom as Ada___ada__text_io__count___axiom
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  
+  val line_length (__void_param: unit) : int
+    reads { Ada___ada__text_io__file_system.file_system,
+      Ada___ada__text_io__standard_in.standard_in,
+      Ada___ada__text_io__standard_out.standard_out,
+      Ada___ada__text_io__standard_err.standard_err,
+      Ada___ada__text_io__current_in.current_in,
+      Ada___ada__text_io__current_out.current_out,
+      Ada___ada__text_io__current_err.current_err }
+    requires { true }
+    writes {  }
+    ensures { (((result
+                   = (((((((Ada___ada__text_io__line_length__2.line_length
+                              (Main.__private__content
+                                  Ada___ada__text_io__file_system.file_system))
+                             (Main.__private__content
+                                 Ada___ada__text_io__standard_in.standard_in))
+                            (Main.__private__content
+                                Ada___ada__text_io__standard_out.standard_out))
+                           (Main.__private__content
+                               Ada___ada__text_io__standard_err.standard_err))
+                          (Main.__private__content
+                              Ada___ada__text_io__current_in.current_in))
+                         (Main.__private__content
+                             Ada___ada__text_io__current_out.current_out))
+                        (Main.__private__content
+                            Ada___ada__text_io__current_err.current_err))) /\
+                  true) /\
+                 (((((Ada___ada__text_io__count___axiom.dynamic_invariant
+                        result)
+                       True)
+                      False)
+                     True)
+                    True)) }
+  
+  axiom line_length__post_axiom:
+    forall Ada___ada__text_io__file_system___file_system___ : Main.__private, Ada___ada__text_io__standard_in___standard_in___ : 
+          Main.__private, Ada___ada__text_io__standard_out___standard_out___ : 
+          Main.__private, Ada___ada__text_io__standard_err___standard_err___ : 
+          Main.__private, Ada___ada__text_io__current_in___current_in___ : 
+          Main.__private, Ada___ada__text_io__current_out___current_out___ : 
+          Main.__private, Ada___ada__text_io__current_err___current_err___ : 
+          Main.__private
+          [((((((Ada___ada__text_io__line_length__2.line_length
+                   Ada___ada__text_io__file_system___file_system___)
+                  Ada___ada__text_io__standard_in___standard_in___)
+                 Ada___ada__text_io__standard_out___standard_out___)
+                Ada___ada__text_io__standard_err___standard_err___)
+               Ada___ada__text_io__current_in___current_in___)
+              Ada___ada__text_io__current_out___current_out___)
+             Ada___ada__text_io__current_err___current_err___].
+      let result =
+        ((((((Ada___ada__text_io__line_length__2.line_length
+                Ada___ada__text_io__file_system___file_system___)
+               Ada___ada__text_io__standard_in___standard_in___)
+              Ada___ada__text_io__standard_out___standard_out___)
+             Ada___ada__text_io__standard_err___standard_err___)
+            Ada___ada__text_io__current_in___current_in___)
+           Ada___ada__text_io__current_out___current_out___)
+          Ada___ada__text_io__current_err___current_err___ in
+      ((true /\
+          (((((Ada___ada__text_io__count___axiom.dynamic_invariant result)
+                True)
+               False)
+              True)
+             True)) /\
+         true)
+end
+
+module Ada___ada__text_io__page_length__2___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  use Ada___ada__text_io__page_length__2 as Ada___ada__text_io__page_length__2
+  use Ada___ada__text_io__count___axiom as Ada___ada__text_io__count___axiom
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  use Ada___ada__text_io__file_system as Ada___ada__text_io__file_system
+  use Ada___ada__text_io__standard_in as Ada___ada__text_io__standard_in
+  use Ada___ada__text_io__standard_out as Ada___ada__text_io__standard_out
+  use Ada___ada__text_io__standard_err as Ada___ada__text_io__standard_err
+  use Ada___ada__text_io__current_in as Ada___ada__text_io__current_in
+  use Ada___ada__text_io__current_out as Ada___ada__text_io__current_out
+  use Ada___ada__text_io__current_err as Ada___ada__text_io__current_err
+  
+  val page_length (__void_param: unit) : int
+    reads { Ada___ada__text_io__file_system.file_system,
+      Ada___ada__text_io__standard_in.standard_in,
+      Ada___ada__text_io__standard_out.standard_out,
+      Ada___ada__text_io__standard_err.standard_err,
+      Ada___ada__text_io__current_in.current_in,
+      Ada___ada__text_io__current_out.current_out,
+      Ada___ada__text_io__current_err.current_err }
+    requires { true }
+    writes {  }
+    ensures { (((result
+                   = (((((((Ada___ada__text_io__page_length__2.page_length
+                              (Main.__private__content
+                                  Ada___ada__text_io__file_system.file_system))
+                             (Main.__private__content
+                                 Ada___ada__text_io__standard_in.standard_in))
+                            (Main.__private__content
+                                Ada___ada__text_io__standard_out.standard_out))
+                           (Main.__private__content
+                               Ada___ada__text_io__standard_err.standard_err))
+                          (Main.__private__content
+                              Ada___ada__text_io__current_in.current_in))
+                         (Main.__private__content
+                             Ada___ada__text_io__current_out.current_out))
+                        (Main.__private__content
+                            Ada___ada__text_io__current_err.current_err))) /\
+                  true) /\
+                 (((((Ada___ada__text_io__count___axiom.dynamic_invariant
+                        result)
+                       True)
+                      False)
+                     True)
+                    True)) }
+  
+  axiom page_length__post_axiom:
+    forall Ada___ada__text_io__file_system___file_system___ : Main.__private, Ada___ada__text_io__standard_in___standard_in___ : 
+          Main.__private, Ada___ada__text_io__standard_out___standard_out___ : 
+          Main.__private, Ada___ada__text_io__standard_err___standard_err___ : 
+          Main.__private, Ada___ada__text_io__current_in___current_in___ : 
+          Main.__private, Ada___ada__text_io__current_out___current_out___ : 
+          Main.__private, Ada___ada__text_io__current_err___current_err___ : 
+          Main.__private
+          [((((((Ada___ada__text_io__page_length__2.page_length
+                   Ada___ada__text_io__file_system___file_system___)
+                  Ada___ada__text_io__standard_in___standard_in___)
+                 Ada___ada__text_io__standard_out___standard_out___)
+                Ada___ada__text_io__standard_err___standard_err___)
+               Ada___ada__text_io__current_in___current_in___)
+              Ada___ada__text_io__current_out___current_out___)
+             Ada___ada__text_io__current_err___current_err___].
+      let result =
+        ((((((Ada___ada__text_io__page_length__2.page_length
+                Ada___ada__text_io__file_system___file_system___)
+               Ada___ada__text_io__standard_in___standard_in___)
+              Ada___ada__text_io__standard_out___standard_out___)
+             Ada___ada__text_io__standard_err___standard_err___)
+            Ada___ada__text_io__current_in___current_in___)
+           Ada___ada__text_io__current_out___current_out___)
+          Ada___ada__text_io__current_err___current_err___ in
+      ((true /\
+          (((((Ada___ada__text_io__count___axiom.dynamic_invariant result)
+                True)
+               False)
+              True)
+             True)) /\
+         true)
+end
+
+module Station__station_record__T5s___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__station_record__T6s___axiom
+  use _gnatprove_standard.Main
+  use int.Int
+end
+
+module Station__add_module__subprogram_def
+  use _gnatprove_standard.Main
+  use int.Int
+  use int.Int
+  use _gnatprove_standard.Main as Main
+  use _gnatprove_standard.Boolean as Boolean
+  use Standard__string as Standard__string
+  use Station__s as Station__s
+  use Station__station_record as Station__station_record
+  use Station__station_record___axiom as Station__station_record___axiom
+  use Station__sealedinvariant as Station__sealedinvariant
+  use Station__sealedinvariant___axiom as Station__sealedinvariant___axiom
+  use Station__altitudeinvariant as Station__altitudeinvariant
+  use Station__altitudeinvariant___axiom as Station__altitudeinvariant___axiom
+  use Station__add_module__s as Station__add_module__s
+  use Station__add_module__new_module as Station__add_module__new_module
+  use Ada___ada__text_io__put_line__2___axiom as Ada___ada__text_io__put_line__2___axiom
+  use Station__add_module__L_1__i as Station__add_module__L_1__i
+  use Station__module as Station__module
+  use Station__module___axiom as Station__module___axiom
+  use Station__module__rep as Station__module__rep
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Station__station_record__T6s as Station__station_record__T6s
+  use Station__station_record__T6s__rep as Station__station_record__T6s__rep
+  use Station__add_module__L_1 as Station__add_module__L_1
+  use Temp___String_Literal_461 as Temp___String_Literal_461
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Temp___String_Literal_463 as Temp___String_Literal_463
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Temp___String_Literal_465 as Temp___String_Literal_465
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Temp___String_Literal_467 as Temp___String_Literal_467
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Array__Int__Standard__character as Array__Int__Standard__character
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Array__Int__Station__module as Array__Int__Station__module
+  use Standard__positive___axiom as Standard__positive___axiom
+  use Standard__character___axiom as Standard__character___axiom
+  use Standard__string___axiom as Standard__string___axiom
+  use Standard__integer___axiom as Standard__integer___axiom
+  use Station__add_module__L_1__i___axiom as Station__add_module__L_1__i___axiom
+  use Station__add_module__L_1___axiom as Station__add_module__L_1___axiom
+  use Station__airlock_door___axiom as Station__airlock_door___axiom
+  use Station__module___axiom as Station__module___axiom
+  use Station__module_array___axiom as Station__module_array___axiom
+  use Station__crewmember___axiom as Station__crewmember___axiom
+  use Station__crewmemberstatus___axiom as Station__crewmemberstatus___axiom
+  use Station__crew_record___axiom as Station__crew_record___axiom
+  use Station__crew_array___axiom as Station__crew_array___axiom
+  use Station__station_record___axiom as Station__station_record___axiom
+  use Station__s___axiom as Station__s___axiom
+  use Station__sealedinvariant___axiom as Station__sealedinvariant___axiom
+  use Station__altitudeinvariant___axiom as Station__altitudeinvariant___axiom
+  use Station__add_module__s___axiom as Station__add_module__s___axiom
+  use Station__add_module__new_module___axiom as Station__add_module__new_module___axiom
+  use Ada___ada__text_io__count___axiom as Ada___ada__text_io__count___axiom
+  use Ada___ada__text_io__line_length__2___axiom as Ada___ada__text_io__line_length__2___axiom
+  use Ada___ada__text_io__page_length__2___axiom as Ada___ada__text_io__page_length__2___axiom
+  use Ada___ada__text_io__put_line__2___axiom as Ada___ada__text_io__put_line__2___axiom
+  use Station__station_record__T5s___axiom as Station__station_record__T5s___axiom
+  use Station__station_record__T6s___axiom as Station__station_record__T6s___axiom
+  
+  let def (__void_param : unit)
+    requires { [#"station.ads" 66 0 0] true }
+    ensures { [#"station.ads" 66 0 0]
+              [#"station.ads" 68 0 0]
+              [@GP_Id:11]
+              [@GP_Reason:VC_POSTCONDITION]
+              [@GP_Sloc:station.ads:68:14]
+              [@model_vc_post]
+              [@comment:     Post => (S.Modules(1) = New_Module) and (S.Top_Module_Index = S'Old.Top_Module_Index + 1) and              ^ station.ads:68:14:VC_POSTCONDITION]
+              [@GP_Shape:pragargs__and]
+              ((((([@GP_Pretty_Ada:1896]
+                   [@GP_Sloc:station.ads:68:14]
+                   ((Station__module__rep.to_rep
+                       (let temp___500 =
+                          (Station__station_record.__split_fields
+                              { Station__station_record.__split_fields =
+                                  (Station__station_record.__split_fields__content
+                                      Station__add_module__s.s__split_fields) }).
+                            Station__station_record.rec__station__station_record__modules in
+                        (Array__Int__Station__module.get temp___500)
+                          (1 : int)))
+                      = Station__add_module__new_module.new_module)) /\
+                    ([@GP_Pretty_Ada:1902]
+                     [@GP_Sloc:station.ads:68:46]
+                     ((Station__station_record__T6s__rep.to_rep
+                         ((Station__station_record.__split_fields
+                              { Station__station_record.__split_fields =
+                                  (Station__station_record.__split_fields__content
+                                      Station__add_module__s.s__split_fields) }).
+                            Station__station_record.rec__station__station_record__top_module_index))
+                        = ((Station__station_record__T6s__rep.to_rep
+                              ((Station__station_record.__split_fields
+                                   (old { Station__station_record.__split_fields =
+                                            (Station__station_record.__split_fields__content
+                                                Station__add_module__s.s__split_fields) })).
+                                 Station__station_record.rec__station__station_record__top_module_index))
+                             + (1 : int))))) /\
+                   (forall i : int.
+                      ((((2 : int) <= i) /\ (i <= (3 : int))) ->
+                         ([@GP_Sloc:station.ads:69:41]
+                          [@GP_Pretty_Ada:1926]
+                          ((Station__module__rep.to_rep
+                              (let temp___501 =
+                                 (Station__station_record.__split_fields
+                                     { Station__station_record.__split_fields =
+                                         (Station__station_record.__split_fields__content
+                                             Station__add_module__s.s__split_fields) }).
+                                   Station__station_record.rec__station__station_record__modules in
+                               (Array__Int__Station__module.get temp___501) i))
+                             = (Station__module__rep.to_rep
+                                  (let temp___502 =
+                                     (Station__station_record.__split_fields
+                                         (old { Station__station_record.__split_fields =
+                                                  (Station__station_record.__split_fields__content
+                                                      Station__add_module__s.s__split_fields) })).
+                                       Station__station_record.rec__station__station_record__modules in
+                                   (Array__Int__Station__module.get
+                                      temp___502)
+                                     (i - (1 : int))))))))) /\
+                  ([@GP_Pretty_Ada:1935]
+                   [@GP_Sloc:station.ads:69:80]
+                   ((epsilon temp___result_503: bool.
+                       ((temp___result_503
+                           = (Station__sealedinvariant.sealedinvariant
+                                (Station__station_record.__split_fields__content
+                                    Station__s.s__split_fields))) /\
+                          ((Station__sealedinvariant.sealedinvariant__function_guard
+                              temp___result_503)
+                             (Station__station_record.__split_fields__content
+                                 Station__s.s__split_fields))))
+                      = True))) /\
+                 ([@GP_Sloc:station.ads:69:100]
+                  [@GP_Pretty_Ada:1937]
+                  ((epsilon temp___result_504: bool.
+                      ((temp___result_504
+                          = (Station__altitudeinvariant.altitudeinvariant
+                               (Station__station_record.__split_fields__content
+                                   Station__s.s__split_fields))) /\
+                         ((Station__altitudeinvariant.altitudeinvariant__function_guard
+                             temp___result_504)
+                            (Station__station_record.__split_fields__content
+                                Station__s.s__split_fields))))
+                     = True))) }
+  = [@vc:divergent]
+    (([@GNAT-comment:Assume dynamic invariants of inputs of the subprogram station.ads:66]
+      ());
+     assume {
+       ((((Station__station_record___axiom.dynamic_invariant
+             { Station__station_record.__split_fields =
+                 (Station__station_record.__split_fields__content
+                     Station__s.s__split_fields) })
+            True)
+           False)
+          True)
+         True };
+     assume {
+       ((((Station__station_record___axiom.dynamic_invariant
+             { Station__station_record.__split_fields =
+                 (Station__station_record.__split_fields__content
+                     Station__add_module__s.s__split_fields) })
+            True)
+           False)
+          True)
+         True };
+     assume {
+       ((((Station__module___axiom.dynamic_invariant
+             Station__add_module__new_module.new_module)
+            True)
+           False)
+          True)
+         True };
+     ([@GNAT-comment:Assume moved pointers in outputs of the subprogram station.ads:66]
+      ());
+     ([@GNAT-comment:Check for RTE in the Pre of the subprogram station.ads:66]
+      ());
+     (begin
+        ensures { true }
+        let _ =
+          let _ =
+            (Boolean.andb
+               ((Boolean.andb
+                   (Station__sealedinvariant___axiom.sealedinvariant ()))
+                  (Station__altitudeinvariant___axiom.altitudeinvariant ())))
+              ((Station__station_record__T6s__rep.to_rep
+                  ((Station__station_record.__split_fields
+                       { Station__station_record.__split_fields =
+                           (Station__station_record.__split_fields__content
+                               Station__add_module__s.s__split_fields) }).
+                     Station__station_record.rec__station__station_record__top_module_index))
+                 < (3 : int)) in
+          () in
+        ()
+      end);
+     ([@GNAT-comment:Assume Pre of the subprogram station.ads:66] ());
+     assume {
+       ((([@GP_Pretty_Ada:1874]
+          ((epsilon temp___result_498: bool.
+              ((temp___result_498
+                  = (Station__sealedinvariant.sealedinvariant
+                       (Station__station_record.__split_fields__content
+                           Station__s.s__split_fields))) /\
+                 ((Station__sealedinvariant.sealedinvariant__function_guard
+                     temp___result_498)
+                    (Station__station_record.__split_fields__content
+                        Station__s.s__split_fields))))
+             = True)) /\
+           ([@GP_Pretty_Ada:1875]
+            ((epsilon temp___result_499: bool.
+                ((temp___result_499
+                    = (Station__altitudeinvariant.altitudeinvariant
+                         (Station__station_record.__split_fields__content
+                             Station__s.s__split_fields))) /\
+                   ((Station__altitudeinvariant.altitudeinvariant__function_guard
+                       temp___result_499)
+                      (Station__station_record.__split_fields__content
+                          Station__s.s__split_fields))))
+               = True))) /\
+          ([@GP_Pretty_Ada:1882]
+           ((Station__station_record__T6s__rep.to_rep
+               ((Station__station_record.__split_fields
+                    { Station__station_record.__split_fields =
+                        (Station__station_record.__split_fields__content
+                            Station__add_module__s.s__split_fields) }).
+                  Station__station_record.rec__station__station_record__top_module_index))
+              < (3 : int)))) };
+     (let temp___old_490 =
+        { Station__station_record.__split_fields =
+            (Station__station_record.__split_fields__content
+                Station__add_module__s.s__split_fields) } in
+      let temp___old_488 =
+        { Station__station_record.__split_fields =
+            (Station__station_record.__split_fields__content
+                Station__add_module__s.s__split_fields) } in
+      (try
+         ([#"station.adb" 96 0 0] ());
+         ([@GP_Sloc:station.adb:82:7] [#"station.adb" 82 0 0] ());
+         ([@GP_Sloc:station.adb:82:7]
+          [#"station.adb" 82 0 0]
+          (([#"station.adb" 82 0 0] (val _f : unit in
+                                     _f));
+           (Ada___ada__text_io__put_line__2___axiom.put_line
+              (let temp___462 =
+                 Temp___String_Literal_461.temp___String_Literal_461 () in
+               ((Standard__string.of_array temp___462) (1 : int)) (0 : int)))));
+         ([@GP_Sloc:station.adb:85:7]
+          [#"station.adb" 85 0 0]
+          (if (([#"station.adb" 85 0 0]
+                [#"station.adb" 85 0 0]
+                (([@branch_id=1065] Main.spark__branch).bool__content <-
+                   ((Station__station_record__T6s__rep.to_rep
+                       ((Station__station_record.__split_fields
+                            { Station__station_record.__split_fields =
+                                (Station__station_record.__split_fields__content
+                                    Station__add_module__s.s__split_fields) }).
+                          Station__station_record.rec__station__station_record__top_module_index))
+                      = (3 : int))));
+               (([@branch_id=1065] Main.spark__branch).bool__content)) then
+             (([@GP_Sloc:station.adb:86:10]
+               [#"station.adb" 86 0 0] [#"station.adb" 86 0 0] ());
+              ([@GP_Sloc:station.adb:87:10] [#"station.adb" 87 0 0] ());
+              ([@GP_Sloc:station.adb:87:10]
+               [#"station.adb" 87 0 0]
+               (([#"station.adb" 87 0 0] (val _f : unit in
+                                          _f));
+                (Ada___ada__text_io__put_line__2___axiom.put_line
+                   (let temp___464 =
+                      Temp___String_Literal_463.temp___String_Literal_463 () in
+                    ((Standard__string.of_array temp___464) (1 : int))
+                      (0 : int)))));
+              ([@GP_Sloc:station.adb:88:10] [#"station.adb" 88 0 0] ());
+              ([@GP_Sloc:station.adb:88:10]
+               [#"station.adb" 88 0 0]
+               (([#"station.adb" 88 0 0] (val _f : unit in
+                                          _f));
+                (Ada___ada__text_io__put_line__2___axiom.put_line
+                   (let temp___466 =
+                      Temp___String_Literal_465.temp___String_Literal_465 () in
+                    ((Standard__string.of_array temp___466) (1 : int))
+                      (33 : int)))));
+              ([@GP_Sloc:station.adb:89:10]
+               [#"station.adb" 89 0 0] [#"station.adb" 89 0 0] ());
+              ([@GP_Sloc:station.adb:90:10] [#"station.adb" 90 0 0] ());
+              ([@GP_Sloc:station.adb:90:10]
+               [#"station.adb" 90 0 0]
+               (([#"station.adb" 90 0 0] (val _f : unit in
+                                          _f));
+                (Ada___ada__text_io__put_line__2___axiom.put_line
+                   (let temp___468 =
+                      Temp___String_Literal_467.temp___String_Literal_467 () in
+                    ((Standard__string.of_array temp___468) (1 : int))
+                      (31 : int)))));
+              ([@GP_Sloc:station.adb:91:10]
+               [#"station.adb" 91 0 0] [#"station.adb" 91 0 0] ());
+              ([@GP_Sloc:station.adb:92:10]
+               [#"station.adb" 92 0 0]
+               [#"station.adb" 92 0 0] ((raise Return__exc) : unit)))
+           else ()));
+         ([@GP_Sloc:station.adb:96:42]
+          [#"station.adb" 96 0 0]
+          (let temp___469 = 2 : int in
+           let temp___470 = 3 : int in
+           ([@GNAT-comment:Translation of an unrolled Ada loop from station.adb:96]
+            ());
+           ([#"station.adb" 96 0 0]
+            (try
+               let temp___loop_entry_476 =
+                 { Station__station_record.__split_fields =
+                     (Station__station_record.__split_fields__content
+                         Station__add_module__s.s__split_fields) } in
+               ([@GNAT-comment:Unrolling of the loop statements of loop station.adb:96]
+                ());
+               ([#"station.adb" 96 0 0]
+                (Station__add_module__L_1__i.i.int__content <- (3 : int)));
+               ([@GP_Sloc:station.adb:97:23]
+                [#"station.adb" 97 0 0]
+                (let temp___475 =
+                   let temp___474 =
+                     { Station__station_record.__split_fields =
+                         (Station__station_record.__split_fields__content
+                             Station__add_module__s.s__split_fields) } in
+                   ([#"station.adb" 97 0 0]
+                    (begin
+                       ensures { true }
+                       let _ =
+                         let _ =
+                           (Station__station_record.__split_fields temp___474).
+                             Station__station_record.rec__station__station_record__modules in
+                         () in
+                       ()
+                     end));
+                   ({ temp___474 with
+                      Station__station_record.__split_fields =
+                        ({ (Station__station_record.__split_fields temp___474) with
+                           Station__station_record.rec__station__station_record__modules =
+                             (let temp___473 =
+                                (Station__station_record.__split_fields
+                                    { Station__station_record.__split_fields =
+                                        (Station__station_record.__split_fields__content
+                                            Station__add_module__s.s__split_fields) }).
+                                  Station__station_record.rec__station__station_record__modules in
+                              ((Array__Int__Station__module.set
+                                  ((Station__station_record.__split_fields
+                                       { Station__station_record.__split_fields =
+                                           (Station__station_record.__split_fields__content
+                                               Station__add_module__s.s__split_fields) }).
+                                     Station__station_record.rec__station__station_record__modules))
+                                 (Station__add_module__L_1__i.i.int__content))
+                                (Station__module__rep.of_rep
+                                   (Station__module__rep.to_rep
+                                      (let temp___472 =
+                                         (Station__station_record.__split_fields
+                                             { Station__station_record.__split_fields =
+                                                 (Station__station_record.__split_fields__content
+                                                     Station__add_module__s.s__split_fields) }).
+                                           Station__station_record.rec__station__station_record__modules in
+                                       (Array__Int__Station__module.get
+                                          temp___472)
+                                         ((Station__add_module__L_1__i.i.int__content)
+                                            - (1 : int)))))) }) }) in
+                 [#"station.adb" 97 0 0]
+                 (Station__add_module__s.s__split_fields.Station__station_record.__split_fields__content <-
+                    (Station__station_record.__split_fields temp___475))));
+               (Station__add_module__L_1__i.i.int__content <- (2 : int));
+               ([@GP_Sloc:station.adb:97:23]
+                [#"station.adb" 97 0 0]
+                (let temp___475 =
+                   let temp___474 =
+                     { Station__station_record.__split_fields =
+                         (Station__station_record.__split_fields__content
+                             Station__add_module__s.s__split_fields) } in
+                   ([#"station.adb" 97 0 0]
+                    (begin
+                       ensures { true }
+                       let _ =
+                         let _ =
+                           (Station__station_record.__split_fields temp___474).
+                             Station__station_record.rec__station__station_record__modules in
+                         () in
+                       ()
+                     end));
+                   ({ temp___474 with
+                      Station__station_record.__split_fields =
+                        ({ (Station__station_record.__split_fields temp___474) with
+                           Station__station_record.rec__station__station_record__modules =
+                             (let temp___473 =
+                                (Station__station_record.__split_fields
+                                    { Station__station_record.__split_fields =
+                                        (Station__station_record.__split_fields__content
+                                            Station__add_module__s.s__split_fields) }).
+                                  Station__station_record.rec__station__station_record__modules in
+                              ((Array__Int__Station__module.set
+                                  ((Station__station_record.__split_fields
+                                       { Station__station_record.__split_fields =
+                                           (Station__station_record.__split_fields__content
+                                               Station__add_module__s.s__split_fields) }).
+                                     Station__station_record.rec__station__station_record__modules))
+                                 (Station__add_module__L_1__i.i.int__content))
+                                (Station__module__rep.of_rep
+                                   (Station__module__rep.to_rep
+                                      (let temp___472 =
+                                         (Station__station_record.__split_fields
+                                             { Station__station_record.__split_fields =
+                                                 (Station__station_record.__split_fields__content
+                                                     Station__add_module__s.s__split_fields) }).
+                                           Station__station_record.rec__station__station_record__modules in
+                                       (Array__Int__Station__module.get
+                                          temp___472)
+                                         ((Station__add_module__L_1__i.i.int__content)
+                                            - (1 : int)))))) }) }) in
+                 [#"station.adb" 97 0 0]
+                 (Station__add_module__s.s__split_fields.Station__station_record.__split_fields__content <-
+                    (Station__station_record.__split_fields temp___475))))
+             with Station__add_module__L_1.L_1 -> ()
+             end))));
+         ([@GP_Sloc:station.adb:100:20]
+          [#"station.adb" 100 0 0]
+          (let temp___481 =
+             let temp___480 =
+               { Station__station_record.__split_fields =
+                   (Station__station_record.__split_fields__content
+                       Station__add_module__s.s__split_fields) } in
+             ([#"station.adb" 100 0 0]
+              (begin
+                 ensures { true }
+                 let _ =
+                   let _ =
+                     (Station__station_record.__split_fields temp___480).
+                       Station__station_record.rec__station__station_record__modules in
+                   () in
+                 ()
+               end));
+             ({ temp___480 with
+                Station__station_record.__split_fields =
+                  ({ (Station__station_record.__split_fields temp___480) with
+                     Station__station_record.rec__station__station_record__modules =
+                       (let temp___479 =
+                          (Station__station_record.__split_fields
+                              { Station__station_record.__split_fields =
+                                  (Station__station_record.__split_fields__content
+                                      Station__add_module__s.s__split_fields) }).
+                            Station__station_record.rec__station__station_record__modules in
+                        ((Array__Int__Station__module.set
+                            ((Station__station_record.__split_fields
+                                 { Station__station_record.__split_fields =
+                                     (Station__station_record.__split_fields__content
+                                         Station__add_module__s.s__split_fields) }).
+                               Station__station_record.rec__station__station_record__modules))
+                           (1 : int))
+                          (Station__module__rep.of_rep
+                             Station__add_module__new_module.new_module)) }) }) in
+           [#"station.adb" 100 0 0]
+           (Station__add_module__s.s__split_fields.Station__station_record.__split_fields__content <-
+              (Station__station_record.__split_fields temp___481))));
+         ([@GP_Sloc:station.adb:101:26]
+          [#"station.adb" 101 0 0]
+          (let temp___484 =
+             let temp___483 =
+               { Station__station_record.__split_fields =
+                   (Station__station_record.__split_fields__content
+                       Station__add_module__s.s__split_fields) } in
+             ([#"station.adb" 101 0 0]
+              (begin
+                 ensures { true }
+                 let _ =
+                   let _ =
+                     (Station__station_record.__split_fields temp___483).
+                       Station__station_record.rec__station__station_record__top_module_index in
+                   () in
+                 ()
+               end));
+             ({ temp___483 with
+                Station__station_record.__split_fields =
+                  ({ (Station__station_record.__split_fields temp___483) with
+                     Station__station_record.rec__station__station_record__top_module_index =
+                       (Station__station_record__T6s__rep.of_rep
+                          ([#"station.adb" 101 0 0]
+                           [@GP_Shape:s_assign__add]
+                           [@GP_Id:10]
+                           [@vc:annotation]
+                           [@comment:      S.Top_Module_Index := S.Top_Module_Index + 1;                                                ^ station.adb:101:48:VC_RANGE_CHECK]
+                           [@GP_Sloc:station.adb:101:48]
+                           [@GP_Reason:VC_RANGE_CHECK]
+                           (Station__station_record__T6s.range_check_
+                              ((Station__station_record__T6s__rep.to_rep
+                                  ((Station__station_record.__split_fields
+                                       { Station__station_record.__split_fields =
+                                           (Station__station_record.__split_fields__content
+                                               Station__add_module__s.s__split_fields) }).
+                                     Station__station_record.rec__station__station_record__top_module_index))
+                                 + (1 : int))))) }) }) in
+           Station__add_module__s.s__split_fields.Station__station_record.__split_fields__content <-
+             (Station__station_record.__split_fields temp___484)));
+         (raise Return__exc)
+       with Return__exc -> ()
+       end);
+      (begin
+         ensures { true }
+         let _ =
+           let _ =
+             (Boolean.andb
+                ((Boolean.andb
+                    ((Boolean.andb
+                        ((Boolean.andb
+                            ((Station__module__rep.to_rep
+                                (let temp___487 =
+                                   (Station__station_record.__split_fields
+                                       { Station__station_record.__split_fields =
+                                           (Station__station_record.__split_fields__content
+                                               Station__add_module__s.s__split_fields) }).
+                                     Station__station_record.rec__station__station_record__modules in
+                                 (Array__Int__Station__module.get temp___487)
+                                   (1 : int)))
+                               = Station__add_module__new_module.new_module))
+                           ((Station__station_record__T6s__rep.to_rep
+                               ((Station__station_record.__split_fields
+                                    { Station__station_record.__split_fields =
+                                        (Station__station_record.__split_fields__content
+                                            Station__add_module__s.s__split_fields) }).
+                                  Station__station_record.rec__station__station_record__top_module_index))
+                              = ((Station__station_record__T6s__rep.to_rep
+                                    ((Station__station_record.__split_fields
+                                         temp___old_488).Station__station_record.rec__station__station_record__top_module_index))
+                                   + (1 : int)))))
+                       ((let i = val _f : int in
+                                 _f in
+                         if ((Boolean.andb ((2 : int) <= i)) (i <= (3 : int))) then
+                           (begin
+                              ensures { true }
+                              let _ =
+                                let _ =
+                                  ((Station__module__rep.to_rep
+                                      (let temp___489 =
+                                         (Station__station_record.__split_fields
+                                             { Station__station_record.__split_fields =
+                                                 (Station__station_record.__split_fields__content
+                                                     Station__add_module__s.s__split_fields) }).
+                                           Station__station_record.rec__station__station_record__modules in
+                                       (Array__Int__Station__module.get
+                                          temp___489)
+                                         i))
+                                     = (Station__module__rep.to_rep
+                                          (let temp___491 =
+                                             (Station__station_record.__split_fields
+                                                 temp___old_490).Station__station_record.rec__station__station_record__modules in
+                                           (Array__Int__Station__module.get
+                                              temp___491)
+                                             (i - (1 : int))))) in
+                                () in
+                              ()
+                            end)
+                         else ());
+                        (val _f : bool
+                           ensures { ((result = True) <->
+                                        (forall i : int.
+                                           ((((2 : int) <= i) /\
+                                               (i <= (3 : int))) ->
+                                              ([@GP_Pretty_Ada:1926]
+                                               ((Station__module__rep.to_rep
+                                                   (let temp___492 =
+                                                      (Station__station_record.__split_fields
+                                                          { Station__station_record.__split_fields =
+                                                              (Station__station_record.__split_fields__content
+                                                                  Station__add_module__s.s__split_fields) }).
+                                                        Station__station_record.rec__station__station_record__modules in
+                                                    (Array__Int__Station__module.get
+                                                       temp___492)
+                                                      i))
+                                                  = (Station__module__rep.to_rep
+                                                       (let temp___493 =
+                                                          (Station__station_record.__split_fields
+                                                              temp___old_490).
+                                                            Station__station_record.rec__station__station_record__modules in
+                                                        (Array__Int__Station__module.get
+                                                           temp___493)
+                                                          (i - (1 : int))))))))) } in
+                         _f))))
+                   (Station__sealedinvariant___axiom.sealedinvariant ())))
+               (Station__altitudeinvariant___axiom.altitudeinvariant ()) in
+           () in
+         ()
+       end)))
+end

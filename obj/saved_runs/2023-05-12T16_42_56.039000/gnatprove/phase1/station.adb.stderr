@@ -1,0 +1,2 @@
+station.ads:81:54: error: parentheses required for unary minus
+station.ads:82:27: error: missing operand

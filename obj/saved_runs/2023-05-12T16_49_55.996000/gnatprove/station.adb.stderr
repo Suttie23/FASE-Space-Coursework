@@ -1,0 +1,2 @@
+station.adb:154:17: medium: array index check might fail [reason for check: value must be a valid index into the array][#0]
+station.ads:82:14: medium: array index check might fail [reason for check: value must be a valid index into the array] [possible fix: use "and then" instead of "and" in precondition][#1]

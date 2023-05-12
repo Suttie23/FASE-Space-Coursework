@@ -49,13 +49,13 @@ is
 
    -- Procedure to Open an Airlock
    procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) with
-     Pre => SealedInvariant,
-     Post => SealedInvariant;
+     Pre => SealedInvariant and AltitudeInvariant,
+     Post => SealedInvariant and AltitudeInvariant;
 
    -- Procedure to Seal the airlock
    procedure Seal_Airlock (S : in out Station_Record) with
-     Pre => (S.Door1 = Open and S.Door2 = Closed) or (S.Door2 = Open and S.Door1 = Closed),
-     Post => S.Door1 = Closed and S.Door2 = Closed;
+     Pre => SealedInvariant and AltitudeInvariant,
+     Post => SealedInvariant and AltitudeInvariant;
 
    -- Procedure to update height of orbit
    procedure Update_Height(S : in out Station_Record; New_Height : in Integer) with
@@ -64,17 +64,23 @@ is
 
    -- Procedure to add a module to the station
    procedure Add_Module(S : in out Station_Record; New_Module : in Module) with
-     Pre => SealedInvariant and (S.Top_Module_Index < S.Modules'Last),
+     Pre => SealedInvariant and AltitudeInvariant and (S.Top_Module_Index < S.Modules'Last),
      Post => (S.Modules(1) = New_Module) and (S.Top_Module_Index = S'Old.Top_Module_Index + 1) and
-     (for all i in 2..S.Modules'Last => S.Modules(i) = S'Old.Modules(i-1)) and SealedInvariant;
+     (for all i in 2..S.Modules'Last => S.Modules(i) = S'Old.Modules(i-1)) and SealedInvariant and AltitudeInvariant;
 
    -- Procedure to remove the top module from the stack
    procedure Remove_Top_Module(S : in out Station_Record) with
-    Pre => SealedInvariant and S.Top_Module_Index >= 1,
-    Post => (S.Top_Module_Index >= 1 and SealedInvariant) or
-     (S.Top_Module_Index >= 1 and S.Modules = (2 => Empty, 3 => Empty) and SealedInvariant);
+    Pre => SealedInvariant and AltitudeInvariant and S.Top_Module_Index >= 1,
+    Post => (S.Top_Module_Index >= 1 and SealedInvariant and AltitudeInvariant) or
+     (S.Top_Module_Index >= 1 and S.Modules = (2 => Empty, 3 => Empty) and SealedInvariant and AltitudeInvariant);
 
-   procedure Attempt_Spacewalk(S : in out Station_Record; CM : in Integer);
+   procedure Attempt_Spacewalk(S : in out Station_Record; CM : in Integer) with
+     Pre =>
+     (SealedInvariant and AltitudeInvariant and CM >= 1 and CM < S.Crew'Length) and then
+       (for all i in S.Modules'Range => S.Modules(i) /= Empty) and then
+       (for all i in S.Crew'Range => S.Crew(i).Status /= Spacewalk) and then
+       (S.Crew(CM).Status /= Spacewalk),
+     Post => (SealedInvariant and AltitudeInvariant and S.Crew(CM).Location = Space);
 
 
 end Station;
