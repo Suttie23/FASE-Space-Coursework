@@ -19,7 +19,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_IMPLEMENTATION_PRAGMAS
 RV MAX_TASKS=1+
 
-U main%b		main.adb		a189b793 NE OO SU
+U main%b		main.adb		00ffdb9d NE OO SU
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 Z ada.real_time%s	a-reatim.adb		a-reatim.ali
@@ -54,8 +54,8 @@ D interfac.ads		20210520051132 edec285f interfaces%s
 D i-c.ads		20210520051132 d9beded9 interfaces.c%s
 D i-cstrin.ads		20210520051132 341d0ddf interfaces.c.strings%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
-D main.adb		20230512130230 1dda0ae8 main%b
-D station.ads		20230512130102 12a76816 station%s
+D main.adb		20230512133924 3003f09a main%b
+D station.ads		20230512133940 9e08fe6a station%s
 D system.ads		20210520051136 2ffa5114 system%s
 D s-atacco.ads		20210520051132 4c36d12f system.address_to_access_conversions%s
 D s-conca2.ads		20210520051132 02a0d7d0 system.concat_2%s
@@ -89,49 +89,53 @@ D s-win32.ads		20210520051136 15ac53fb system.win32%s
 D unchconv.ads		20210520051136 ca2f9e18 unchecked_conversion%s
 G a e
 G c Z b b [main standard 4 11 none]
-G r c none [main standard 4 11 none] [open_door station 50 14 none]
-G r c none [main standard 4 11 none] [seal_airlock station 55 14 none]
-G r c none [main standard 4 11 none] [update_height station 60 14 none]
-G r c none [main standard 4 11 none] [add_module station 65 14 none]
-G r c none [main standard 4 11 none] [remove_top_module station 71 14 none]
+G r c none [main standard 4 11 none] [open_door station 52 14 none]
+G r c none [main standard 4 11 none] [seal_airlock station 57 14 none]
+G r c none [main standard 4 11 none] [update_height station 62 14 none]
+G r c none [main standard 4 11 none] [add_module station 67 14 none]
+G r c none [main standard 4 11 none] [remove_top_module station 73 14 none]
+G r c none [main standard 4 11 none] [attempt_spacewalk station 78 13 none]
 X 1 ada.ads
 16K9*Ada 20e8 18|2r6 2r23
 X 12 a-textio.ads
 58K13*Text_IO 725e16 18|2w10 2r27
-479U14*Get_Line 18|55s10 66s13 79s16
+479U14*Get_Line 18|56s10 67s13 80s16
 506U14*Put_Line 18|14s7 15s7 16s7 17s7 18s7 19s7 20s7 21s10 22s7 23s7 24s7
 . 25s7 26s7 27s7 28s10 29s7 30s10 31s7 32s7 33s7 34s7 35s7 36s7 37s10 38s7
-. 39s7 40s7 41s7 42s7 43s7 44s7 45s7 46s7 47s10 48s7 61s13 62s13 63s13 64s13
-. 65s13 75s13 76s13 77s13 78s13
+. 39s7 40s7 41s7 42s7 43s7 44s7 45s7 46s7 47s7 48s10 49s7 62s13 63s13 64s13
+. 65s13 66s13 76s13 77s13 78s13 79s13
 X 18 main.adb
-4U11*Main 4b11 95l5 95t9
-6a4 Str{string} 55m19 56r16 66m22 67r21 79m25 80r21
-7i4 Last{natural} 55m24 66m27 79m30
-9t9 ControlPanel 51b14 91l8 91t20
-11U14 DashboardControls 11b14 49l8 49t25 54s10
+4U11*Main 4b11 97l5 97t9
+6a4 Str{string} 56m19 57r16 67m22 68r21 80m25 81r21
+7i4 Last{natural} 56m24 67m27 80m30
+9t9 ControlPanel 52b14 93l8 93t20
+11U14 DashboardControls 11b14 50l8 50t25 55s10
 X 19 station.ads
-1K9*Station 18|1w6 1r19 19|77e12
-12n20*CrewQuarters{12E9} 18|82r42
-12n34*CommunicationsArray{12E9} 18|83r42
-12n55*ResearchBay{12E9} 18|81r42
+1K9*Station 18|1w6 1r19 19|81e12
+12n20*CrewQuarters{12E9} 18|83r42
+12n34*CommunicationsArray{12E9} 18|84r42
+12n55*ResearchBay{12E9} 18|82r42
 13A9*Module_Array(12E9)<integer>
-17e7*Door1{9E9} 18|18r41
-18e7*Door2{9E9} 18|19r41
-19i7*Altitude{integer} 18|20r33 68r47 69r47 70r47 71r47
-20a7*Modules{13A9} 18|25r31 26r31 27r31
-21i7*Top_Module_Index{integer} 18|29r43
-24r4*S{16R9} 18|18r39 19r39 20r31 25r29 26r29 27r29 29r41 57m32 57r32 58m32
-. 58r32 59m35 59r35 68m42 68r42 68r45 69m42 69r42 69r45 70m42 70r42 70r45
-. 71m42 71r42 71r45 81m39 81r39 82m39 82r39 83m39 83r39 86m40 86r40
-33e7*Name{28E9} 18|34r34 35r34 36r34
-34e7*Status{29E9} 18|34r71 35r71 36r71
-35e7*Location{12E9} 18|34r112 35r112 36r112
-38a1*CRW(32R9) 18|34r27 34r64 34r105 35r27 35r64 35r105 36r27 36r64 36r105
-50U14*Open_Door 18|57s22 58s22
-55U14*Seal_Airlock 18|59s22
-60U14*Update_Height 18|68s28 69s28 70s28 71s28
-65U14*Add_Module 18|81s28 82s28 83s28
-71U14*Remove_Top_Module 18|86s22
+20e7*Name{15E9} 18|34r37 35r37 36r37
+21e7*Status{16E9} 18|34r77 35r77 36r77
+22e7*Location{12E9} 18|34r121 35r121 36r121
+25A9*Crew_Array(19R9)<integer>
+29e7*Door1{9E9} 18|18r41
+30e7*Door2{9E9} 18|19r41
+31i7*Altitude{integer} 18|20r33 69r47 70r47 71r47 72r47
+32a7*Modules{13A9} 18|25r31 26r31 27r31
+33i7*Top_Module_Index{integer} 18|29r43
+34a7*Crew{25A9} 18|34r29 34r69 34r113 35r29 35r69 35r113 36r29 36r69 36r113
+37r4*S{28R9} 18|18r39 19r39 20r31 25r29 26r29 27r29 29r41 34r27 34r67 34r111
+. 35r27 35r67 35r111 36r27 36r67 36r111 58m32 58r32 59m32 59r32 60m35 60r35
+. 69m42 69r42 69r45 70m42 70r42 70r45 71m42 71r42 71r45 72m42 72r42 72r45
+. 82m39 82r39 83m39 83r39 84m39 84r39 87m40 87r40 88m43 88r43
+52U14*Open_Door 18|58s22 59s22
+57U14*Seal_Airlock 18|60s22
+62U14*Update_Height 18|69s28 70s28 71s28 72s28
+67U14*Add_Module 18|82s28 83s28 84s28
+73U14*Remove_Top_Module 18|87s22
+78U13*Attempt_Spacewalk 18|88s25
 X 37 s-stausa.ads
 208U14*Initialize 209i<c,__gnat_stack_usage_initialize>22
 273U14*Output_Results 277i<c,__gnat_stack_usage_output_results>22

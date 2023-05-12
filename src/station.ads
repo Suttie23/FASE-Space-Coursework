@@ -12,19 +12,6 @@ is
    type Module is (CrewQuarters, CommunicationsArray, ResearchBay, Empty);
    type Module_Array is array (1..3) of Module;
 
-   -- Station Record to hold all Station Variables
-   type Station_Record is record
-      Door1 : Airlock_Door := Closed;
-      Door2 : Airlock_Door := Closed;
-      Altitude : Integer range MINALTITUDE..MAXALTITUDE;
-      Modules : Module_Array;
-      Top_Module_Index : Natural range 1..3;
-   end record;
-
-   S : Station_Record := (Door1 => Closed, Door2 => Closed, Altitude => MINALTITUDE,
-                          Modules => (1 => CrewQuarters, 2 => CommunicationsArray, 3 => Empty),
-                          Top_Module_Index => 2);
-
    type CrewMember is (Jebediah, Valentina, Bill);
    type CrewMemberStatus is (Spacewalk, Monitoring, Relaxing);
    type CrewMemberLocation is (TopModule, MiddleModule, BottomModule, EVA);
@@ -35,9 +22,24 @@ is
       Location : Module;
    end record;
 
-CRW : array(1..3) of Crew_Record := ((Name => Jebediah, Status => Relaxing, Location => CrewQuarters),
-                                     (Name => Valentina, Status => Relaxing, Location => CrewQuarters),
-                                     (Name => Bill, Status => Relaxing, Location => CommunicationsArray));
+   type Crew_Array is array(1..3) of Crew_Record;
+
+   -- Station Record to hold all Station Variables
+   type Station_Record is record
+      Door1 : Airlock_Door := Closed;
+      Door2 : Airlock_Door := Closed;
+      Altitude : Integer range MINALTITUDE..MAXALTITUDE;
+      Modules : Module_Array;
+      Top_Module_Index : Natural range 1..3;
+      Crew : Crew_Array;
+   end record;
+
+   S : Station_Record := (Door1 => Closed, Door2 => Closed, Altitude => MINALTITUDE,
+                          Modules => (1 => CrewQuarters, 2 => CommunicationsArray, 3 => Empty),
+                          Top_Module_Index => 2, Crew =>
+                            ((Name => Jebediah, Status => Relaxing, Location => CrewQuarters),
+                            (Name => Valentina, Status => Relaxing, Location => CrewQuarters),
+                            (Name => Bill, Status => Relaxing, Location => CrewQuarters)));
 
    function SealedInvariant return Boolean is
      ((S.Door1 = Open and S.Door2 = Closed) or (S.Door1 = Closed and S.Door2 = Open)
@@ -71,7 +73,9 @@ CRW : array(1..3) of Crew_Record := ((Name => Jebediah, Status => Relaxing, Loca
    procedure Remove_Top_Module(S : in out Station_Record) with
     Pre => SealedInvariant and S.Top_Module_Index >= 1,
     Post => (S.Top_Module_Index >= 1 and SealedInvariant) or
-      (S.Top_Module_Index >= 1 and S.Modules = (2 => Empty, 3 => Empty) and SealedInvariant);
+     (S.Top_Module_Index >= 1 and S.Modules = (2 => Empty, 3 => Empty) and SealedInvariant);
+
+  procedure Attempt_Spacewalk(S : in out Station_Record);
 
 
 end Station;

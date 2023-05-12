@@ -31,9 +31,9 @@ procedure Main is
       Put_Line("------------------------------");
       Put_Line("Crew Status");
       Put_Line("------------------------------");
-      Put_Line("Name: " & CRW(1).Name'Image & " // Status: " & CRW(1).Status'Image & " // Location: " & CRW(1).Location'Image);
-      Put_Line("Name: " & CRW(2).Name'Image & " // Status: " & CRW(2).Status'Image & " // Location: " & CRW(2).Location'Image);
-      Put_Line("Name: " & CRW(3).Name'Image & " // Status: " & CRW(3).Status'Image & " // Location: " & CRW(3).Location'Image);
+      Put_Line("Name: " & S.Crew(1).Name'Image & " // Status: " & S.Crew(1).Status'Image & " // Location: " & S.Crew(1).Location'Image);
+      Put_Line("Name: " & S.Crew(2).Name'Image & " // Status: " & S.Crew(2).Status'Image & " // Location: " & S.Crew(2).Location'Image);
+      Put_Line("Name: " & S.Crew(3).Name'Image & " // Status: " & S.Crew(3).Status'Image & " // Location: " & S.Crew(3).Location'Image);
          Put_Line("");
       Put_Line("------------------------------");
       Put_Line("Napier Space Station Control Panel");
@@ -44,6 +44,7 @@ procedure Main is
       Put_Line("(d) - Adjust Orbit");
       Put_Line("(e) - Add Module");
       Put_Line("(f) - Remove Module");
+      Put_Line("(g) - Attempt Spacewalk");
          Put_Line("");
       Put_Line("Enter command:");
    end DashboardControls;
@@ -84,6 +85,7 @@ procedure Main is
                when others => exit;
             end case;
          when 'f' => Remove_Top_Module(S);
+            when 'g' => Attempt_Spacewalk(S);
          when others => exit;
          end case;
       end loop;

@@ -116,6 +116,12 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       S.Top_Module_Index := 1;
       end if;
    end loop;
-end Remove_Top_Module;
+   end Remove_Top_Module;
+
+   procedure Attempt_Spacewalk(S : in out Station_Record) is
+   begin
+      S.Crew(1).Status := Monitoring;
+   end Attempt_Spacewalk;
+
 
 end Station;
