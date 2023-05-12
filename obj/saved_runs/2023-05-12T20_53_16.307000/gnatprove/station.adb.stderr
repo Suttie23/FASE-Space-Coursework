@@ -1,0 +1,2 @@
+station.adb:232:07: warning: initialization of "SpacewalkInProgress" has no effect[#0]
+station.ads:96:36: medium: postcondition might fail, cannot prove S.Crew(i).Status /= Spacewalk[#1]

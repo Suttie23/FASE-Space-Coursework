@@ -1,0 +1,36 @@
+Summary of SPARK analysis
+=========================
+
+--------------------------------------------------------------------------------------------
+SPARK Analysis results        Total      Flow   CodePeer      Provers   Justified   Unproved
+--------------------------------------------------------------------------------------------
+Data Dependencies                 .         .          .            .           .          .
+Flow Dependencies                 .         .          .            .           .          .
+Initialization                    .         .          .            .           .          .
+Non-Aliasing                      .         .          .            .           .          .
+Run-time Checks                  49         .          .    49 (CVC4)           .          .
+Assertions                        .         .          .            .           .          .
+Functional Contracts             13         .          .    12 (CVC4)           .          1
+LSP Verification                  .         .          .            .           .          .
+Termination                       .         .          .            .           .          .
+Concurrency                       .         .          .            .           .          .
+--------------------------------------------------------------------------------------------
+Total                            62         .          .     61 (98%)           .     1 (2%)
+
+
+max steps used for successful proof: 1
+
+Analyzed 2 units
+in unit main, 0 subprograms and packages out of 1 analyzed
+  Main at main.adb:4 skipped
+in unit station, 10 subprograms and packages out of 10 analyzed
+  Station at station.ads:1 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (0 checks)
+  Station.Add_Module at station.ads:72 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (2 checks)
+  Station.AltitudeInvariant at station.ads:53 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (0 checks)
+  Station.Attempt_Spacewalk at station.ads:84 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (33 checks)
+  Station.Open_Door at station.ads:57 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (5 checks)
+  Station.Remove_Top_Module at station.ads:78 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (9 checks)
+  Station.Return_From_Spacewalk at station.ads:92 flow analyzed (0 errors, 0 checks and 1 warnings) and not proved, 7 checks out of 8 proved
+  Station.Seal_Airlock at station.ads:62 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (3 checks)
+  Station.SealedInvariant at station.ads:48 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (0 checks)
+  Station.Update_Height at station.ads:67 flow analyzed (0 errors, 0 checks and 0 warnings) and proved (2 checks)

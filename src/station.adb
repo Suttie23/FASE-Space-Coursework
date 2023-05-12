@@ -223,9 +223,50 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       Put_Line(S.Crew(CM).Name'Image & " IS ON A SPACEWALK");
 
       S.Crew(CM).Location := Space;
+      S.ActiveSpaceWalk := True;
 
 
    end Attempt_Spacewalk;
+
+   -- Procedure to return a crewman from a spacewalk
+   procedure Return_From_Spacewalk(S : in out Station_Record) is
+   begin
+
+      -- If not, do nothing
+      if S.ActiveSpaceWalk = False then
+         Put_Line("There are no crewmen on a spacewalk");
+         delay 0.8;
+
+         -- if there is, recall them to the station
+      else
+         for i in S.Crew'Range Loop
+            if S.Crew(i).Status = Spacewalk then
+               Put_Line(S.Crew(i).Name'Image & " Is Being Recalled...");
+               delay 0.8;
+               Open_Door(S, 2);
+               delay 0.8;
+               Put_Line(S.Crew(i).Name'Image & " Is inside the airlock...");
+               Put_Line("");
+               delay 0.8;
+               Open_Door(S, 1);
+               delay 0.8;
+               Put_Line(S.Crew(i).Name'Image & " Has entered the station...");
+               Put_Line("");
+               delay 0.8;
+               Seal_Airlock(S);
+               Put_Line(S.Crew(i).Name'Image & " IS ON A SPACEWALK");
+
+               S.Crew(i).Location := S.Modules(2);
+               S.Crew(i).Status := Relaxing;
+            else
+               S.Crew(i).Status := Relaxing;
+            end if;
+         end Loop;
+         S.ActiveSpaceWalk := False;
+      end if;
+
+   end Return_From_Spacewalk;
+
 
 
 end Station;

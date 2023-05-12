@@ -18,6 +18,8 @@ procedure Main is
       Put_Line("Interior Airlock: " & S.Door1'Image);
       Put_Line("Exterior Airlock: " & S.Door2'Image);
       Put_Line("Altitude: " & S.Altitude'Image & "ft (820,000ft Min, 920,000ft Max)");
+      Put_Line("Active Space Walk: " & S.ActiveSpaceWalk'Image);
+
          Put_Line("");
       Put_Line("------------------------------");
       Put_Line("Station Modules");
@@ -45,6 +47,7 @@ procedure Main is
       Put_Line("(e) - Add Module");
       Put_Line("(f) - Remove Module");
       Put_Line("(g) - Attempt Spacewalk");
+      Put_Line("(h) - Return From Spacewalk");
          Put_Line("");
       Put_Line("Enter command:");
       Put_Line("");
@@ -103,7 +106,8 @@ procedure Main is
                when '2' => Attempt_Spacewalk(S, 2);
                when '3' => Attempt_Spacewalk(S, 3);
                when others => exit;
-            end case;
+               end case;
+         when 'h' => Return_From_Spacewalk(S);
          when others => exit;
          end case;
       end loop;

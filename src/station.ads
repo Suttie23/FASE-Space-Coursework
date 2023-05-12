@@ -34,6 +34,7 @@ is
       Modules : Module_Array;
       Top_Module_Index : Natural range 1..3;
       Crew : Crew_Array;
+      ActiveSpaceWalk: boolean := False;
    end record;
 
    -- Initialise Station Record
@@ -42,7 +43,9 @@ is
                           Top_Module_Index => 3, Crew =>
                             ((Name => Jebediah, Status => Relaxing, Location => ResearchBay),
                             (Name => Valentina, Status => Relaxing, Location => CrewQuarters),
-                            (Name => Bill, Status => Relaxing, Location => CommunicationsArray)));
+                             (Name => Bill, Status => Relaxing, Location => CommunicationsArray)),
+                          ActiveSpaceWalk => False);
+
 
    -- Ensure that at least one door, if not both, are closed
    function SealedInvariant return Boolean is
@@ -87,7 +90,12 @@ is
        (for all i in S.Modules'Range => S.Modules(i) /= Empty) and then
        (for all i in S.Crew'Range => S.Crew(i).Status /= Spacewalk) and then
        (S.Crew(CM).Status /= Spacewalk),
-     Post => (SealedInvariant and AltitudeInvariant and S.Crew(CM).Location = Space);
+       Post => (SealedInvariant and AltitudeInvariant and S.Crew(CM).Location = Space);
 
+   procedure Return_From_Spacewalk(S : in out Station_Record) with
+     Pre => (SealedInvariant and AltitudeInvariant) and then
+     S.ActiveSpaceWalk = True,
+     Post => (SealedInvariant and AltitudeInvariant) and then
+     (S.ActiveSpaceWalk = False);
 
 end Station;
