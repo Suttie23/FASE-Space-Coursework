@@ -64,6 +64,14 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
 
       Put_Line("");
 
+      -- Ensure the module cannot be added if a spacewalk is active
+      if S.ActiveSpaceWalk = true then
+         Put_Line ("");
+         Put_Line("WARNING: CANNOT CHANGE ORBIT WHILE A SPACEWALK IS ACTIVE!");
+         delay 0.8;
+      return;
+      end if;
+
       -- Adjust orbital height if within acceptable parameters
       if (New_Height >= 820000 and New_Height <= 920000) and SealedInvariant then
          S.Altitude := New_Height;
@@ -86,6 +94,14 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
    begin
 
       Put_Line("");
+
+      -- Ensure the module cannot be added if a spacewalk is active
+      if S.ActiveSpaceWalk = true then
+         Put_Line ("");
+         Put_Line("WARNING: CANNOT ADD MODULE WHILE A SPACEWALK IS ACTIVE!");
+         delay 0.8;
+      return;
+      end if;
 
       -- Ensure that additional modules cannot be added
       if S.Top_Module_Index = 3 then
@@ -113,6 +129,15 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
 
       Put_Line("");
 
+      -- Ensure the module cannot be removed if a spacewalk is active
+      if S.ActiveSpaceWalk = true then
+         Put_Line ("");
+         Put_Line("WARNING: CANNOT REMOVE MODULE WHILE A SPACEWALK IS ACTIVE!");
+         delay 0.8;
+      return;
+      end if;
+
+
       -- Ensure the final module cannot be removed
       if S.Top_Module_Index = 1 then
          Put_Line ("");
@@ -130,9 +155,9 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
                   S.Crew(k).Location := S.Modules(1);
                   Put_Line ("");
                   delay 0.8;
-                  Put_Line(S.Modules(i)'Image & "Is occupied by " & S.Crew(k).Name'Image & ".");
+                  Put_Line(S.Modules(i)'Image & " Is occupied by " & S.Crew(k).Name'Image & ".");
                   delay 0.8;
-                  Put_Line("Moving " & S.Crew(k).Name'Image & "to the " & S.Modules(1)'Image & " Module");
+                  Put_Line("Moving " & S.Crew(k).Name'Image & " to the " & S.Modules(1)'Image & " Module");
                   delay 0.8;
                end if;
             end loop;
@@ -157,7 +182,10 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       -- Check whether the station is fully functional
       for i in S.Modules'Range loop
          if S.Modules(i) = Empty then
+            Put_Line("");
+            delay 0.8;
             Put_Line("SPACEWALK IS ONLY AVALIABLE WITH A FULLY FUNCTIONAL STATION!");
+            delay 0.8;
             return;
          end if;
       end loop;
@@ -165,16 +193,24 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       -- Check whether there is an ongoing spacewalk
       for i in S.Crew'Range loop
          if S.Crew(i).Status = Spacewalk then
+            delay 0.8;
             Put_Line("SPACEWALK IN PROGRESS, CANNOT PERFORM ANOTHER UNTIL CREWMAN HAS RETURNED");
+            delay 0.8;
             return;
          end if;
       end loop;
 
       -- Check whether selected Crewmember is avaliable
       if S.Crew(CM).Status /= Spacewalk then
+         Put_Line("");
+         delay 0.8;
          Put_Line(S.Crew(CM).Name'Image & " IS AVALIABLE FOR A SPACEWALK");
+         delay 0.8;
       else
+         Put_Line("");
+         delay 0.8;
          Put_Line(S.Crew(CM).Name'Image & " IS ALREADY ON A SPACEWALK");
+         delay 0.8;
          return;
       end if;
 
@@ -254,7 +290,8 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
                Put_Line("");
                delay 0.8;
                Seal_Airlock(S);
-               Put_Line(S.Crew(i).Name'Image & " IS ON A SPACEWALK");
+               Put_Line(S.Crew(i).Name'Image & " HAS RETURNED TO THE STATION");
+               delay 0.8;
 
                S.Crew(i).Location := S.Modules(2);
                S.Crew(i).Status := Relaxing;

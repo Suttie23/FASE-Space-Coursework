@@ -186,3 +186,207 @@
     '
   output_parser: GNATprove_Parser
   timestamp: '2023-05-12T21:21:43.157000'
+'2023-05-12T21:31:08.387000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    station.ads:72:15: medium: postcondition might fail, cannot prove S.Altitude =
+    New_Height[#0]
+
+    station.ads:77:14: medium: postcondition might fail, cannot prove S.Modules(1)
+    = New_Module[#1]
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:31:08.387000'
+'2023-05-12T21:32:23.709000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    station.ads:77:14: medium: postcondition might fail, cannot prove S.Modules(1)
+    = New_Module[#0]
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:32:23.709000'
+'2023-05-12T21:34:18.968000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:34:18.968000'
+'2023-05-12T21:34:32.183000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:34:32.183000'
+'2023-05-12T21:37:08.954000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    station.ads:93:59: medium: postcondition might fail, cannot prove S.Crew(CM).Location
+    = Space [possible fix: postcondition of call at station.adb:258 should mention
+    S (for argument S)][#0]
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:37:08.954000'
+'2023-05-12T21:38:27.232000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    station.ads:94:35: error: mixed logical operators in expression
+
+    gnatprove: error during generation of Global contracts
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:38:27.232000'
+'2023-05-12T21:40:05.734000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    station.ads:99:35: error: mixed logical operators in expression
+
+    gnatprove: error during generation of Global contracts
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:40:05.734000'
+'2023-05-12T21:40:48.307000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    station.ads:100:81: error: mixed logical operators in expression
+
+    gnatprove: error during generation of Global contracts
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:40:48.307000'
+'2023-05-12T21:41:50.374000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    station.ads:98:16: medium: postcondition might fail [possible fix: postcondition
+    of call at station.adb:258 should mention S (for argument S)][#0]
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:41:50.374000'
+'2023-05-12T21:45:48.795000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    station.ads:98:16: medium: postcondition might fail [possible fix: postcondition
+    of call at station.adb:258 should mention S (for argument S)][#0]
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:45:48.795000'
+'2023-05-12T21:46:09.009000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    station.ads:98:16: medium: postcondition might fail [possible fix: postcondition
+    of call at station.adb:258 should mention S (for argument S)][#0]
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:46:09.009000'
+'2023-05-12T21:47:44.030000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:47:44.030000'
+'2023-05-12T21:50:14.865000':
+  category: GNATprove
+  files:
+  - D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove
+  label: Basic Prove File
+  output: 'Phase 1 of 2: generation of Global contracts ...
+
+    Phase 2 of 2: flow analysis and proof ...
+
+    Summary logged in D:\My Folders\Uni\Year 4\Formal Approaches To Software Engineering\Code\FASE-Space-Coursework\obj\gnatprove\gnatprove.out
+
+    '
+  output_parser: GNATprove_Parser
+  timestamp: '2023-05-12T21:50:14.865000'

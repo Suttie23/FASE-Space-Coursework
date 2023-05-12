@@ -19,7 +19,7 @@ RV NO_DYNAMIC_SIZED_OBJECTS
 RV NO_IMPLEMENTATION_PRAGMAS
 RV MAX_TASKS=1+
 
-U main%b		main.adb		760c8496 NE OO SU
+U main%b		main.adb		dc8185a7 NE OO SU
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 Z ada.real_time%s	a-reatim.adb		a-reatim.ali
@@ -55,7 +55,7 @@ D i-c.ads		20210520051132 d9beded9 interfaces.c%s
 D i-cstrin.ads		20210520051132 341d0ddf interfaces.c.strings%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
 D main.adb		20230512200928 1d2ae524 main%b
-D station.ads		20230512201212 c5d2b4df station%s
+D station.ads		20230512203406 6f5fb5ee station%s
 D system.ads		20210520051136 2ffa5114 system%s
 D s-atacco.ads		20210520051132 4c36d12f system.address_to_access_conversions%s
 D s-conca2.ads		20210520051132 02a0d7d0 system.concat_2%s
@@ -92,10 +92,10 @@ G c Z b b [main standard 4 11 none]
 G r c none [main standard 4 11 none] [open_door station 60 14 none]
 G r c none [main standard 4 11 none] [seal_airlock station 65 14 none]
 G r c none [main standard 4 11 none] [update_height station 70 14 none]
-G r c none [main standard 4 11 none] [add_module station 75 14 none]
-G r c none [main standard 4 11 none] [remove_top_module station 81 14 none]
-G r c none [main standard 4 11 none] [attempt_spacewalk station 87 14 none]
-G r c none [main standard 4 11 none] [return_from_spacewalk station 95 14 none]
+G r c none [main standard 4 11 none] [add_module station 76 14 none]
+G r c none [main standard 4 11 none] [remove_top_module station 82 14 none]
+G r c none [main standard 4 11 none] [attempt_spacewalk station 88 14 none]
+G r c none [main standard 4 11 none] [return_from_spacewalk station 97 14 none]
 X 1 ada.ads
 16K9*Ada 20e8 18|2r6 2r23
 X 12 a-textio.ads
@@ -113,7 +113,7 @@ X 18 main.adb
 9t9 ControlPanel 57b14 115l8 115t20
 11U14 DashboardControls 11b14 55l8 55t25 60s10
 X 19 station.ads
-1K9*Station 18|1w6 1r19 19|101e12
+1K9*Station 18|1w6 1r19 19|103e12
 12n20*CrewQuarters{12E9} 18|91r42
 12n34*CommunicationsArray{12E9} 18|92r42
 12n55*ResearchBay{12E9} 18|90r42
@@ -137,10 +137,10 @@ X 19 station.ads
 60U14*Open_Door 18|63s22 64s22
 65U14*Seal_Airlock 18|65s22
 70U14*Update_Height 18|75s28 76s28 77s28 78s28
-75U14*Add_Module 18|90s28 91s28 92s28
-81U14*Remove_Top_Module 18|96s22
-87U14*Attempt_Spacewalk 18|105s28 106s28 107s28
-95U14*Return_From_Spacewalk 18|110s22
+76U14*Add_Module 18|90s28 91s28 92s28
+82U14*Remove_Top_Module 18|96s22
+88U14*Attempt_Spacewalk 18|105s28 106s28 107s28
+97U14*Return_From_Spacewalk 18|110s22
 X 37 s-stausa.ads
 208U14*Initialize 209i<c,__gnat_stack_usage_initialize>22
 273U14*Output_Results 277i<c,__gnat_stack_usage_output_results>22

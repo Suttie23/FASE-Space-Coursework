@@ -1,0 +1,2 @@
+station.ads:72:15: medium: postcondition might fail, cannot prove S.Altitude = New_Height[#0]
+station.ads:77:14: medium: postcondition might fail, cannot prove S.Modules(1) = New_Module[#1]
