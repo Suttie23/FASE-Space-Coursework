@@ -12,15 +12,18 @@ is
    type Module is (CrewQuarters, CommunicationsArray, ResearchBay, Empty, Space);
    type Module_Array is array (1..3) of Module;
 
+   -- Crew Types
    type CrewMember is (Jebediah, Valentina, Bill);
    type CrewMemberStatus is (Spacewalk, Monitoring, Relaxing);
 
+   -- Crew Record will hold all crew member variables
    type Crew_Record is record
       Name : CrewMember;
       Status : CrewMemberStatus;
       Location : Module;
    end record;
 
+   -- Array of Crew member record
    type Crew_Array is array(1..3) of Crew_Record;
 
    -- Station Record to hold all Station Variables
@@ -33,6 +36,7 @@ is
       Crew : Crew_Array;
    end record;
 
+   -- Initialise Station Record
    S : Station_Record := (Door1 => Closed, Door2 => Closed, Altitude => MINALTITUDE,
                           Modules => (1 => CrewQuarters, 2 => CommunicationsArray, 3 => ResearchBay),
                           Top_Module_Index => 3, Crew =>
@@ -40,10 +44,12 @@ is
                             (Name => Valentina, Status => Relaxing, Location => CrewQuarters),
                             (Name => Bill, Status => Relaxing, Location => CommunicationsArray)));
 
+   -- Ensure that at least one door, if not both, are closed
    function SealedInvariant return Boolean is
      ((S.Door1 = Open and S.Door2 = Closed) or (S.Door1 = Closed and S.Door2 = Open)
       or (S.Door1 = Closed and S.Door2 = Closed));
 
+   -- Ensure the correct orbit
    function AltitudeInvariant return Boolean is
       (S.Altitude >= MINALTITUDE and S.Altitude <= MAXALTITUDE);
 
@@ -59,7 +65,7 @@ is
 
    -- Procedure to update height of orbit
    procedure Update_Height(S : in out Station_Record; New_Height : in Integer) with
-     Pre => (New_Height >= 820000 and New_Height <= 920000) and SealedInvariant,
+     Pre => (New_Height >= 820000 and New_Height <= 920000) and SealedInvariant and AltitudeInvariant,
      Post => (S.Altitude = New_Height and SealedInvariant and AltitudeInvariant);
 
    -- Procedure to add a module to the station
@@ -74,6 +80,7 @@ is
     Post => (S.Top_Module_Index >= 1 and SealedInvariant and AltitudeInvariant) or
      (S.Top_Module_Index >= 1 and S.Modules = (2 => Empty, 3 => Empty) and SealedInvariant and AltitudeInvariant);
 
+   -- Procedure to attempt a space walk
    procedure Attempt_Spacewalk(S : in out Station_Record; CM : in Integer) with
      Pre =>
      (SealedInvariant and AltitudeInvariant and CM >= 1 and CM < S.Crew'Length) and then

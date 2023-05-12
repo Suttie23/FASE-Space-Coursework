@@ -10,6 +10,7 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
 
       Put_Line("");
 
+      -- Open door 1 and ensure 2 is closed
       if Airlock_Number = 1 and SealedInvariant then
          S.Door1 := Open;
          S.Door2 := Closed;
@@ -19,16 +20,18 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
          Put_Line ("Door 2 is:" & S.Door2'Image);
          Put_Line ("");
 
+         -- Open door 2 and ensure 1 is closed
       elsif Airlock_Number = 2 and SealedInvariant then
          S.Door2 := Open;
          S.Door1 := Closed;
-
          Put_Line ("Opening Exterior Door...");
          delay 0.5;
          Put_Line ("Door 1 is: " & S.Door1'Image);
          Put_Line ("Door 2 is: " & S.Door2'Image);
          Put_Line ("");
-      else
+
+         -- Close Both doors in the event of an emergency (Should never trigger)
+      elsif SealedInvariant = false then
          S.Door2 := Closed;
          S.Door1 := Closed;
          Put_Line ("");
@@ -37,7 +40,7 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       end if;
    end Open_Door;
 
-   -- Seal Airlock
+   -- Seal Both Doors
    procedure Seal_Airlock (S : in out Station_Record) is
    begin
          if S.Door1 = Open then
@@ -61,8 +64,11 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
 
       Put_Line("");
 
+      -- Adjust orbital height if within acceptable parameters
       if (New_Height >= 820000 and New_Height <= 920000) and SealedInvariant then
          S.Altitude := New_Height;
+
+         -- Warn of unsafe orbital adjustment and disregard command
       else
          Put_Line ("");
          Put_Line ("WARNING: UNSAFE ORBITAL ADJUSTMENT DETECTED!");
@@ -175,6 +181,7 @@ procedure Open_Door (S : in out Station_Record; Airlock_Number : Integer) is
       -- Update the status of the selected Crewmembers to spacewalk
       S.Crew(CM).Status := Spacewalk;
 
+      -- Get indicies of remaining two crew members
    for i in S.Crew'Range loop
       if i /= CM and S.Crew(i).Status /= Spacewalk then
          if Top_CM = 0 then
