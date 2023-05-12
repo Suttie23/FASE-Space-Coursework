@@ -23,8 +23,21 @@ is
 
    S : Station_Record := (Door1 => Closed, Door2 => Closed, Altitude => MINALTITUDE,
                           Modules => (1 => CrewQuarters, 2 => CommunicationsArray, 3 => Empty),
-                         Top_Module_Index => 2);
+                          Top_Module_Index => 2);
 
+   type CrewMember is (Jebediah, Valentina, Bill);
+   type CrewMemberStatus is (Spacewalk, Monitoring, Relaxing);
+   type CrewMemberLocation is (TopModule, MiddleModule, BottomModule, EVA);
+
+   type Crew_Record is record
+      Name : CrewMember;
+      Status : CrewMemberStatus;
+      Location : Module;
+   end record;
+
+CRW : array(1..3) of Crew_Record := ((Name => Jebediah, Status => Relaxing, Location => CrewQuarters),
+                                     (Name => Valentina, Status => Relaxing, Location => CrewQuarters),
+                                     (Name => Bill, Status => Relaxing, Location => CommunicationsArray));
 
    function SealedInvariant return Boolean is
      ((S.Door1 = Open and S.Door2 = Closed) or (S.Door1 = Closed and S.Door2 = Open)

@@ -31,9 +31,9 @@ procedure Main is
       Put_Line("------------------------------");
       Put_Line("Crew Status");
       Put_Line("------------------------------");
-      Put_Line("Crew Member 1: " & "Living Quarters");
-      Put_Line("Crew Member 2: " & "Active Spacewalk");
-      Put_Line("Crew Member 3: " & "R&D Wing");
+      Put_Line("Name: " & CRW(1).Name'Image & " // Status: " & CRW(1).Status'Image & " // Location: " & CRW(1).Location'Image);
+      Put_Line("Name: " & CRW(2).Name'Image & " // Status: " & CRW(2).Status'Image & " // Location: " & CRW(2).Location'Image);
+      Put_Line("Name: " & CRW(3).Name'Image & " // Status: " & CRW(3).Status'Image & " // Location: " & CRW(3).Location'Image);
          Put_Line("");
       Put_Line("------------------------------");
       Put_Line("Napier Space Station Control Panel");
